@@ -67,6 +67,7 @@ const Player = () => {
                 fontSize: 24,
                 fontFamily: theme.font700,
               }}
+              numberOfLines={2}
             >
               アイドル
             </Text>
@@ -76,6 +77,7 @@ const Player = () => {
                 fontSize: 18,
                 fontFamily: theme.font700,
               }}
+              numberOfLines={1}
             >
               YOASOBI
             </Text>
@@ -85,6 +87,7 @@ const Player = () => {
                 fontSize: 16,
                 fontFamily: theme.font500,
               }}
+              numberOfLines={1}
             >
               アイドル
             </Text> */}
@@ -132,6 +135,7 @@ const Player = () => {
                 fontFamily: theme.font400,
                 textAlign: 'center',
               }}
+              numberOfLines={1}
             >
               無敵の笑顔で荒らすメディア
             </Text>
@@ -141,6 +145,7 @@ const Player = () => {
                 fontFamily: theme.font400,
                 textAlign: 'center',
               }}
+              numberOfLines={1}
             >
               知りたいその秘密ミステリアス
             </Text>

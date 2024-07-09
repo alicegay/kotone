@@ -1,9 +1,9 @@
-type RootStackParamList = {
-  Home: undefined
+type RootStack = {
+  Tabs: undefined
   Player: undefined
   Settings: undefined
   SelectServer: undefined
   SelectUser: { server: string }
 }
 
-export default RootStackParamList
+export default RootStack

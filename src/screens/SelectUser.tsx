@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import RootStackParamList from 'types/RootStackParamList'
+import RootStack from 'types/RootStack'
 import { AxiosError } from 'axios'
 import { users } from 'jellyfin-api'
 import useClient from 'hooks/useClient'
@@ -14,7 +14,7 @@ import DeviceInfo from 'react-native-device-info'
 const SelectUser = ({
   navigation,
   route,
-}: NativeStackScreenProps<RootStackParamList, 'SelectUser'>) => {
+}: NativeStackScreenProps<RootStack, 'SelectUser'>) => {
   const { server } = route.params
   const client = useClient()
   const theme = useTheme()
@@ -89,7 +89,7 @@ const SelectUser = ({
 
   useEffect(() => {
     if (client.client) {
-      navigation.replace('Home')
+      navigation.replace('Tabs')
     }
   }, [client.client])
 

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 //import BootSplash from 'react-native-bootsplash'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import RootStackParamList from 'types/RootStackParamList'
+import RootStack from 'types/RootStack'
 import { system } from 'jellyfin-api'
 import { AxiosError } from 'axios'
 import DeviceInfo from 'react-native-device-info'
@@ -15,7 +15,7 @@ import CenterLoading from 'components/CenterLoading'
 const SelectServer = ({
   navigation,
   route,
-}: NativeStackScreenProps<RootStackParamList, 'SelectServer'>) => {
+}: NativeStackScreenProps<RootStack, 'SelectServer'>) => {
   const client = useClient()
   const theme = useTheme()
 
@@ -62,7 +62,7 @@ const SelectServer = ({
   useEffect(() => {
     if (client.hasHydrated) {
       if (client.client) {
-        navigation.replace('Home')
+        navigation.replace('Tabs')
       } else if (
         !client.client &&
         client.server &&
@@ -92,7 +92,7 @@ const SelectServer = ({
       token: client.token,
     })
     console.log('CLIENT RESET')
-    navigation.replace('Home')
+    navigation.replace('Tabs')
   }
 
   const styles = StyleSheet.create({
