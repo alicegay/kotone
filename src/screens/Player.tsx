@@ -7,18 +7,19 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
+import { Shadow } from 'react-native-shadow-2'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { hash, itemid, server } from '../temp'
-import { Shadow } from 'react-native-shadow-2'
-import useTheme from '../hooks/useTheme'
+import useClient from 'hooks/useClient'
+import useTheme from 'hooks/useTheme'
+
+import { hash, itemid } from 'temp'
 
 const Player = () => {
+  const client = useClient()
+  const theme = useTheme()
   const insets = useSafeAreaInsets()
   const { width } = useWindowDimensions()
-  const theme = useTheme()
-
-  //const average = tinycolor(Blurhash.getAverageColor(hash)).toHex8String()
 
   return (
     <View style={{ flex: 1, backgroundColor: '#000' }}>
@@ -34,14 +35,6 @@ const Player = () => {
           backgroundColor: '#0004',
         }}
       />
-      {/* <View
-        style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          backgroundColor: average,
-        }}
-      /> */}
 
       <View
         style={{
@@ -55,7 +48,9 @@ const Player = () => {
         <View style={{ gap: 32 }}>
           <Shadow distance={32} offset={[0, 8]} startColor="#0002">
             <Image
-              source={{ uri: server + '/Items/' + itemid + '/Images/Primary' }}
+              source={{
+                uri: client.server + '/Items/' + itemid + '/Images/Primary',
+              }}
               style={{
                 width: width - 32 * 2,
                 height: width - 32 * 2,
@@ -178,6 +173,7 @@ const Player = () => {
           <Icon name="repeat" style={{ color: '#fff4', fontSize: 20 }} />
           <Icon name="heart" style={{ color: '#fff', fontSize: 20 }} />
           <Icon name="playlist-music" style={{ color: '#fff', fontSize: 20 }} />
+          <Icon name="dots-vertical" style={{ color: '#fff', fontSize: 20 }} />
         </View>
       </View>
     </View>

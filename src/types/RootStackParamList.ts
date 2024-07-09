@@ -1,4 +1,5 @@
 type RootStackParamList = {
+  Home: undefined
   Player: undefined
   Settings: undefined
   SelectServer: undefined
