@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		009F62622C3D6CB300A6FC25 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 009F62612C3D6CB300A6FC25 /* MaterialCommunityIcons.ttf */; };
 		00E356F31AD99517003FC87E /* KotoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* KotoneTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-Kotone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Kotone.a */; };
+		0F0D7792B91348A885A4CA9F /* NunitoRoundedMplus-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20F817219CD14B8FB6BA1FCF /* NunitoRoundedMplus-Bold.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		49AF250CA2AB45BB917B714C /* NunitoRoundedMplus-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 010DDD6A3FF04AD096C3243A /* NunitoRoundedMplus-Medium.ttf */; };
 		5A523905BB52BE0DCFE8CCE4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 56B18419B4BE90DE47D4325C /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-Kotone-KotoneTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Kotone-KotoneTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8B1565D6210D428095FA8C45 /* NunitoRoundedMplus-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1DE1FC343024300AA3A0767 /* NunitoRoundedMplus-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,9 +32,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		009F62612C3D6CB300A6FC25 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* KotoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KotoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* KotoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KotoneTests.m; sourceTree = "<group>"; };
+		010DDD6A3FF04AD096C3243A /* NunitoRoundedMplus-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoRoundedMplus-Medium.ttf"; path = "../src/assets/fonts/NunitoRoundedMplus-Medium.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Kotone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kotone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Kotone/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Kotone/AppDelegate.mm; sourceTree = "<group>"; };
@@ -39,13 +45,15 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Kotone/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Kotone/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Kotone-KotoneTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Kotone-KotoneTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		20F817219CD14B8FB6BA1FCF /* NunitoRoundedMplus-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoRoundedMplus-Bold.ttf"; path = "../src/assets/fonts/NunitoRoundedMplus-Bold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Kotone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone.debug.xcconfig"; path = "Target Support Files/Pods-Kotone/Pods-Kotone.debug.xcconfig"; sourceTree = "<group>"; };
-		56B18419B4BE90DE47D4325C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Kotone/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		56B18419B4BE90DE47D4325C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Kotone/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Kotone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone.release.xcconfig"; path = "Target Support Files/Pods-Kotone/Pods-Kotone.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Kotone-KotoneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone-KotoneTests.debug.xcconfig"; path = "Target Support Files/Pods-Kotone-KotoneTests/Pods-Kotone-KotoneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Kotone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Kotone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Kotone/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Kotone-KotoneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone-KotoneTests.release.xcconfig"; path = "Target Support Files/Pods-Kotone-KotoneTests/Pods-Kotone-KotoneTests.release.xcconfig"; sourceTree = "<group>"; };
+		B1DE1FC343024300AA3A0767 /* NunitoRoundedMplus-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoRoundedMplus-Regular.ttf"; path = "../src/assets/fonts/NunitoRoundedMplus-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -69,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		009F62602C3D6C9C00A6FC25 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				009F62612C3D6CB300A6FC25 /* MaterialCommunityIcons.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		00E356EF1AD99517003FC87E /* KotoneTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +105,7 @@
 		13B07FAE1A68108700A75B9A /* Kotone */ = {
 			isa = PBXGroup;
 			children = (
+				009F62602C3D6C9C00A6FC25 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -99,6 +116,16 @@
 				56B18419B4BE90DE47D4325C /* PrivacyInfo.xcprivacy */,
 			);
 			name = Kotone;
+			sourceTree = "<group>";
+		};
+		1F9E6D4630F146AD8AFEF4DD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				20F817219CD14B8FB6BA1FCF /* NunitoRoundedMplus-Bold.ttf */,
+				010DDD6A3FF04AD096C3243A /* NunitoRoundedMplus-Medium.ttf */,
+				B1DE1FC343024300AA3A0767 /* NunitoRoundedMplus-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -127,6 +154,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				1F9E6D4630F146AD8AFEF4DD /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -247,8 +275,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				009F62622C3D6CB300A6FC25 /* MaterialCommunityIcons.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				5A523905BB52BE0DCFE8CCE4 /* PrivacyInfo.xcprivacy in Resources */,
+				0F0D7792B91348A885A4CA9F /* NunitoRoundedMplus-Bold.ttf in Resources */,
+				49AF250CA2AB45BB917B714C /* NunitoRoundedMplus-Medium.ttf in Resources */,
+				8B1565D6210D428095FA8C45 /* NunitoRoundedMplus-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,10 +622,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -665,10 +694,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
