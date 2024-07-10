@@ -8,6 +8,7 @@ import RootStack from 'types/RootStack'
 import TabStack from 'types/TabStack'
 import useTheme from 'hooks/useTheme'
 import FloatingPlayer from 'components/FloatingPlayer'
+import Home from './Home'
 
 const Tab = createBottomTabNavigator<TabStack>()
 
@@ -20,6 +21,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
       paddingHorizontal: 8,
       paddingVertical: 4,
       borderRadius: 8,
+      overflow: 'hidden',
     },
     tabIconFocus: { backgroundColor: '#fff2' },
   })
@@ -57,24 +59,12 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           },
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Music" component={SettingsScreen} />
         <Tab.Screen name="Search" component={SettingsScreen} />
       </Tab.Navigator>
       <FloatingPlayer navigation={navigation} />
     </>
-  )
-}
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-      <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
-    </View>
   )
 }
 

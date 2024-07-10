@@ -2,13 +2,13 @@ import { Image, Pressable, Text, View } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
+import { State, usePlaybackState, useProgress } from 'react-native-track-player'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
-import { hash, itemid } from 'temp'
 
 import RootStack from 'types/RootStack'
 import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
+import usePlayer from 'hooks/usePlayer'
 
 interface Props {
   navigation: StackNavigationProp<RootStack>
@@ -17,7 +17,28 @@ interface Props {
 const FloatingPlayer = ({ navigation }: Props) => {
   const client = useClient()
   const theme = useTheme()
+  const player = usePlayer()
   const insets = useSafeAreaInsets()
+  const playerProgress = useProgress()
+  const playerState = usePlaybackState()
+
+  const track = player.queue.length > 0 ? player.queue[player.track] : null
+  if (!track) return null
+
+  const image =
+    'Primary' in track.ImageTags
+      ? client.server + '/Items/' + track.Id + '/Images/Primary'
+      : track.AlbumPrimaryImageTag
+      ? client.server + '/Items/' + track.AlbumId + '/Images/Primary'
+      : null
+  const blurhash =
+    'Primary' in track.ImageBlurHashes
+      ? track.ImageBlurHashes.Primary[
+          'Primary' in track.ImageTags
+            ? track.ImageTags.Primary
+            : track.AlbumPrimaryImageTag
+        ]
+      : null
 
   return (
     <View
@@ -44,14 +65,16 @@ const FloatingPlayer = ({ navigation }: Props) => {
           navigation.push('Player')
         }}
       >
-        <Blurhash
-          blurhash={hash}
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-          }}
-        />
+        {Blurhash.isBlurhashValid(blurhash) && (
+          <Blurhash
+            blurhash={blurhash}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        )}
         <View
           style={{
             position: 'absolute',
@@ -63,7 +86,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
 
         <Image
           source={{
-            uri: client.server + '/Items/' + itemid + '/Images/Primary',
+            uri: image,
           }}
           style={{
             width: 64,
@@ -87,7 +110,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
             }}
             numberOfLines={1}
           >
-            アイドル
+            {track.Name}
           </Text>
           <Text
             style={{
@@ -97,11 +120,14 @@ const FloatingPlayer = ({ navigation }: Props) => {
             }}
             numberOfLines={1}
           >
-            YOASOBI
+            {track.Artists.join(', ')}
           </Text>
         </View>
 
-        <Icon name="play" style={{ fontSize: 32, color: '#fff' }} />
+        <Icon
+          name={playerState.state == State.Playing ? 'pause' : 'play'}
+          style={{ fontSize: 32, color: '#fff' }}
+        />
         <Icon
           name="skip-next"
           style={{ fontSize: 32, color: '#fff', paddingRight: 16 }}

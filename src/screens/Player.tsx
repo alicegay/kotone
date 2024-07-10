@@ -1,6 +1,8 @@
 import {
   ColorValue,
+  DimensionValue,
   Image,
+  Pressable,
   Text,
   useWindowDimensions,
   View,
@@ -9,24 +11,53 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
 import { Shadow } from 'react-native-shadow-2'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import TrackPlayer, {
+  State,
+  usePlaybackState,
+  useProgress,
+} from 'react-native-track-player'
 
 import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
-
-import { hash, itemid } from 'temp'
+import usePlayer from 'hooks/usePlayer'
+import ticksToTime from 'lib/ticksToTime'
+import secsToTime from 'lib/secsToTime'
 
 const Player = () => {
   const client = useClient()
   const theme = useTheme()
+  const player = usePlayer()
   const insets = useSafeAreaInsets()
   const { width } = useWindowDimensions()
+  const playerProgress = useProgress()
+  const playerState = usePlaybackState()
+
+  const track = player.queue.length > 0 ? player.queue[player.track] : null
+  if (!track) return null
+
+  const image =
+    'Primary' in track.ImageTags
+      ? client.server + '/Items/' + track.Id + '/Images/Primary'
+      : track.AlbumPrimaryImageTag
+      ? client.server + '/Items/' + track.AlbumId + '/Images/Primary'
+      : null
+  const blurhash =
+    'Primary' in track.ImageBlurHashes
+      ? track.ImageBlurHashes.Primary[
+          'Primary' in track.ImageTags
+            ? track.ImageTags.Primary
+            : track.AlbumPrimaryImageTag
+        ]
+      : null
 
   return (
     <View style={{ flex: 1, backgroundColor: '#000' }}>
-      <Blurhash
-        blurhash={hash}
-        style={{ position: 'absolute', width: '100%', height: '100%' }}
-      />
+      {Blurhash.isBlurhashValid(blurhash) && (
+        <Blurhash
+          blurhash={blurhash}
+          style={{ position: 'absolute', width: '100%', height: '100%' }}
+        />
+      )}
       <View
         style={{
           position: 'absolute',
@@ -49,7 +80,7 @@ const Player = () => {
           <Shadow distance={32} offset={[0, 8]} startColor="#0002">
             <Image
               source={{
-                uri: client.server + '/Items/' + itemid + '/Images/Primary',
+                uri: image,
               }}
               style={{
                 width: width - 32 * 2,
@@ -69,7 +100,7 @@ const Player = () => {
               }}
               numberOfLines={2}
             >
-              アイドル
+              {track.Name}
             </Text>
             <Text
               style={{
@@ -79,18 +110,20 @@ const Player = () => {
               }}
               numberOfLines={1}
             >
-              YOASOBI
+              {track.Artists.join(', ')}
             </Text>
-            {/* <Text
-              style={{
-                color: '#fff6',
-                fontSize: 16,
-                fontFamily: theme.font500,
-              }}
-              numberOfLines={1}
-            >
-              アイドル
-            </Text> */}
+            {track.Album != track.Name && (
+              <Text
+                style={{
+                  color: '#fff6',
+                  fontSize: 16,
+                  fontFamily: theme.font500,
+                }}
+                numberOfLines={1}
+              >
+                {track.Album}
+              </Text>
+            )}
           </View>
 
           <View style={{ gap: 8 }}>
@@ -106,7 +139,9 @@ const Player = () => {
               <View
                 style={{
                   backgroundColor: '#fff',
-                  width: '40%',
+                  width: ((playerProgress.position / playerProgress.duration) *
+                    100 +
+                    '%') as DimensionValue,
                   height: 6,
                   borderRadius: 3,
                   overflow: 'hidden',
@@ -117,18 +152,18 @@ const Player = () => {
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <Text style={{ color: '#fff6', fontFamily: theme.font400 }}>
-                01:20
+                {secsToTime(playerProgress.position)}
               </Text>
-              <Text style={{ color: '#fff6', fontFamily: theme.font400 }}>
+              {/* <Text style={{ color: '#fff6', fontFamily: theme.font400 }}>
                 FLAC
-              </Text>
+              </Text> */}
               <Text style={{ color: '#fff6', fontFamily: theme.font400 }}>
-                03:33
+                {secsToTime(playerProgress.duration)}
               </Text>
             </View>
           </View>
 
-          <View>
+          {/* <View>
             <Text
               style={{
                 color: '#fff',
@@ -149,7 +184,7 @@ const Player = () => {
             >
               知りたいその秘密ミステリアス
             </Text>
-          </View>
+          </View> */}
         </View>
 
         <View
@@ -159,9 +194,47 @@ const Player = () => {
             alignItems: 'center',
           }}
         >
-          <Icon name="skip-previous" style={{ color: '#fff', fontSize: 60 }} />
-          <Icon name="play" style={{ color: '#fff', fontSize: 80 }} />
-          <Icon name="skip-next" style={{ color: '#fff', fontSize: 60 }} />
+          <Pressable
+            onPress={async () => {
+              player.prevTrack()
+            }}
+            android_ripple={{
+              color: '#fff2',
+            }}
+          >
+            <Icon
+              name="skip-previous"
+              style={{ color: '#fff', fontSize: 48 }}
+            />
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              if (playerState.state == State.Playing) {
+                player.pause()
+              } else {
+                player.play()
+              }
+            }}
+            android_ripple={{
+              color: '#fff2',
+            }}
+          >
+            <Icon
+              name={playerState.state == State.Playing ? 'pause' : 'play'}
+              style={{ color: '#fff', fontSize: 80 }}
+            />
+          </Pressable>
+          <Pressable
+            onPress={async () => {
+              //console.log(await TrackPlayer.getQueue())
+              player.nextTrack()
+            }}
+            android_ripple={{
+              color: '#fff2',
+            }}
+          >
+            <Icon name="skip-next" style={{ color: '#fff', fontSize: 48 }} />
+          </Pressable>
         </View>
 
         <View

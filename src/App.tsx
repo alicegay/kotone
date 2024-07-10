@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import 'react-native-gesture-handler'
 import { AppRegistry, useWindowDimensions } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
@@ -6,20 +7,52 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import TrackPlayer from 'react-native-track-player'
+import TrackPlayer, { Capability, RatingType } from 'react-native-track-player'
 
 import RootStack from 'types/RootStack'
+import PlaybackService from 'services/PlaybackService'
 import Player from 'screens/Player'
 import SelectServer from 'screens/SelectServer'
 import SelectUser from 'screens/SelectUser'
 import Tabs from 'screens/Tabs'
-import PlaybackService from 'services/PlaybackService'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
 
 const App = () => {
   const { height } = useWindowDimensions()
+
+  useEffect(() => {
+    TrackPlayer.setupPlayer()
+    TrackPlayer.updateOptions({
+      ratingType: RatingType.Heart,
+      progressUpdateEventInterval: 10,
+      capabilities: [
+        Capability.Play,
+        Capability.PlayFromId,
+        Capability.PlayFromSearch,
+        Capability.Pause,
+        Capability.Stop,
+        Capability.SeekTo,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+        Capability.Skip,
+        Capability.SetRating,
+      ],
+      notificationCapabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+        Capability.SetRating,
+      ],
+      compactCapabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.SkipToNext,
+      ],
+    })
+  })
 
   return (
     <QueryClientProvider client={queryClient}>
