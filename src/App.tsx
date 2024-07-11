@@ -18,6 +18,7 @@ import SelectServer from 'screens/SelectServer'
 import SelectUser from 'screens/SelectUser'
 import Tabs from 'screens/Tabs'
 import Queue from 'screens/Queue'
+import TabStack from 'types/TabStack'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -102,7 +103,6 @@ const App = () => {
               cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
             }}
           />
-          <Stack.Screen name="Queue" component={Queue} />
           <Stack.Screen name="SelectServer" component={SelectServer} />
           <Stack.Screen name="SelectUser" component={SelectUser} />
         </Stack.Navigator>
@@ -113,3 +113,9 @@ const App = () => {
 
 AppRegistry.registerComponent('Kotone', () => App)
 TrackPlayer.registerPlaybackService(() => PlaybackService)
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStack, TabStack {}
+  }
+}

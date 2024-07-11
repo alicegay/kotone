@@ -1,8 +1,8 @@
 type TabStack = {
-  Home: undefined
   Music: undefined
   Queue: undefined
   Search: undefined
+  Settings: undefined
 }
 
 export default TabStack

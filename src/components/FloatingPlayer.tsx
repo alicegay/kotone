@@ -9,6 +9,7 @@ import RootStack from 'types/RootStack'
 import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
 import usePlayer from 'hooks/usePlayer'
+import { Shadow } from 'react-native-shadow-2'
 
 interface Props {
   navigation: StackNavigationProp<RootStack>
@@ -47,144 +48,149 @@ const FloatingPlayer = ({ navigation }: Props) => {
         bottom: 64 + insets.bottom + 16,
         width: '100%',
         height: 64,
+        paddingHorizontal: 16,
       }}
     >
-      <Pressable
-        style={{
-          flex: 1,
-          marginHorizontal: 16,
-          backgroundColor: theme.background,
-          height: 64,
-          borderRadius: 16,
-          overflow: 'hidden',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-        onPress={() => {
-          navigation.push('Player')
-        }}
-      >
-        {Blurhash.isBlurhashValid(blurhash) && (
-          <Blurhash
-            blurhash={blurhash}
+      <Shadow distance={32} offset={[0, 8]} startColor="#0002">
+        <Pressable
+          style={{
+            flex: 1,
+            //marginHorizontal: 16,
+            backgroundColor: theme.background,
+            width: '100%',
+            height: 64,
+            borderRadius: 16,
+            overflow: 'hidden',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+          onPress={() => {
+            navigation.push('Player')
+          }}
+        >
+          {Blurhash.isBlurhashValid(blurhash) && (
+            <Blurhash
+              blurhash={blurhash}
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+              }}
+            />
+          )}
+          <View
             style={{
               position: 'absolute',
               width: '100%',
               height: '100%',
+              backgroundColor: '#0004',
             }}
           />
-        )}
-        <View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            backgroundColor: '#0004',
-          }}
-        />
 
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={{
-            width: 64,
-            height: 64,
-            borderRadius: 16,
-            overflow: 'hidden',
-          }}
-        />
-
-        <View
-          style={{
-            flexShrink: 1,
-            flexGrow: 1,
-            paddingLeft: 16,
-          }}
-        >
-          <Text
+          <Image
+            source={{
+              uri: image,
+            }}
             style={{
-              fontFamily: theme.font500,
-              fontSize: 18,
-              color: theme.foreground,
+              width: 64,
+              height: 64,
+              borderRadius: 16,
+              overflow: 'hidden',
             }}
-            numberOfLines={1}
-          >
-            {track.Name}
-          </Text>
-          <Text
+          />
+
+          <View
             style={{
-              fontFamily: theme.font400,
-              fontSize: 14,
-              color: theme.foregroundAlt,
+              flexShrink: 1,
+              flexGrow: 1,
+              paddingLeft: 16,
             }}
-            numberOfLines={1}
           >
-            {track.Artists.join(', ')}
-          </Text>
-        </View>
+            <Text
+              style={{
+                fontFamily: theme.font500,
+                fontSize: 18,
+                color: theme.foreground,
+              }}
+              numberOfLines={1}
+            >
+              {track.Name}
+            </Text>
+            <Text
+              style={{
+                fontFamily: theme.font400,
+                fontSize: 14,
+                color: theme.foregroundAlt,
+              }}
+              numberOfLines={1}
+            >
+              {track.Artists.join(', ')}
+            </Text>
+          </View>
 
-        <Pressable
-          style={{
-            width: 48,
-            height: 64,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          android_ripple={{
-            color: theme.ripple,
-            radius: 24,
-            foreground: true,
-            borderless: true,
-          }}
-          onPress={() => {
-            if (playerState.state === State.Playing) {
-              player.pause()
-            } else {
-              player.play()
-            }
-          }}
-        >
-          <Icon
-            name={playerState.state === State.Playing ? 'pause' : 'play'}
-            style={{ fontSize: 32, color: theme.foreground }}
-          />
-        </Pressable>
-        <Pressable
-          style={{
-            width: 48,
-            height: 64,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          android_ripple={{
-            color: theme.ripple,
-            radius: 24,
-            foreground: true,
-            borderless: true,
-          }}
-          onPress={() => {
-            player.nextTrack()
-          }}
-        >
-          <Icon
-            name="skip-next"
-            style={{ fontSize: 32, color: theme.foreground }}
-          />
-        </Pressable>
+          <Pressable
+            style={{
+              width: 48,
+              height: 64,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            android_ripple={{
+              color: theme.ripple,
+              radius: 24,
+              foreground: true,
+              borderless: true,
+            }}
+            onPress={() => {
+              if (playerState.state === State.Playing) {
+                player.pause()
+              } else {
+                player.play()
+              }
+            }}
+          >
+            <Icon
+              name={playerState.state === State.Playing ? 'pause' : 'play'}
+              style={{ fontSize: 32, color: theme.foreground }}
+            />
+          </Pressable>
+          <Pressable
+            style={{
+              width: 48,
+              height: 64,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            android_ripple={{
+              color: theme.ripple,
+              radius: 24,
+              foreground: true,
+              borderless: true,
+            }}
+            onPress={() => {
+              player.nextTrack()
+            }}
+          >
+            <Icon
+              name="skip-next"
+              style={{ fontSize: 32, color: theme.foreground }}
+            />
+          </Pressable>
 
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            width: ((playerProgress.position / playerProgress.duration) * 100 +
-              '%') as DimensionValue,
-            height: 3,
-            borderRadius: 3,
-            backgroundColor: theme.foregroundAlt,
-          }}
-        ></View>
-      </Pressable>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              width: ((playerProgress.position / playerProgress.duration) *
+                100 +
+                '%') as DimensionValue,
+              height: 3,
+              borderRadius: 3,
+              backgroundColor: theme.foregroundAlt,
+            }}
+          ></View>
+        </Pressable>
+      </Shadow>
     </View>
   )
 }

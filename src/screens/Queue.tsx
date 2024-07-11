@@ -1,6 +1,9 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useEffect } from 'react'
 import { Text, View } from 'react-native'
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import TabStack from 'types/TabStack'
 import useClient from 'hooks/useClient'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
@@ -8,7 +11,7 @@ import Button from 'components/Button'
 import { FlashList } from '@shopify/flash-list'
 import TrackListItem from 'components/TrackListItem'
 
-const Queue = () => {
+const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
   const client = useClient()
   const theme = useTheme()
   const player = usePlayer()
@@ -63,6 +66,7 @@ const Queue = () => {
                 playing={index === player.track}
               />
             )}
+            initialScrollIndex={player.track}
             estimatedItemSize={56}
             contentContainerStyle={{ paddingBottom: 64 + 32 }}
           />

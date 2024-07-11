@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -28,10 +28,10 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   })
 
   const icons = {
-    Home: 'home',
     Music: 'music-box-multiple-outline',
     Queue: 'playlist-music',
     Search: 'magnify',
+    Settings: 'cog',
   }
 
   return (
@@ -61,21 +61,20 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           },
         })}
       >
-        <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Music" component={Home} />
+        <Tab.Screen name="Search" component={Temp} />
         <Tab.Screen name="Queue" component={Queue} />
-        <Tab.Screen name="Search" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={Temp} />
       </Tab.Navigator>
       <FloatingPlayer navigation={navigation} />
     </>
   )
 }
 
-function SettingsScreen({ navigation }) {
+function Temp({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      <Text>Temporary screen!</Text>
     </View>
   )
 }
