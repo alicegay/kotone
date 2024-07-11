@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import {
   GestureResponderEvent,
   Image,
@@ -6,8 +5,11 @@ import {
   Text,
   View,
 } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Item from 'jellyfin-api/lib/types/media/Item'
+
 import useClient from 'hooks/useClient'
+import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
 
@@ -18,6 +20,7 @@ interface Props {
   showAlbumArt?: boolean
   showArtist?: boolean
   trackNumber?: number
+  playing?: boolean | 'auto'
 }
 
 const TrackListItem = ({
@@ -27,21 +30,11 @@ const TrackListItem = ({
   showAlbumArt = true,
   showArtist = true,
   trackNumber,
+  playing = 'auto',
 }: Props) => {
   const client = useClient()
+  const player = usePlayer()
   const theme = useTheme()
-
-  // const [image, setImage] = useState<string>(null)
-
-  // useEffect(() => {
-  //   if ('Primary' in track.ImageTags) {
-  //     setImage(client.server + '/Items/' + track.Id + '/Images/Primary')
-  //   } else if (track.AlbumPrimaryImageTag) {
-  //     setImage(client.server + '/Items/' + track.AlbumId + '/Images/Primary')
-  //   } else {
-  //     setImage(null)
-  //   }
-  // }, [])
 
   const image =
     'Primary' in track.ImageTags
@@ -49,6 +42,8 @@ const TrackListItem = ({
       : track.AlbumPrimaryImageTag
       ? client.server + '/Items/' + track.AlbumId + '/Images/Primary'
       : null
+
+  const isPlaying = playing === 'auto' ? player.trackID == track.Id : playing
 
   return (
     <Pressable
@@ -73,21 +68,45 @@ const TrackListItem = ({
               style={{ width: '100%', height: '100%' }}
             />
           )}
+          {isPlaying && (
+            <View
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#0006',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Icon
+                name="music-note"
+                style={{ color: theme.foreground, fontSize: 32 }}
+              />
+            </View>
+          )}
         </View>
       )}
 
-      {(!!trackNumber || trackNumber === 0) && (
-        <Text
-          style={{
-            color: theme.foreground,
-            fontFamily: theme.font700,
-            fontSize: 14,
-            width: 24,
-            textAlign: 'center',
-          }}
-        >
-          {trackNumber}
-        </Text>
+      {(!!trackNumber || trackNumber === 0) && isPlaying ? (
+        <Icon
+          name="music-note"
+          style={{ color: theme.foreground, fontSize: 24, width: 24 }}
+        />
+      ) : (
+        (!!trackNumber || trackNumber === 0) && (
+          <Text
+            style={{
+              color: theme.foreground,
+              fontFamily: theme.font700,
+              fontSize: 14,
+              width: 24,
+              textAlign: 'center',
+            }}
+          >
+            {trackNumber}
+          </Text>
+        )
       )}
 
       <View

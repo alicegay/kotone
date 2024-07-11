@@ -94,6 +94,7 @@ const Home = () => {
               onPress={() => {
                 player.setTrack(i)
               }}
+              playing={i === player.track}
             />
           ))}
       </View>
