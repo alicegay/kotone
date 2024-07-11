@@ -78,9 +78,10 @@ const usePlayer = create<PlayerStore>()(
         )
       },
 
-      setQueue: (items, index = 0) => {
+      setQueue: async (items, index = 0) => {
         set(() => ({ queue: items, track: index, trackID: items[index].Id }))
-        TrackPlayer.setQueue(items.map((item) => itemToTrack(item)))
+        await TrackPlayer.setQueue(items.map((item) => itemToTrack(item)))
+        await TrackPlayer.skip(index)
       },
       clearQueue: () => {
         set(() => ({ queue: [], track: 0, trackID: undefined }))
