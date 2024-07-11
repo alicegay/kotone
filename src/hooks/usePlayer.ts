@@ -2,19 +2,22 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import Item from 'jellyfin-api/lib/types/media/Item'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import TrackPlayer from 'react-native-track-player'
+import TrackPlayer, { RepeatMode } from 'react-native-track-player'
 import itemToTrack from 'lib/itemToTrack'
 
 interface PlayerStore {
   track: number
   trackID?: string
   queue: Item[]
+  repeat: 'off' | 'track' | 'queue'
 
   setTrack: (index: number, stealth?: boolean) => void
   prevTrack: () => void
   nextTrack: () => void
   play: () => void
   pause: () => void
+  setRepeat: (mode: 'off' | 'track' | 'queue') => void
+  cycleRepeat: () => void
 
   setQueue: (items: Item[], index?: number) => void
   clearQueue: () => void
@@ -32,6 +35,7 @@ const usePlayer = create<PlayerStore>()(
       track: 0,
       trackID: undefined,
       queue: [],
+      repeat: 'off',
 
       setTrack: (index, stealth = false) => {
         set((state) => ({ track: index, trackID: state.queue[index].Id }))
@@ -56,6 +60,22 @@ const usePlayer = create<PlayerStore>()(
       },
       pause: () => {
         TrackPlayer.pause()
+      },
+      setRepeat: (mode) => {
+        set(() => ({ repeat: mode }))
+        TrackPlayer.setRepeatMode(
+          mode === 'off'
+            ? RepeatMode.Off
+            : mode === 'queue'
+            ? RepeatMode.Queue
+            : RepeatMode.Track,
+        )
+      },
+      cycleRepeat: () => {
+        const current = get().repeat
+        get().setRepeat(
+          current === 'off' ? 'queue' : current === 'queue' ? 'track' : 'off',
+        )
       },
 
       setQueue: (items, index = 0) => {

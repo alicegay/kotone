@@ -4,9 +4,12 @@ interface ThemeStore {
   background: string
   foreground: string
   foregroundAlt: string
-  tint: string
-  green: string
   ripple: string
+  tint: string
+  red: string
+  green: string
+  blue: string
+
   font400: string
   font500: string
   font700: string
@@ -16,9 +19,12 @@ const useTheme = create<ThemeStore>()(() => ({
   background: '#222',
   foreground: '#fff',
   foregroundAlt: '#fff6',
-  tint: '#A00000',
-  green: '#00A000',
   ripple: '#fff2',
+  tint: '#A00000',
+  red: '#A00000',
+  green: '#00A000',
+  blue: '#0000A0',
+
   font400: 'NunitoRoundedMplus-Regular',
   font500: 'NunitoRoundedMplus-Medium',
   font700: 'NunitoRoundedMplus-Bold',

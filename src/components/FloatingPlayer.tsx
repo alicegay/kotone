@@ -1,4 +1,4 @@
-import { Image, Pressable, Text, View } from 'react-native'
+import { DimensionValue, Image, Pressable, Text, View } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
@@ -53,7 +53,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
         style={{
           flex: 1,
           marginHorizontal: 16,
-          backgroundColor: '#000',
+          backgroundColor: theme.background,
           height: 64,
           borderRadius: 16,
           overflow: 'hidden',
@@ -172,6 +172,18 @@ const FloatingPlayer = ({ navigation }: Props) => {
             style={{ fontSize: 32, color: theme.foreground }}
           />
         </Pressable>
+
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: ((playerProgress.position / playerProgress.duration) * 100 +
+              '%') as DimensionValue,
+            height: 3,
+            borderRadius: 3,
+            backgroundColor: theme.foregroundAlt,
+          }}
+        ></View>
       </Pressable>
     </View>
   )

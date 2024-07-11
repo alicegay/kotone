@@ -23,7 +23,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
       borderRadius: 8,
       overflow: 'hidden',
     },
-    tabIconFocus: { backgroundColor: '#fff2' },
+    tabIconFocus: { backgroundColor: theme.ripple },
   })
 
   const icons = {
@@ -38,8 +38,8 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#fff',
-          tabBarInactiveTintColor: '#fff6',
+          tabBarActiveTintColor: theme.foreground,
+          tabBarInactiveTintColor: theme.foregroundAlt,
           tabBarStyle: {
             paddingBottom: insets.bottom,
             height: 64 + insets.bottom,

@@ -3,6 +3,7 @@ import {
   DimensionValue,
   Image,
   Pressable,
+  StyleSheet,
   Text,
   useWindowDimensions,
   View,
@@ -49,6 +50,21 @@ const Player = () => {
             : track.AlbumPrimaryImageTag
         ]
       : null
+
+  const androidRipple = {
+    color: theme.ripple,
+    foreground: true,
+    borderless: true,
+  }
+
+  const styles = StyleSheet.create({
+    buttonSmall: {
+      width: 32,
+      height: 32,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  })
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
@@ -208,11 +224,7 @@ const Player = () => {
             onPress={async () => {
               player.prevTrack()
             }}
-            android_ripple={{
-              color: '#fff2',
-              foreground: true,
-              borderless: true,
-            }}
+            android_ripple={androidRipple}
           >
             <Icon
               name="skip-previous"
@@ -227,11 +239,7 @@ const Player = () => {
                 player.play()
               }
             }}
-            android_ripple={{
-              color: theme.ripple,
-              foreground: true,
-              borderless: true,
-            }}
+            android_ripple={androidRipple}
           >
             <Icon
               name={playerState.state == State.Playing ? 'pause' : 'play'}
@@ -243,11 +251,7 @@ const Player = () => {
               //console.log(await TrackPlayer.getQueue())
               player.nextTrack()
             }}
-            android_ripple={{
-              color: theme.ripple,
-              foreground: true,
-              borderless: true,
-            }}
+            android_ripple={androidRipple}
           >
             <Icon
               name="skip-next"
@@ -263,26 +267,70 @@ const Player = () => {
             alignItems: 'center',
           }}
         >
-          <Icon
-            name="text-box-outline"
-            style={{ color: theme.foregroundAlt, fontSize: 20 }}
-          />
-          <Icon
-            name="repeat"
-            style={{ color: theme.foregroundAlt, fontSize: 20 }}
-          />
-          <Icon
-            name="heart"
-            style={{ color: theme.foreground, fontSize: 20 }}
-          />
-          <Icon
-            name="playlist-music"
-            style={{ color: theme.foreground, fontSize: 20 }}
-          />
-          <Icon
-            name="dots-vertical"
-            style={{ color: theme.foreground, fontSize: 20 }}
-          />
+          <Pressable
+            style={styles.buttonSmall}
+            android_ripple={androidRipple}
+            onPress={() => {}}
+          >
+            <Icon
+              name="text-box-outline"
+              style={{ color: theme.foregroundAlt, fontSize: 20 }}
+            />
+          </Pressable>
+          <Pressable
+            style={styles.buttonSmall}
+            android_ripple={androidRipple}
+            onPress={() => {
+              player.cycleRepeat()
+            }}
+          >
+            <Icon
+              name={
+                player.repeat === 'track'
+                  ? 'repeat-once'
+                  : player.repeat === 'queue'
+                  ? 'repeat'
+                  : 'repeat-off'
+              }
+              style={{
+                color:
+                  player.repeat === 'off'
+                    ? theme.foregroundAlt
+                    : theme.foreground,
+                fontSize: 20,
+              }}
+            />
+          </Pressable>
+          <Pressable
+            style={styles.buttonSmall}
+            android_ripple={androidRipple}
+            onPress={() => {}}
+          >
+            <Icon
+              name="heart"
+              style={{ color: theme.foreground, fontSize: 20 }}
+            />
+          </Pressable>
+          <Pressable
+            style={styles.buttonSmall}
+            android_ripple={androidRipple}
+            onPress={() => {}}
+          >
+            <Icon
+              name="playlist-music"
+              style={{ color: theme.foreground, fontSize: 20 }}
+            />
+          </Pressable>
+          <Pressable
+            style={styles.buttonSmall}
+            android_ripple={androidRipple}
+            onPress={() => {}}
+          >
+            <Icon
+              name="dots-vertical"
+              style={{ color: theme.foreground, fontSize: 20 }}
+            />
+          </Pressable>
         </View>
       </View>
     </View>

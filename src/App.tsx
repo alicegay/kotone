@@ -73,6 +73,7 @@ const App = () => {
       const queue = await TrackPlayer.getQueue()
       if (player.queue.length > 0 && queue.length === 0) {
         player.setQueue(player.queue, player.track)
+        player.setRepeat(player.repeat)
         console.log('RESTORED QUEUE')
       }
     }
