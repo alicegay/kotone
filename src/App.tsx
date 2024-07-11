@@ -11,6 +11,8 @@ import TrackPlayer, { Capability, RatingType } from 'react-native-track-player'
 
 import RootStack from 'types/RootStack'
 import PlaybackService from 'services/PlaybackService'
+import useClient from 'hooks/useClient'
+import usePlayer from 'hooks/usePlayer'
 import Player from 'screens/Player'
 import SelectServer from 'screens/SelectServer'
 import SelectUser from 'screens/SelectUser'
@@ -22,6 +24,8 @@ const queryClient = new QueryClient()
 let playerSetup = false
 
 const App = () => {
+  const client = useClient()
+  const player = usePlayer()
   const { height } = useWindowDimensions()
 
   useEffect(() => {
@@ -59,9 +63,23 @@ const App = () => {
 
     if (!playerSetup) {
       setupPlayer()
+      console.log('PLAYER SETUP')
       playerSetup = true
     }
   })
+
+  useEffect(() => {
+    const restoreQueue = async () => {
+      const queue = await TrackPlayer.getQueue()
+      if (player.queue.length > 0 && queue.length === 0) {
+        player.setQueue(player.queue, player.track)
+        console.log('RESTORED QUEUE')
+      }
+    }
+    if (client.hasHydrated && player.hasHydrated) {
+      restoreQueue()
+    }
+  }, [client.hasHydrated, player.hasHydrated])
 
   return (
     <QueryClientProvider client={queryClient}>
