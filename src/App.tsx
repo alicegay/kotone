@@ -19,39 +19,48 @@ import Tabs from 'screens/Tabs'
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
 
+let playerSetup = false
+
 const App = () => {
   const { height } = useWindowDimensions()
 
   useEffect(() => {
-    TrackPlayer.setupPlayer()
-    TrackPlayer.updateOptions({
-      ratingType: RatingType.Heart,
-      progressUpdateEventInterval: 10,
-      capabilities: [
-        Capability.Play,
-        Capability.PlayFromId,
-        Capability.PlayFromSearch,
-        Capability.Pause,
-        Capability.Stop,
-        Capability.SeekTo,
-        Capability.SkipToNext,
-        Capability.SkipToPrevious,
-        Capability.Skip,
-        Capability.SetRating,
-      ],
-      notificationCapabilities: [
-        Capability.Play,
-        Capability.Pause,
-        Capability.SkipToNext,
-        Capability.SkipToPrevious,
-        Capability.SetRating,
-      ],
-      compactCapabilities: [
-        Capability.Play,
-        Capability.Pause,
-        Capability.SkipToNext,
-      ],
-    })
+    const setupPlayer = async () => {
+      await TrackPlayer.setupPlayer()
+      await TrackPlayer.updateOptions({
+        ratingType: RatingType.Heart,
+        progressUpdateEventInterval: 10,
+        capabilities: [
+          Capability.Play,
+          Capability.PlayFromId,
+          Capability.PlayFromSearch,
+          Capability.Pause,
+          Capability.Stop,
+          Capability.SeekTo,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+          Capability.Skip,
+          Capability.SetRating,
+        ],
+        notificationCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+          Capability.SetRating,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+        ],
+      })
+    }
+
+    if (!playerSetup) {
+      setupPlayer()
+      playerSetup = true
+    }
   })
 
   return (
