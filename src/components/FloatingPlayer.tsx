@@ -58,7 +58,6 @@ const FloatingPlayer = ({ navigation }: Props) => {
           borderRadius: 16,
           overflow: 'hidden',
           flexDirection: 'row',
-          gap: 16,
           alignItems: 'center',
         }}
         onPress={() => {
@@ -100,13 +99,14 @@ const FloatingPlayer = ({ navigation }: Props) => {
           style={{
             flexShrink: 1,
             flexGrow: 1,
+            paddingLeft: 16,
           }}
         >
           <Text
             style={{
               fontFamily: theme.font500,
               fontSize: 18,
-              color: '#fff',
+              color: theme.foreground,
             }}
             numberOfLines={1}
           >
@@ -116,7 +116,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
             style={{
               fontFamily: theme.font400,
               fontSize: 14,
-              color: '#fff6',
+              color: theme.foregroundAlt,
             }}
             numberOfLines={1}
           >
@@ -124,14 +124,54 @@ const FloatingPlayer = ({ navigation }: Props) => {
           </Text>
         </View>
 
-        <Icon
-          name={playerState.state == State.Playing ? 'pause' : 'play'}
-          style={{ fontSize: 32, color: '#fff' }}
-        />
-        <Icon
-          name="skip-next"
-          style={{ fontSize: 32, color: '#fff', paddingRight: 16 }}
-        />
+        <Pressable
+          style={{
+            width: 48,
+            height: 64,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          android_ripple={{
+            color: theme.ripple,
+            radius: 24,
+            foreground: true,
+            borderless: true,
+          }}
+          onPress={() => {
+            if (playerState.state === State.Playing) {
+              player.pause()
+            } else {
+              player.play()
+            }
+          }}
+        >
+          <Icon
+            name={playerState.state === State.Playing ? 'pause' : 'play'}
+            style={{ fontSize: 32, color: theme.foreground }}
+          />
+        </Pressable>
+        <Pressable
+          style={{
+            width: 48,
+            height: 64,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          android_ripple={{
+            color: theme.ripple,
+            radius: 24,
+            foreground: true,
+            borderless: true,
+          }}
+          onPress={() => {
+            player.nextTrack()
+          }}
+        >
+          <Icon
+            name="skip-next"
+            style={{ fontSize: 32, color: theme.foreground }}
+          />
+        </Pressable>
       </Pressable>
     </View>
   )

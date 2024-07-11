@@ -51,7 +51,7 @@ const Player = () => {
       : null
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
       {Blurhash.isBlurhashValid(blurhash) && (
         <Blurhash
           blurhash={blurhash}
@@ -94,7 +94,7 @@ const Player = () => {
           <View style={{ gap: 8 }}>
             <Text
               style={{
-                color: '#fff',
+                color: theme.foreground,
                 fontSize: 24,
                 fontFamily: theme.font700,
               }}
@@ -104,7 +104,7 @@ const Player = () => {
             </Text>
             <Text
               style={{
-                color: '#fff6',
+                color: theme.foregroundAlt,
                 fontSize: 18,
                 fontFamily: theme.font700,
               }}
@@ -115,7 +115,7 @@ const Player = () => {
             {track.Album != track.Name && (
               <Text
                 style={{
-                  color: '#fff6',
+                  color: theme.foregroundAlt,
                   fontSize: 16,
                   fontFamily: theme.font500,
                 }}
@@ -129,7 +129,7 @@ const Player = () => {
           <View style={{ gap: 8 }}>
             <View
               style={{
-                backgroundColor: '#fff6',
+                backgroundColor: theme.foregroundAlt,
                 width: '100%',
                 height: 6,
                 borderRadius: 3,
@@ -138,7 +138,7 @@ const Player = () => {
             >
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: theme.foreground,
                   width: ((playerProgress.position / playerProgress.duration) *
                     100 +
                     '%') as DimensionValue,
@@ -151,13 +151,23 @@ const Player = () => {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={{ color: '#fff6', fontFamily: theme.font400 }}>
+              <Text
+                style={{
+                  color: theme.foregroundAlt,
+                  fontFamily: theme.font400,
+                }}
+              >
                 {secsToTime(playerProgress.position)}
               </Text>
-              {/* <Text style={{ color: '#fff6', fontFamily: theme.font400 }}>
+              {/* <Text style={{ color: theme.foregroundAlt, fontFamily: theme.font400 }}>
                 FLAC
               </Text> */}
-              <Text style={{ color: '#fff6', fontFamily: theme.font400 }}>
+              <Text
+                style={{
+                  color: theme.foregroundAlt,
+                  fontFamily: theme.font400,
+                }}
+              >
                 {secsToTime(playerProgress.duration)}
               </Text>
             </View>
@@ -200,11 +210,13 @@ const Player = () => {
             }}
             android_ripple={{
               color: '#fff2',
+              foreground: true,
+              borderless: true,
             }}
           >
             <Icon
               name="skip-previous"
-              style={{ color: '#fff', fontSize: 48 }}
+              style={{ color: theme.foreground, fontSize: 48 }}
             />
           </Pressable>
           <Pressable
@@ -216,12 +228,14 @@ const Player = () => {
               }
             }}
             android_ripple={{
-              color: '#fff2',
+              color: theme.ripple,
+              foreground: true,
+              borderless: true,
             }}
           >
             <Icon
               name={playerState.state == State.Playing ? 'pause' : 'play'}
-              style={{ color: '#fff', fontSize: 80 }}
+              style={{ color: theme.foreground, fontSize: 80 }}
             />
           </Pressable>
           <Pressable
@@ -230,10 +244,15 @@ const Player = () => {
               player.nextTrack()
             }}
             android_ripple={{
-              color: '#fff2',
+              color: theme.ripple,
+              foreground: true,
+              borderless: true,
             }}
           >
-            <Icon name="skip-next" style={{ color: '#fff', fontSize: 48 }} />
+            <Icon
+              name="skip-next"
+              style={{ color: theme.foreground, fontSize: 48 }}
+            />
           </Pressable>
         </View>
 
@@ -246,12 +265,24 @@ const Player = () => {
         >
           <Icon
             name="text-box-outline"
-            style={{ color: '#fff4', fontSize: 20 }}
+            style={{ color: theme.foregroundAlt, fontSize: 20 }}
           />
-          <Icon name="repeat" style={{ color: '#fff4', fontSize: 20 }} />
-          <Icon name="heart" style={{ color: '#fff', fontSize: 20 }} />
-          <Icon name="playlist-music" style={{ color: '#fff', fontSize: 20 }} />
-          <Icon name="dots-vertical" style={{ color: '#fff', fontSize: 20 }} />
+          <Icon
+            name="repeat"
+            style={{ color: theme.foregroundAlt, fontSize: 20 }}
+          />
+          <Icon
+            name="heart"
+            style={{ color: theme.foreground, fontSize: 20 }}
+          />
+          <Icon
+            name="playlist-music"
+            style={{ color: theme.foreground, fontSize: 20 }}
+          />
+          <Icon
+            name="dots-vertical"
+            style={{ color: theme.foreground, fontSize: 20 }}
+          />
         </View>
       </View>
     </View>
