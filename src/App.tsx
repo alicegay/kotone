@@ -17,6 +17,7 @@ import Player from 'screens/Player'
 import SelectServer from 'screens/SelectServer'
 import SelectUser from 'screens/SelectUser'
 import Tabs from 'screens/Tabs'
+import Queue from 'screens/Queue'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -73,9 +74,9 @@ const App = () => {
       const queue = await TrackPlayer.getQueue()
       if (player.queue.length > 0 && queue.length === 0) {
         player.setQueue(player.queue, player.track)
-        player.setRepeat(player.repeat)
         console.log('RESTORED QUEUE')
       }
+      player.setRepeat(player.repeat)
     }
     if (client.hasHydrated && player.hasHydrated) {
       restoreQueue()
@@ -101,6 +102,7 @@ const App = () => {
               cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
             }}
           />
+          <Stack.Screen name="Queue" component={Queue} />
           <Stack.Screen name="SelectServer" component={SelectServer} />
           <Stack.Screen name="SelectUser" component={SelectUser} />
         </Stack.Navigator>

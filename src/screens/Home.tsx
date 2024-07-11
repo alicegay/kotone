@@ -1,12 +1,12 @@
 import { Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { FlashList } from '@shopify/flash-list'
 
 import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
 import useItems from 'api/useItems'
 import TrackListItem from 'components/TrackListItem'
 import usePlayer from 'hooks/usePlayer'
-import Button from 'components/Button'
 
 const Home = () => {
   const client = useClient()
@@ -31,7 +31,6 @@ const Home = () => {
           flex: 1,
           paddingTop: insets.top,
           paddingBottom: 64 + 32,
-          //gap: 8,
         }}
       >
         <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
@@ -45,58 +44,25 @@ const Home = () => {
             Favorite Songs
           </Text>
         </View>
-        {!tracks.isLoading &&
-          tracks.data.Items.map((item, i) => (
-            <TrackListItem
-              key={item.Id}
-              track={item}
-              onPress={() => {
-                player.setQueue([item])
-                player.play()
-              }}
-              onLongPress={() => {
-                player.addQueue([item])
-              }}
-            />
-          ))}
-
-        <View
-          style={{
-            paddingHorizontal: 16,
-            paddingBottom: 8,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            style={{
-              color: theme.foreground,
-              fontFamily: theme.font700,
-              fontSize: 24,
-            }}
-          >
-            Queue
-          </Text>
-          <Button
-            onPress={() => {
-              player.clearQueue()
-            }}
-          >
-            Clear
-          </Button>
-        </View>
-        {player.hasHydrated &&
-          player.queue.map((item, i) => (
-            <TrackListItem
-              key={item.Id}
-              track={item}
-              onPress={() => {
-                player.setTrack(i)
-              }}
-              playing={i === player.track}
-            />
-          ))}
+        {!tracks.isLoading && (
+          <FlashList
+            data={tracks.data.Items}
+            estimatedItemSize={56}
+            renderItem={({ item }) => (
+              <TrackListItem
+                key={item.Id}
+                track={item}
+                onPress={() => {
+                  player.setQueue([item])
+                  player.play()
+                }}
+                onLongPress={() => {
+                  player.addQueue([item])
+                }}
+              />
+            )}
+          />
+        )}
       </View>
     </View>
   )

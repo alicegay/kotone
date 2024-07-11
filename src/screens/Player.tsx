@@ -1,5 +1,4 @@
 import {
-  ColorValue,
   DimensionValue,
   Image,
   Pressable,
@@ -12,19 +11,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
 import { Shadow } from 'react-native-shadow-2'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import TrackPlayer, {
-  State,
-  usePlaybackState,
-  useProgress,
-} from 'react-native-track-player'
+import { State, usePlaybackState, useProgress } from 'react-native-track-player'
 
+import RootStack from 'types/RootStack'
 import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
 import usePlayer from 'hooks/usePlayer'
-import ticksToTime from 'lib/ticksToTime'
 import secsToTime from 'lib/secsToTime'
+import { StackScreenProps } from '@react-navigation/stack'
 
-const Player = () => {
+const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const client = useClient()
   const theme = useTheme()
   const player = usePlayer()
@@ -314,7 +310,9 @@ const Player = () => {
           <Pressable
             style={styles.buttonSmall}
             android_ripple={androidRipple}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.push('Queue')
+            }}
           >
             <Icon
               name="playlist-music"

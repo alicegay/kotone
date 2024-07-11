@@ -9,6 +9,7 @@ import TabStack from 'types/TabStack'
 import useTheme from 'hooks/useTheme'
 import FloatingPlayer from 'components/FloatingPlayer'
 import Home from './Home'
+import Queue from './Queue'
 
 const Tab = createBottomTabNavigator<TabStack>()
 
@@ -29,6 +30,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const icons = {
     Home: 'home',
     Music: 'music-box-multiple-outline',
+    Queue: 'playlist-music',
     Search: 'magnify',
   }
 
@@ -60,7 +62,8 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
         })}
       >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Music" component={SettingsScreen} />
+        <Tab.Screen name="Music" component={Home} />
+        <Tab.Screen name="Queue" component={Queue} />
         <Tab.Screen name="Search" component={SettingsScreen} />
       </Tab.Navigator>
       <FloatingPlayer navigation={navigation} />

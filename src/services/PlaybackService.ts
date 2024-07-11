@@ -22,7 +22,6 @@ const PlaybackService = async () => {
           10,
           usePlayer.getState().queue[event.index].NormalizationGain / 20,
         )
-        console.log('gain', gain)
         TrackPlayer.setVolume(gain)
       } else {
         TrackPlayer.setVolume(1.0)

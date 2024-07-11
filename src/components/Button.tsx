@@ -37,7 +37,7 @@ const Button = forwardRef<View, Props>(
         justifyContent: 'center',
         borderRadius: 20,
         minHeight: 36,
-        backgroundColor: theme.background,
+        backgroundColor: theme.tint,
       },
       rootFocus: {
         backgroundColor: theme.foreground,
