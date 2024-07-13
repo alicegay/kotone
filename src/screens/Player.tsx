@@ -19,8 +19,7 @@ import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
 import usePlayer from 'hooks/usePlayer'
 import secsToTime from 'lib/secsToTime'
-import IconS from 'components/icons/MaterialSymbols'
-import IconI from 'components/icons/MaterialIcons'
+import { Icon, IconFilled } from 'components/Icon'
 
 const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const client = useClient()
@@ -225,7 +224,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             }}
             android_ripple={androidRipple}
           >
-            <IconI
+            <IconFilled
               name="skip_previous"
               style={{ color: theme.foreground, fontSize: 48 }}
             />
@@ -240,7 +239,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             }}
             android_ripple={androidRipple}
           >
-            <IconI
+            <IconFilled
               name={playerState.state == State.Playing ? 'pause' : 'play_arrow'}
               style={{ color: theme.foreground, fontSize: 80 }}
             />
@@ -252,7 +251,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             }}
             android_ripple={androidRipple}
           >
-            <IconI
+            <IconFilled
               name="skip_next"
               style={{ color: theme.foreground, fontSize: 48 }}
             />
@@ -271,7 +270,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             android_ripple={androidRipple}
             onPress={() => {}}
           >
-            <IconS
+            <Icon
               name="lyrics"
               style={{ color: theme.foregroundAlt, fontSize: 20 }}
             />
@@ -283,7 +282,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
               player.cycleRepeat()
             }}
           >
-            <IconS
+            <Icon
               name={player.repeat === 'track' ? 'repeat_one' : 'repeat'}
               style={{
                 color:
@@ -299,7 +298,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             android_ripple={androidRipple}
             onPress={() => {}}
           >
-            <IconI
+            <IconFilled
               name="favorite"
               style={{ color: theme.foreground, fontSize: 20 }}
             />
@@ -312,7 +311,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
               navigationHook.navigate('Queue')
             }}
           >
-            <IconS
+            <Icon
               name="queue_music"
               style={{ color: theme.foreground, fontSize: 20 }}
             />
@@ -322,7 +321,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             android_ripple={androidRipple}
             onPress={() => {}}
           >
-            <IconS
+            <Icon
               name="more_vert"
               style={{ color: theme.foreground, fontSize: 20 }}
             />

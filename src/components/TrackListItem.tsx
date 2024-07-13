@@ -11,7 +11,7 @@ import useClient from 'hooks/useClient'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
-import IconS from 'components/icons/MaterialSymbols'
+import { Icon } from 'components/Icon'
 
 interface Props {
   track: Item
@@ -94,7 +94,7 @@ const TrackListItem = ({
                 justifyContent: 'center',
               }}
             >
-              <IconS
+              <Icon
                 name="music_note"
                 style={{ color: theme.foreground, fontSize: 32 }}
               />
@@ -104,7 +104,7 @@ const TrackListItem = ({
       )}
 
       {(!!trackNumber || trackNumber === 0) && isPlaying ? (
-        <IconS
+        <Icon
           name="music_note"
           style={{ color: theme.foreground, fontSize: 24, width: 24 }}
         />
@@ -184,7 +184,7 @@ const TrackListItem = ({
             foreground: true,
           }}
         >
-          <IconS
+          <Icon
             name="menu"
             style={{ color: theme.foregroundAlt, fontSize: 20 }}
           />

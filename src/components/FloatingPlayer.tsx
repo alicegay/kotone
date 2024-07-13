@@ -9,7 +9,7 @@ import RootStack from 'types/RootStack'
 import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
 import usePlayer from 'hooks/usePlayer'
-import IconI from 'components/icons/MaterialIcons'
+import { IconFilled } from 'components/Icon'
 
 interface Props {
   navigation: StackNavigationProp<RootStack>
@@ -149,7 +149,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
               }
             }}
           >
-            <IconI
+            <IconFilled
               name={
                 playerState.state === State.Playing ? 'pause' : 'play_arrow'
               }
@@ -173,7 +173,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
               player.nextTrack()
             }}
           >
-            <IconI
+            <IconFilled
               name="skip_next"
               style={{ fontSize: 32, color: theme.foreground }}
             />

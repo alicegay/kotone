@@ -4,7 +4,7 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import BootSplash from 'react-native-bootsplash'
-import IconS from 'components/icons/MaterialSymbols'
+import { Icon } from 'components/Icon'
 
 import RootStack from 'types/RootStack'
 import TabStack from 'types/TabStack'
@@ -58,7 +58,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           },
           tabBarIcon: ({ focused, color, size }) => {
             return (
-              <IconS
+              <Icon
                 name={icons[route.name]}
                 style={[
                   styles.tabIcon,

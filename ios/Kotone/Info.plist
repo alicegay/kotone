@@ -50,11 +50,11 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialCommunityIcons.ttf</string>
-		<string>MaterialSymbolsRounded.ttf</string>
 		<string>NunitoRoundedMplus-Bold.ttf</string>
 		<string>NunitoRoundedMplus-Medium.ttf</string>
 		<string>NunitoRoundedMplus-Regular.ttf</string>
-		<string>MaterialIconsRound.otf</string>
+		<string>MaterialSymbolsRounded-Regular.ttf</string>
+		<string>MaterialSymbolsRounded_Filled-Regular.ttf</string>
 	</array>
 </dict>
 </plist>
