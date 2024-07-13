@@ -69,23 +69,25 @@ const FloatingPlayer = ({ navigation }: Props) => {
           }}
         >
           {Blurhash.isBlurhashValid(blurhash) && (
-            <Blurhash
-              blurhash={blurhash}
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-              }}
-            />
+            <>
+              <Blurhash
+                blurhash={blurhash}
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+              <View
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: '#0004',
+                }}
+              />
+            </>
           )}
-          <View
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              backgroundColor: '#0004',
-            }}
-          />
 
           <Image
             source={{

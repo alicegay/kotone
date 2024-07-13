@@ -9,6 +9,7 @@ import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import Button from 'components/Button'
 import TrackListItem from 'components/TrackListItem'
+import EndOfList from 'components/EndOfList'
 
 const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
   const client = useClient()
@@ -75,43 +76,7 @@ const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
             //estimatedItemSize={56}
             //itemsSize={56}
             contentContainerStyle={{ paddingBottom: 64 + 32 }}
-            ListFooterComponent={
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingTop: 16,
-                  paddingHorizontal: 16,
-                  gap: 16,
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: theme.foregroundAlt,
-                    height: 1,
-                    flexGrow: 1,
-                  }}
-                />
-                <Text
-                  style={{
-                    color: theme.foregroundAlt,
-                    fontFamily: theme.font400,
-                    fontSize: 12,
-                  }}
-                >
-                  End of queue
-                </Text>
-                <View
-                  style={{
-                    backgroundColor: theme.foregroundAlt,
-                    height: 1,
-                    flexGrow: 1,
-                  }}
-                />
-              </View>
-            }
+            ListFooterComponent={<EndOfList text="End of queue" />}
           />
         )}
       </View>

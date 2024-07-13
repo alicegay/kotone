@@ -57,6 +57,7 @@ const TrackListItem = ({
     <Pressable
       onPress={onPress}
       onLongPress={onLongPress}
+      delayLongPress={300}
       disabled={isDragging}
       style={{
         //flex: 1,
@@ -95,7 +96,7 @@ const TrackListItem = ({
               }}
             >
               <Icon
-                name="music_note"
+                name="equalizer"
                 style={{ color: theme.foreground, fontSize: 32 }}
               />
             </View>
@@ -105,7 +106,7 @@ const TrackListItem = ({
 
       {(!!trackNumber || trackNumber === 0) && isPlaying ? (
         <Icon
-          name="music_note"
+          name="equalizer"
           style={{ color: theme.foreground, fontSize: 24, width: 24 }}
         />
       ) : (
