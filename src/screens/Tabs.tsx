@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import BootSplash from 'react-native-bootsplash'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import RootStack from 'types/RootStack'
@@ -14,17 +16,23 @@ import Queue from './Queue'
 const Tab = createBottomTabNavigator<TabStack>()
 
 const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
+  useEffect(() => {
+    BootSplash.isVisible().then(async (visible) => {
+      if (visible) await BootSplash.hide({ fade: true })
+    })
+  }, [])
+
   const theme = useTheme()
   const insets = useSafeAreaInsets()
 
   const styles = StyleSheet.create({
     tabIcon: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
+      paddingHorizontal: 16,
+      paddingVertical: 6,
       borderRadius: 8,
       overflow: 'hidden',
     },
-    tabIconFocus: { backgroundColor: theme.ripple },
+    tabIconFocus: { backgroundColor: '#493939' },
   })
 
   const icons = {
@@ -40,12 +48,12 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.foreground,
-          tabBarInactiveTintColor: theme.foregroundAlt,
+          tabBarActiveTintColor: '#FADCD6',
+          tabBarInactiveTintColor: '#493939',
           tabBarStyle: {
             paddingBottom: insets.bottom,
             height: 64 + insets.bottom,
-            backgroundColor: theme.background,
+            backgroundColor: '#201818',
           },
           tabBarIcon: ({ focused, color, size }) => {
             return (

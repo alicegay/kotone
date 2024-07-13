@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-//import BootSplash from 'react-native-bootsplash'
+import BootSplash from 'react-native-bootsplash'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import RootStack from 'types/RootStack'
 import { system } from 'jellyfin-api'
@@ -71,7 +71,7 @@ const SelectServer = ({
       ) {
         resetClient()
       } else {
-        //BootSplash.hide({ fade: true })
+        BootSplash.hide({ fade: true })
         serverRef.current.focus()
       }
     }
