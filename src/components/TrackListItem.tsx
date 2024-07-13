@@ -22,6 +22,7 @@ interface Props {
   isDragging?: boolean
   showAlbumArt?: boolean
   showArtist?: boolean
+  showDuration?: boolean
   trackNumber?: number
   playing?: boolean | 'auto'
 }
@@ -35,6 +36,7 @@ const TrackListItem = ({
   isDragging = false,
   showAlbumArt = true,
   showArtist = true,
+  showDuration = true,
   trackNumber,
   playing = 'auto',
 }: Props) => {
@@ -157,7 +159,7 @@ const TrackListItem = ({
         )}
       </View>
 
-      {!onDragStart && (
+      {!onDragStart && showDuration && (
         <Text
           style={{
             color: theme.foregroundAlt,

@@ -1,0 +1,108 @@
+import { GestureResponderEvent, Pressable, Text, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import useTheme from 'hooks/useTheme'
+import { Icon } from './Icon'
+import { ReactNode } from 'react'
+
+interface Props {
+  children?: ReactNode
+  title: string
+  showBackButton?: boolean
+  icon?: string
+  onPress?: (e: GestureResponderEvent) => void
+}
+
+const InnerScreen = ({
+  children,
+  title,
+  showBackButton = true,
+  icon,
+  onPress,
+}: Props) => {
+  const theme = useTheme()
+  const insets = useSafeAreaInsets()
+  const navigation = useNavigation()
+
+  return (
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: insets.top + 8,
+        }}
+      >
+        <View
+          style={{
+            paddingHorizontal: 16,
+            paddingBottom: 16,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 16,
+          }}
+        >
+          {showBackButton && (
+            <Pressable
+              style={{
+                width: 32,
+                height: 32,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              android_ripple={{
+                color: theme.ripple,
+                borderless: true,
+                foreground: true,
+              }}
+              onPress={() => {
+                navigation.goBack()
+              }}
+            >
+              <Icon
+                name="arrow_back"
+                style={{ color: theme.foreground, fontSize: 24 }}
+              />
+            </Pressable>
+          )}
+          <Text
+            style={{
+              color: theme.foreground,
+              fontFamily: theme.font700,
+              fontSize: 24,
+              flexGrow: 1,
+              flexShrink: 1,
+            }}
+            numberOfLines={1}
+          >
+            {title}
+          </Text>
+          {!!icon && (
+            <Pressable
+              style={{
+                width: 32,
+                height: 32,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              android_ripple={{
+                color: theme.ripple,
+                borderless: true,
+                foreground: true,
+              }}
+              onPress={onPress}
+            >
+              <Icon
+                name={icon}
+                style={{ color: theme.foreground, fontSize: 24 }}
+              />
+            </Pressable>
+          )}
+        </View>
+        {children}
+      </View>
+    </View>
+  )
+}
+
+export default InnerScreen

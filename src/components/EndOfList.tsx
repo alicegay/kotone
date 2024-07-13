@@ -18,6 +18,7 @@ const EndOfList = ({ text = 'End of list' }: Props) => {
         paddingTop: 16,
         paddingHorizontal: 16,
         gap: 16,
+        paddingBottom: 64 + 32,
       }}
     >
       <View
