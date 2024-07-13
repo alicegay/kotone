@@ -42,19 +42,37 @@ const usePlayer = create<PlayerStore>()(
         set((state) => ({ track: index, trackID: state.queue[index].Id }))
         if (!stealth) TrackPlayer.skip(index)
       },
-      prevTrack: () => {
-        set((state) => ({
-          track: state.track - 1,
-          trackID: state.queue[state.track - 1].Id,
-        }))
-        TrackPlayer.skipToPrevious()
+      prevTrack: async () => {
+        const current = get().track
+        const progress = await TrackPlayer.getProgress()
+        if (progress.position < 1.0 && current !== 0) {
+          set((state) => ({
+            track: state.track - 1,
+            trackID: state.queue[state.track - 1].Id,
+          }))
+          await TrackPlayer.skipToPrevious()
+        } else {
+          await TrackPlayer.seekTo(0)
+        }
       },
       nextTrack: () => {
-        set((state) => ({
-          track: state.track + 1,
-          trackID: state.queue[state.track + 1].Id,
-        }))
-        TrackPlayer.skipToNext()
+        const current = get().track
+        const length = get().queue.length
+        const repeat = get().repeat
+        if (current === length - 1) {
+          if (repeat === 'queue') {
+            set((state) => ({ track: 0, trackId: state.queue[0].Id }))
+            TrackPlayer.skip(0)
+          } else if (repeat == 'track') {
+            TrackPlayer.seekTo(0)
+          }
+        } else {
+          set((state) => ({
+            track: state.track + 1,
+            trackID: state.queue[state.track + 1].Id,
+          }))
+          TrackPlayer.skipToNext()
+        }
       },
       play: () => {
         TrackPlayer.play()

@@ -3,13 +3,13 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
 import { State, usePlaybackState, useProgress } from 'react-native-track-player'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Shadow } from 'react-native-shadow-2'
 
 import RootStack from 'types/RootStack'
 import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
 import usePlayer from 'hooks/usePlayer'
-import { Shadow } from 'react-native-shadow-2'
+import IconI from 'components/icons/MaterialIcons'
 
 interface Props {
   navigation: StackNavigationProp<RootStack>
@@ -149,8 +149,10 @@ const FloatingPlayer = ({ navigation }: Props) => {
               }
             }}
           >
-            <Icon
-              name={playerState.state === State.Playing ? 'pause' : 'play'}
+            <IconI
+              name={
+                playerState.state === State.Playing ? 'pause' : 'play_arrow'
+              }
               style={{ fontSize: 32, color: theme.foreground }}
             />
           </Pressable>
@@ -171,8 +173,8 @@ const FloatingPlayer = ({ navigation }: Props) => {
               player.nextTrack()
             }}
           >
-            <Icon
-              name="skip-next"
+            <IconI
+              name="skip_next"
               style={{ fontSize: 32, color: theme.foreground }}
             />
           </Pressable>

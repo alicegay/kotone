@@ -5,13 +5,13 @@ import {
   Text,
   View,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Item from 'jellyfin-api/lib/types/media/Item'
 
 import useClient from 'hooks/useClient'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
+import IconS from 'components/icons/MaterialSymbols'
 
 interface Props {
   track: Item
@@ -94,8 +94,8 @@ const TrackListItem = ({
                 justifyContent: 'center',
               }}
             >
-              <Icon
-                name="music-note"
+              <IconS
+                name="music_note"
                 style={{ color: theme.foreground, fontSize: 32 }}
               />
             </View>
@@ -104,8 +104,8 @@ const TrackListItem = ({
       )}
 
       {(!!trackNumber || trackNumber === 0) && isPlaying ? (
-        <Icon
-          name="music-note"
+        <IconS
+          name="music_note"
           style={{ color: theme.foreground, fontSize: 24, width: 24 }}
         />
       ) : (
@@ -184,7 +184,7 @@ const TrackListItem = ({
             foreground: true,
           }}
         >
-          <Icon
+          <IconS
             name="menu"
             style={{ color: theme.foregroundAlt, fontSize: 20 }}
           />

@@ -8,10 +8,10 @@ import {
   View,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { StackScreenProps } from '@react-navigation/stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
 import { Shadow } from 'react-native-shadow-2'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { State, usePlaybackState, useProgress } from 'react-native-track-player'
 
 import RootStack from 'types/RootStack'
@@ -19,7 +19,8 @@ import useClient from 'hooks/useClient'
 import useTheme from 'hooks/useTheme'
 import usePlayer from 'hooks/usePlayer'
 import secsToTime from 'lib/secsToTime'
-import { StackScreenProps } from '@react-navigation/stack'
+import IconS from 'components/icons/MaterialSymbols'
+import IconI from 'components/icons/MaterialIcons'
 
 const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const client = useClient()
@@ -224,8 +225,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             }}
             android_ripple={androidRipple}
           >
-            <Icon
-              name="skip-previous"
+            <IconI
+              name="skip_previous"
               style={{ color: theme.foreground, fontSize: 48 }}
             />
           </Pressable>
@@ -239,8 +240,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             }}
             android_ripple={androidRipple}
           >
-            <Icon
-              name={playerState.state == State.Playing ? 'pause' : 'play'}
+            <IconI
+              name={playerState.state == State.Playing ? 'pause' : 'play_arrow'}
               style={{ color: theme.foreground, fontSize: 80 }}
             />
           </Pressable>
@@ -251,8 +252,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             }}
             android_ripple={androidRipple}
           >
-            <Icon
-              name="skip-next"
+            <IconI
+              name="skip_next"
               style={{ color: theme.foreground, fontSize: 48 }}
             />
           </Pressable>
@@ -270,8 +271,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             android_ripple={androidRipple}
             onPress={() => {}}
           >
-            <Icon
-              name="text-box-outline"
+            <IconS
+              name="lyrics"
               style={{ color: theme.foregroundAlt, fontSize: 20 }}
             />
           </Pressable>
@@ -282,14 +283,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
               player.cycleRepeat()
             }}
           >
-            <Icon
-              name={
-                player.repeat === 'track'
-                  ? 'repeat-once'
-                  : player.repeat === 'queue'
-                  ? 'repeat'
-                  : 'repeat-off'
-              }
+            <IconS
+              name={player.repeat === 'track' ? 'repeat_one' : 'repeat'}
               style={{
                 color:
                   player.repeat === 'off'
@@ -304,8 +299,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             android_ripple={androidRipple}
             onPress={() => {}}
           >
-            <Icon
-              name="heart"
+            <IconI
+              name="favorite"
               style={{ color: theme.foreground, fontSize: 20 }}
             />
           </Pressable>
@@ -317,8 +312,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
               navigationHook.navigate('Queue')
             }}
           >
-            <Icon
-              name="playlist-music"
+            <IconS
+              name="queue_music"
               style={{ color: theme.foreground, fontSize: 20 }}
             />
           </Pressable>
@@ -327,8 +322,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             android_ripple={androidRipple}
             onPress={() => {}}
           >
-            <Icon
-              name="dots-vertical"
+            <IconS
+              name="more_vert"
               style={{ color: theme.foreground, fontSize: 20 }}
             />
           </Pressable>

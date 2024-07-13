@@ -21,7 +21,7 @@ const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
       <View
         style={{
           flex: 1,
-          paddingTop: insets.top + 16,
+          paddingTop: insets.top + 8,
         }}
       >
         <View

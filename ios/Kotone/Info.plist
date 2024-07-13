@@ -32,7 +32,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -50,11 +50,11 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialCommunityIcons.ttf</string>
-		<string>FontAwesome6_Regular.ttf</string>
-		<string>FontAwesome6_Solid.ttf</string>
+		<string>MaterialSymbolsRounded.ttf</string>
 		<string>NunitoRoundedMplus-Bold.ttf</string>
 		<string>NunitoRoundedMplus-Medium.ttf</string>
 		<string>NunitoRoundedMplus-Regular.ttf</string>
+		<string>MaterialIconsRound.otf</string>
 	</array>
 </dict>
 </plist>

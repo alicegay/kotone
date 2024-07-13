@@ -2,6 +2,14 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/assets/fonts/MaterialIconsRound.otf",
+      "sha1": "ac81e06519a047577408ee050c9a1cc903ca18b7"
+    },
+    {
+      "path": "src/assets/fonts/MaterialSymbolsRounded.ttf",
+      "sha1": "c6bf12aa18e0cee95ae73068031582717965ce33"
+    },
+    {
       "path": "src/assets/fonts/NunitoRoundedMplus-Bold.ttf",
       "sha1": "3234200bb92b2b68166cd116326b06f2a158c6bd"
     },

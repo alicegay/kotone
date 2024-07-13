@@ -4,7 +4,7 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import BootSplash from 'react-native-bootsplash'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import IconS from 'components/icons/MaterialSymbols'
 
 import RootStack from 'types/RootStack'
 import TabStack from 'types/TabStack'
@@ -29,17 +29,17 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
     tabIcon: {
       paddingHorizontal: 16,
       paddingVertical: 6,
-      borderRadius: 8,
+      borderRadius: 32,
       overflow: 'hidden',
     },
     tabIconFocus: { backgroundColor: '#493939' },
   })
 
   const icons = {
-    Music: 'music-box-multiple-outline',
-    Queue: 'playlist-music',
-    Search: 'magnify',
-    Settings: 'cog',
+    Music: 'library_music',
+    Search: 'search',
+    Queue: 'queue_music',
+    Settings: 'settings',
   }
 
   return (
@@ -58,7 +58,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           },
           tabBarIcon: ({ focused, color, size }) => {
             return (
-              <Icon
+              <IconS
                 name={icons[route.name]}
                 style={[
                   styles.tabIcon,
