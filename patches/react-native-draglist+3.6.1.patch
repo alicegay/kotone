@@ -1,0 +1,39 @@
+diff --git a/node_modules/react-native-draglist/.DS_Store b/node_modules/react-native-draglist/.DS_Store
+new file mode 100644
+index 0000000..28d4651
+Binary files /dev/null and b/node_modules/react-native-draglist/.DS_Store differ
+diff --git a/node_modules/react-native-draglist/dist/index.d.ts b/node_modules/react-native-draglist/dist/index.d.ts
+index b651159..e84fed5 100644
+--- a/node_modules/react-native-draglist/dist/index.d.ts
++++ b/node_modules/react-native-draglist/dist/index.d.ts
+@@ -26,7 +26,7 @@ export interface DragListRenderItemInfo<T> extends ListRenderItemInfo<T> {
+ }
+ interface Props<T> extends Omit<FlatListProps<T>, "renderItem"> {
+     data: T[];
+-    keyExtractor: (item: T) => string;
++    keyExtractor: (item: T, index: number) => string;
+     renderItem: (info: DragListRenderItemInfo<T>) => React.ReactElement | null;
+     containerStyle?: StyleProp<ViewStyle>;
+     onDragBegin?: () => void;
+diff --git a/node_modules/react-native-draglist/dist/index.js b/node_modules/react-native-draglist/dist/index.js
+index d53e93e..0fce73c 100644
+--- a/node_modules/react-native-draglist/dist/index.js
++++ b/node_modules/react-native-draglist/dist/index.js
+@@ -174,7 +174,7 @@ function DragListImpl(props, _ref) {
+         }
+         var curIndex = 0;
+         var key;
+-        while (curIndex < dataRef.current.length && layouts.hasOwnProperty(key = keyExtractor(dataRef.current[curIndex])) && layouts[key].pos + layouts[key].extent < clientPos) {
++        while (curIndex < dataRef.current.length && layouts.hasOwnProperty(key = keyExtractor(dataRef.current[curIndex], curIndex)) && layouts[key].pos + layouts[key].extent < clientPos) {
+           curIndex++;
+         }
+         pan.setValue(clientPos - (layouts[activeKey.current].pos + dragItemExtent / 2));
+@@ -233,7 +233,7 @@ function DragListImpl(props, _ref) {
+     reorderRef.current = props.onReordered;
+   }, [props.onReordered]);
+   var renderDragItem = React.useCallback(function (info) {
+-    var key = keyExtractor(info.item);
++    var key = keyExtractor(info.item, info.index);
+     var isActive = key === activeKey.current;
+     var onDragStart = function onDragStart() {
+       if (data.length > 1) {

@@ -17,6 +17,9 @@ interface Props {
   track: Item
   onPress?: (e: GestureResponderEvent) => void
   onLongPress?: (e: GestureResponderEvent) => void
+  onDragStart?: (e: GestureResponderEvent) => void
+  onDragEnd?: (e: GestureResponderEvent) => void
+  isDragging?: boolean
   showAlbumArt?: boolean
   showArtist?: boolean
   trackNumber?: number
@@ -27,6 +30,9 @@ const TrackListItem = ({
   track,
   onPress,
   onLongPress,
+  onDragStart,
+  onDragEnd,
+  isDragging = false,
   showAlbumArt = true,
   showArtist = true,
   trackNumber,
@@ -35,6 +41,8 @@ const TrackListItem = ({
   const client = useClient()
   const player = usePlayer()
   const theme = useTheme()
+
+  if (!track) return null
 
   const image =
     'Primary' in track.ImageTags
@@ -49,7 +57,9 @@ const TrackListItem = ({
     <Pressable
       onPress={onPress}
       onLongPress={onLongPress}
+      disabled={isDragging}
       style={{
+        //flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 16,
@@ -60,7 +70,12 @@ const TrackListItem = ({
     >
       {showAlbumArt && (
         <View
-          style={{ width: 48, height: 48, borderRadius: 8, overflow: 'hidden' }}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 8,
+            overflow: 'hidden',
+          }}
         >
           {!!image && (
             <Image
@@ -141,15 +156,40 @@ const TrackListItem = ({
         )}
       </View>
 
-      <Text
-        style={{
-          color: theme.foregroundAlt,
-          fontFamily: theme.font400,
-          fontSize: 14,
-        }}
-      >
-        {ticksToTime(track.RunTimeTicks)}
-      </Text>
+      {!onDragStart && (
+        <Text
+          style={{
+            color: theme.foregroundAlt,
+            fontFamily: theme.font400,
+            fontSize: 14,
+          }}
+        >
+          {ticksToTime(track.RunTimeTicks)}
+        </Text>
+      )}
+
+      {!!onDragStart && !!onDragEnd && (
+        <Pressable
+          onPressIn={onDragStart}
+          onPressOut={onDragEnd}
+          style={{
+            height: 48,
+            width: 48,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          android_ripple={{
+            color: theme.ripple,
+            borderless: true,
+            foreground: true,
+          }}
+        >
+          <Icon
+            name="menu"
+            style={{ color: theme.foregroundAlt, fontSize: 20 }}
+          />
+        </Pressable>
+      )}
     </Pressable>
   )
 }

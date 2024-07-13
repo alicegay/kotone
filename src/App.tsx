@@ -19,6 +19,7 @@ import SelectUser from 'screens/SelectUser'
 import Tabs from 'screens/Tabs'
 import Queue from 'screens/Queue'
 import TabStack from 'types/TabStack'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -85,29 +86,31 @@ const App = () => {
   }, [client.hasHydrated, player.hasHydrated])
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="SelectServer"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Tabs" component={Tabs} />
-          <Stack.Screen
-            name="Player"
-            component={Player}
-            options={{
-              presentation: 'card',
-              gestureEnabled: true,
-              gestureDirection: 'vertical',
-              gestureResponseDistance: height / 2,
-              cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-            }}
-          />
-          <Stack.Screen name="SelectServer" component={SelectServer} />
-          <Stack.Screen name="SelectUser" component={SelectUser} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="SelectServer"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Tabs" component={Tabs} />
+            <Stack.Screen
+              name="Player"
+              component={Player}
+              options={{
+                presentation: 'card',
+                gestureEnabled: true,
+                gestureDirection: 'vertical',
+                gestureResponseDistance: height / 2,
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+              }}
+            />
+            <Stack.Screen name="SelectServer" component={SelectServer} />
+            <Stack.Screen name="SelectUser" component={SelectUser} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   )
 }
 

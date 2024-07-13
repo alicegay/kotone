@@ -54,6 +54,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             paddingBottom: insets.bottom,
             height: 64 + insets.bottom,
             backgroundColor: '#201818',
+            borderTopWidth: 0,
           },
           tabBarIcon: ({ focused, color, size }) => {
             return (

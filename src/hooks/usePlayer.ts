@@ -20,6 +20,7 @@ interface PlayerStore {
   cycleRepeat: () => void
 
   setQueue: (items: Item[], index?: number) => void
+  moveQueue: (fromIndex: number, toIndex: number) => void
   clearQueue: () => void
   addQueue: (items: Item[]) => void
   nextQueue: (items: Item[]) => void
@@ -82,6 +83,25 @@ const usePlayer = create<PlayerStore>()(
         set(() => ({ queue: items, track: index, trackID: items[index].Id }))
         await TrackPlayer.setQueue(items.map((item) => itemToTrack(item)))
         await TrackPlayer.skip(index)
+      },
+      moveQueue: async (fromIndex, toIndex) => {
+        const newQueue = [...get().queue]
+        const removed = newQueue.splice(fromIndex, 1)
+        newQueue.splice(toIndex, 0, removed[0]!)
+        let newIndex = get().track
+        if (fromIndex === newIndex) {
+          newIndex = toIndex
+        } else if (fromIndex < newIndex && toIndex >= newIndex) {
+          newIndex--
+        } else if (fromIndex > newIndex && toIndex <= newIndex) {
+          newIndex++
+        }
+        set(() => ({
+          queue: newQueue,
+          track: newIndex,
+          trackID: newQueue[newIndex].Id,
+        }))
+        await TrackPlayer.move(fromIndex, toIndex)
       },
       clearQueue: () => {
         set(() => ({ queue: [], track: 0, trackID: undefined }))

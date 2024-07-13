@@ -1,14 +1,13 @@
-import { useEffect } from 'react'
 import { Text, View } from 'react-native'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import DragList from 'react-native-draglist'
 
 import TabStack from 'types/TabStack'
 import useClient from 'hooks/useClient'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import Button from 'components/Button'
-import { FlashList } from '@shopify/flash-list'
 import TrackListItem from 'components/TrackListItem'
 
 const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
@@ -22,13 +21,13 @@ const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
       <View
         style={{
           flex: 1,
-          paddingTop: insets.top,
+          paddingTop: insets.top + 16,
         }}
       >
         <View
           style={{
             paddingHorizontal: 16,
-            paddingBottom: 8,
+            paddingBottom: 16,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -53,22 +52,66 @@ const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
         </View>
 
         {player.hasHydrated && (
-          <FlashList
+          <DragList
             data={player.queue}
             extraData={player.track}
-            renderItem={({ item, index }) => (
+            keyExtractor={(item, index) => index + '_' + item.Id}
+            renderItem={({ item, index, isActive, onDragStart, onDragEnd }) => (
               <TrackListItem
-                key={index}
                 track={item}
                 onPress={() => {
                   player.setTrack(index)
                 }}
+                onDragStart={onDragStart}
+                onDragEnd={onDragEnd}
+                isDragging={isActive}
                 playing={index === player.track}
               />
             )}
-            initialScrollIndex={player.track}
-            estimatedItemSize={56}
+            onReordered={(fromIndex, toIndex) => {
+              player.moveQueue(fromIndex, toIndex)
+            }}
+            //initialScrollIndex={player.track}
+            //estimatedItemSize={56}
+            //itemsSize={56}
             contentContainerStyle={{ paddingBottom: 64 + 32 }}
+            ListFooterComponent={
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingTop: 16,
+                  paddingHorizontal: 16,
+                  gap: 16,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: theme.foregroundAlt,
+                    height: 1,
+                    flexGrow: 1,
+                  }}
+                />
+                <Text
+                  style={{
+                    color: theme.foregroundAlt,
+                    fontFamily: theme.font400,
+                    fontSize: 12,
+                  }}
+                >
+                  End of queue
+                </Text>
+                <View
+                  style={{
+                    backgroundColor: theme.foregroundAlt,
+                    height: 1,
+                    flexGrow: 1,
+                  }}
+                />
+              </View>
+            }
           />
         )}
       </View>
