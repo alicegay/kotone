@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { AppRegistry, useWindowDimensions } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import {
@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/stack'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import TrackPlayer, { Capability, RatingType } from 'react-native-track-player'
+import SystemNavigationBar from 'react-native-system-navigation-bar'
 
 import RootStack from 'types/RootStack'
 import PlaybackService from 'services/PlaybackService'
@@ -17,9 +18,7 @@ import Player from 'screens/Player'
 import SelectServer from 'screens/SelectServer'
 import SelectUser from 'screens/SelectUser'
 import Tabs from 'screens/Tabs'
-import Queue from 'screens/Queue'
 import TabStack from 'types/TabStack'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -69,6 +68,8 @@ const App = () => {
       console.log('PLAYER SETUP')
       playerSetup = true
     }
+
+    SystemNavigationBar.setNavigationColor(0x00000000, 'light')
   })
 
   useEffect(() => {
