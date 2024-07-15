@@ -14,14 +14,14 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		250FAA9E2EC9423DABA3A42C /* MaterialSymbolsRounded-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F22AC709D864A0482C44E46 /* MaterialSymbolsRounded-Regular.ttf */; };
 		49AF250CA2AB45BB917B714C /* NunitoRoundedMplus-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 010DDD6A3FF04AD096C3243A /* NunitoRoundedMplus-Medium.ttf */; };
 		5A523905BB52BE0DCFE8CCE4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 56B18419B4BE90DE47D4325C /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-Kotone-KotoneTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Kotone-KotoneTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8B1565D6210D428095FA8C45 /* NunitoRoundedMplus-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1DE1FC343024300AA3A0767 /* NunitoRoundedMplus-Regular.ttf */; };
-		E798E64BCC4941EC9871C3DE /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77DF052A76D641D4B5870282 /* BootSplash.storyboard */; };
-		250FAA9E2EC9423DABA3A42C /* MaterialSymbolsRounded-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F22AC709D864A0482C44E46 /* MaterialSymbolsRounded-Regular.ttf */; };
 		D2F566AA0D2C449F84DBF634 /* MaterialSymbolsRounded_Filled-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECC304710FA348FABE8A9321 /* MaterialSymbolsRounded_Filled-Regular.ttf */; };
+		E798E64BCC4941EC9871C3DE /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77DF052A76D641D4B5870282 /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +51,7 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Kotone-KotoneTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Kotone-KotoneTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20F817219CD14B8FB6BA1FCF /* NunitoRoundedMplus-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoRoundedMplus-Bold.ttf"; path = "../src/assets/fonts/NunitoRoundedMplus-Bold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Kotone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone.debug.xcconfig"; path = "Target Support Files/Pods-Kotone/Pods-Kotone.debug.xcconfig"; sourceTree = "<group>"; };
+		3F22AC709D864A0482C44E46 /* MaterialSymbolsRounded-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "MaterialSymbolsRounded-Regular.ttf"; path = "../src/assets/fonts/MaterialSymbolsRounded-Regular.ttf"; sourceTree = "<group>"; };
 		56B18419B4BE90DE47D4325C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Kotone/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Kotone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone.release.xcconfig"; path = "Target Support Files/Pods-Kotone/Pods-Kotone.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Kotone-KotoneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone-KotoneTests.debug.xcconfig"; path = "Target Support Files/Pods-Kotone-KotoneTests/Pods-Kotone-KotoneTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -59,9 +60,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Kotone/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Kotone-KotoneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kotone-KotoneTests.release.xcconfig"; path = "Target Support Files/Pods-Kotone-KotoneTests/Pods-Kotone-KotoneTests.release.xcconfig"; sourceTree = "<group>"; };
 		B1DE1FC343024300AA3A0767 /* NunitoRoundedMplus-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoRoundedMplus-Regular.ttf"; path = "../src/assets/fonts/NunitoRoundedMplus-Regular.ttf"; sourceTree = "<group>"; };
+		ECC304710FA348FABE8A9321 /* MaterialSymbolsRounded_Filled-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "MaterialSymbolsRounded_Filled-Regular.ttf"; path = "../src/assets/fonts/MaterialSymbolsRounded_Filled-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		3F22AC709D864A0482C44E46 /* MaterialSymbolsRounded-Regular.ttf */ = {isa = PBXFileReference; name = "MaterialSymbolsRounded-Regular.ttf"; path = "../src/assets/fonts/MaterialSymbolsRounded-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		ECC304710FA348FABE8A9321 /* MaterialSymbolsRounded_Filled-Regular.ttf */ = {isa = PBXFileReference; name = "MaterialSymbolsRounded_Filled-Regular.ttf"; path = "../src/assets/fonts/MaterialSymbolsRounded_Filled-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -646,7 +646,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -718,7 +721,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

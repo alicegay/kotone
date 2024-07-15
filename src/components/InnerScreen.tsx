@@ -1,10 +1,17 @@
-import { GestureResponderEvent, Pressable, Text, View } from 'react-native'
+import {
+  GestureResponderEvent,
+  Pressable,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import useTheme from 'hooks/useTheme'
 import { Icon } from './Icon'
 import { ReactNode } from 'react'
+import { BlurMask, Canvas, Oval, Rect } from '@shopify/react-native-skia'
 
 interface Props {
   children?: ReactNode
@@ -23,10 +30,22 @@ const InnerScreen = ({
 }: Props) => {
   const theme = useTheme()
   const insets = useSafeAreaInsets()
+  const { width } = useWindowDimensions()
   const navigation = useNavigation()
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
+      <Canvas style={{ position: 'absolute', width: '100%', height: 200 }}>
+        <Oval
+          x={-(width * 1.5) / 2}
+          y={-100}
+          width={width * 1.75}
+          height={200}
+          color={theme.tint}
+        >
+          <BlurMask blur={24} style="normal" />
+        </Oval>
+      </Canvas>
       <View
         style={{
           flex: 1,

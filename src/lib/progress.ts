@@ -19,7 +19,7 @@ export const playing = async (
     ItemId: itemID ?? usePlayer.getState().trackID,
     MediaSourceId: itemID ?? usePlayer.getState().trackID,
     EventName: event,
-    IsPaused: state === State.Paused,
+    IsPaused: state !== State.Playing,
     IsMuted: false,
     VolumeLevel: 100,
     PositionTicks: secsToTicks(position),
