@@ -25,22 +25,29 @@ const Albums = ({
     typeof albumParam === 'string' ? albumParam : albumParam.Id,
   )
 
-  const { data, isLoading } = useItems(
-    {
-      ParentId: typeof albumParam === 'string' ? albumParam : albumParam.Id,
-      SortBy: 'ParentIndexNumber,IndexNumber,Name',
-    },
-    typeof albumParam === 'string' && !albumQuery.data ? false : true,
-  )
-
   const album = typeof albumParam === 'string' ? albumQuery.data : albumParam
   const playlist = album?.Type === 'Playlist'
+
+  const params = {
+    ParentId: typeof albumParam === 'string' ? albumParam : albumParam.Id,
+    SortBy: playlist ? undefined : 'ParentIndexNumber,IndexNumber,Name',
+  }
+  const { data, isLoading } = useItems(
+    params,
+    typeof albumParam === 'string' && !albumQuery.data ? false : true,
+  )
 
   const [trackModal, setTrackModal] = useState<Item>(null)
 
   return (
     <>
-      <InnerScreen title={album?.Name} icon="more_horiz" onPress={() => {}}>
+      <InnerScreen
+        title={album?.Name}
+        icon="more_horiz"
+        onPress={() => {
+          setTrackModal(album)
+        }}
+      >
         {!isLoading && !!data && (
           <FlashList
             data={data.Items}
@@ -71,10 +78,6 @@ const Albums = ({
       <TrackModal
         visible={!!trackModal}
         onClose={() => setTrackModal(null)}
-        onPlay={() => {
-          player.setQueue([trackModal])
-          player.play()
-        }}
         track={trackModal}
         navigation={navigation}
       />

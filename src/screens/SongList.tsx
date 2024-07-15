@@ -23,7 +23,7 @@ const SongList = ({
   const player = usePlayer()
   const library = useLibrary()
 
-  const [trackModal, setTrackModal] = useState<Item>(null)
+  const [trackModal, setTrackModal] = useState<Item | 'songs'>(null)
 
   const titles = {
     songs: 'Songs',
@@ -74,17 +74,23 @@ const SongList = ({
 
   return (
     <>
-      <InnerScreen title={titles[type]} icon="more_horiz" onPress={() => {}}>
+      <InnerScreen
+        title={titles[type]}
+        icon="more_horiz"
+        onPress={() => {
+          setTrackModal('songs')
+        }}
+      >
         {!isLoading && data && (
           <FlashList
             data={data.Items}
             estimatedItemSize={56}
             keyExtractor={(item, index) => index + '_' + item.Id}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <TrackListItem
                 track={item}
                 onPress={() => {
-                  player.setQueue([item])
+                  player.setQueue(data.Items, index)
                   player.play()
                 }}
                 onLongPress={() => {
@@ -106,11 +112,8 @@ const SongList = ({
       <TrackModal
         visible={!!trackModal}
         onClose={() => setTrackModal(null)}
-        onPlay={() => {
-          player.setQueue([trackModal])
-          player.play()
-        }}
-        track={trackModal}
+        track={typeof trackModal !== 'string' ? trackModal : null}
+        songs={trackModal === 'songs' ? data.Items : null}
         navigation={navigation}
       />
     </>

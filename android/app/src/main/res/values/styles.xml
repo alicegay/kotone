@@ -14,5 +14,12 @@
     <item name="bootSplashBackground">@color/bootsplash_background</item>
     <item name="bootSplashLogo">@drawable/bootsplash_logo</item>
     <item name="postBootSplashTheme">@style/AppTheme</item>
+
+    <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    <item name="android:windowTranslucentNavigation">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:enforceStatusBarContrast">false</item>
+    <item name="android:enforceNavigationBarContrast">false</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
   </style>
 </resources>

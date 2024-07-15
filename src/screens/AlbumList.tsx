@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { FlashList } from '@shopify/flash-list'
 import { useQueryClient } from '@tanstack/react-query'
@@ -53,7 +53,7 @@ const AlbumList = ({
 
   return (
     <>
-      <InnerScreen title={titles[type]} icon="more_horiz" onPress={() => {}}>
+      <InnerScreen title={titles[type]}>
         {!isLoading && data && (
           <FlashList
             data={data.Items}
@@ -86,7 +86,6 @@ const AlbumList = ({
       <TrackModal
         visible={!!trackModal}
         onClose={() => setTrackModal(null)}
-        onPlay={() => {}}
         track={trackModal}
         navigation={navigation}
       />

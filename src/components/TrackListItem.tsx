@@ -55,7 +55,7 @@ const TrackListItem = ({
       onPress={onPress}
       onLongPress={onLongPress}
       delayLongPress={300}
-      disabled={isDragging}
+      disabled={isDragging || (!onPress && !onLongPress)}
       style={{
         //flex: 1,
         flexDirection: 'row',
