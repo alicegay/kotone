@@ -141,7 +141,7 @@ const TrackListItem = ({
         >
           {track.Name}
         </Text>
-        {showArtist && (
+        {showArtist && track.Type !== 'Playlist' && (
           <Text
             style={{
               color: theme.foregroundAlt,

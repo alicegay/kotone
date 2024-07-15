@@ -18,24 +18,45 @@ const MusicHome = ({
       <View style={{ paddingHorizontal: 16, gap: 8 }}>
         <Button
           onPress={() => {
-            navigation.push('Songs')
+            navigation.push('SongList', { type: 'songs' })
           }}
         >
           Songs
         </Button>
         <Button
           onPress={() => {
-            navigation.push('Favorites')
+            navigation.push('SongList', { type: 'favorites' })
           }}
         >
           Favorites
         </Button>
         <Button
           onPress={() => {
-            navigation.push('Albums')
+            navigation.push('SongList', { type: 'frequent' })
+          }}
+        >
+          Frequently Played
+        </Button>
+        <Button
+          onPress={() => {
+            navigation.push('SongList', { type: 'recent' })
+          }}
+        >
+          Recently Played
+        </Button>
+        <Button
+          onPress={() => {
+            navigation.push('AlbumList', { type: 'albums' })
           }}
         >
           Albums
+        </Button>
+        <Button
+          onPress={() => {
+            navigation.push('AlbumList', { type: 'playlists' })
+          }}
+        >
+          Playlists
         </Button>
       </View>
     </InnerScreen>

@@ -1,28 +1,26 @@
-import {
-  GestureResponderEvent,
-  Pressable,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { useWindowDimensions, View } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Modal from 'react-native-modal'
 import { Blurhash } from 'react-native-blurhash'
-import tinycolor from 'tinycolor2'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Item from 'jellyfin-api/lib/types/media/Item'
 
+import MusicStack from 'types/MusicStack'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
-import { Icon, IconFilled } from 'components/Icon'
 import TrackListItem from 'components/TrackListItem'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import ModalButton from './ModalButton'
+import Separator from './Separator'
 
 interface Props {
   visible: boolean
   onClose: () => void
+  onPlay: () => void
   track: Item
+  navigation: NativeStackNavigationProp<MusicStack>
 }
 
-const TrackModal = ({ visible, onClose, track }: Props) => {
+const TrackModal = ({ visible, onClose, onPlay, track, navigation }: Props) => {
   const player = usePlayer()
   const theme = useTheme()
   const { height } = useWindowDimensions()
@@ -38,13 +36,6 @@ const TrackModal = ({ visible, onClose, track }: Props) => {
             : track.AlbumPrimaryImageTag
         ]
       : null
-  // const averageColor = blurhash
-  //   ? tinycolor(Blurhash.getAverageColor(blurhash))
-  //   : tinycolor(theme.background)
-
-  // const finalColor = averageColor.isDark()
-  //   ? averageColor.toHex8String()
-  //   : averageColor.darken(10).toHex8String()
 
   return (
     <Modal
@@ -62,7 +53,7 @@ const TrackModal = ({ visible, onClose, track }: Props) => {
       <View style={{ paddingHorizontal: 16 }}>
         <View
           style={{
-            backgroundColor: '#000',
+            backgroundColor: '#222',
             borderRadius: 16,
             overflow: 'hidden',
           }}
@@ -88,18 +79,27 @@ const TrackModal = ({ visible, onClose, track }: Props) => {
             </>
           )}
           <View style={{ paddingVertical: 8, gap: 4 }}>
-            <TrackListItem track={track} playing={false} />
-            <Button
-              text="Play"
+            <TrackListItem
+              track={track}
+              playing={false}
+              showDuration={track.Type === 'Audio'}
+            />
+            <ModalButton
+              text={
+                track.Type === 'MusicAlbum'
+                  ? 'Play album'
+                  : track.Type === 'Playlist'
+                  ? 'Play playlist'
+                  : 'Play'
+              }
               icon="play_arrow"
               iconFilled={true}
               onPress={() => {
-                player.setQueue([track])
-                player.play()
+                onPlay()
                 onClose()
               }}
             />
-            <Button
+            <ModalButton
               text="Play next"
               icon="playlist_play"
               onPress={() => {
@@ -107,7 +107,7 @@ const TrackModal = ({ visible, onClose, track }: Props) => {
                 onClose()
               }}
             />
-            <Button
+            <ModalButton
               text="Add to queue"
               icon="playlist_add"
               onPress={() => {
@@ -115,83 +115,38 @@ const TrackModal = ({ visible, onClose, track }: Props) => {
                 onClose()
               }}
             />
-            <Button
+            <ModalButton
               text="Add to playlist"
               icon="playlist_add"
               onPress={() => {}}
             />
 
-            <Separator />
+            {track.Type !== 'Playlist' && (
+              <>
+                <Separator />
 
-            <Button text="View album" icon="album" onPress={() => {}} />
-            <Button
-              text="View artist"
-              icon="artist"
-              iconFilled={true}
-              onPress={() => {}}
-            />
+                {track.Type === 'Audio' && (
+                  <ModalButton
+                    text="View album"
+                    icon="album"
+                    onPress={() => {
+                      onClose()
+                      navigation.push('Album', { album: track.AlbumId })
+                    }}
+                  />
+                )}
+                <ModalButton
+                  text="View artist"
+                  icon="artist"
+                  iconFilled={true}
+                  onPress={() => {}}
+                />
+              </>
+            )}
           </View>
         </View>
       </View>
     </Modal>
-  )
-}
-
-interface ButtonProps {
-  text: string
-  icon: string
-  iconFilled?: boolean
-  onPress?: (e: GestureResponderEvent) => void
-}
-
-const Button = ({ text, icon, iconFilled = false, onPress }: ButtonProps) => {
-  const theme = useTheme()
-
-  return (
-    <Pressable
-      onPress={onPress}
-      style={{
-        flexDirection: 'row',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        gap: 16,
-      }}
-      android_ripple={{ color: theme.ripple }}
-    >
-      {iconFilled ? (
-        <IconFilled
-          name={icon}
-          style={{ color: theme.foreground, fontSize: 24 }}
-        />
-      ) : (
-        <Icon name={icon} style={{ color: theme.foreground, fontSize: 24 }} />
-      )}
-      <Text
-        style={{
-          color: theme.foreground,
-          fontFamily: theme.font500,
-          fontSize: 20,
-        }}
-      >
-        {text}
-      </Text>
-    </Pressable>
-  )
-}
-
-const Separator = () => {
-  const theme = useTheme()
-
-  return (
-    <View
-      style={{
-        flexGrow: 1,
-        height: 1,
-        backgroundColor: theme.foregroundAlt,
-        marginHorizontal: 16,
-        marginVertical: 4,
-      }}
-    />
   )
 }
 

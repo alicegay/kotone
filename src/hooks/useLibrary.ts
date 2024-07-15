@@ -3,6 +3,7 @@ import { create } from 'zustand'
 
 interface LibraryStore {
   views: Item[]
+  viewIDs: { [key: string]: string }
   songs: Item[]
   albums: Item[]
   artists: Item[]
@@ -11,6 +12,7 @@ interface LibraryStore {
   musicvideos: Item[]
 
   setViews: (views: Item[]) => void
+  setViewIDs: (viewIDs: { [key: string]: string }) => void
   setSongs: (songs: Item[]) => void
   setAlbums: (albums: Item[]) => void
   setArtists: (artists: Item[]) => void
@@ -21,6 +23,7 @@ interface LibraryStore {
 
 const useLibrary = create<LibraryStore>()((set) => ({
   views: null,
+  viewIDs: null,
   songs: null,
   albums: null,
   artists: null,
@@ -30,6 +33,9 @@ const useLibrary = create<LibraryStore>()((set) => ({
 
   setViews: (views) => {
     set(() => ({ views: views }))
+  },
+  setViewIDs: (viewIDs) => {
+    set(() => ({ viewIDs: viewIDs }))
   },
   setSongs: (songs) => {
     set(() => ({ songs: songs }))

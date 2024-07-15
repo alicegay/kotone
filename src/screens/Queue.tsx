@@ -17,7 +17,7 @@ const Queue = ({ navigation }: BottomTabScreenProps<TabStack, 'Queue'>) => {
   const insets = useSafeAreaInsets()
 
   return (
-    <InnerScreen title="Queue" showBackButton={false} icon="clear_all">
+    <InnerScreen title="Queue" showBackButton={false} icon="more_horiz">
       {player.hasHydrated && (
         <DragList
           data={player.queue}

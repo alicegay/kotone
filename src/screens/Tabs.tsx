@@ -30,45 +30,17 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const insets = useSafeAreaInsets()
 
   const views = useViews()
-  const musicView = views.data?.filter(
-    (view) => view.CollectionType === 'music',
-  )[0].Id
-  const songs = useItems({
-    SortBy: 'Name',
-    SortOrder: 'Ascending',
-    IncludeItemTypes: 'Audio',
-    Recursive: true,
-  })
-  const favorites = useItems({
-    SortBy: 'Name',
-    SortOrder: 'Ascending',
-    IncludeItemTypes: 'Audio',
-    Recursive: true,
-    IsFavorite: true,
-  })
-  const albums = useItems(
-    {
-      ParentId: musicView,
-      SortBy: 'Name',
-      SortOrder: 'Ascending',
-      IncludeItemTypes: 'MusicAlbum',
-      Recursive: true,
-    },
-    !!musicView,
-  )
 
   useEffect(() => {
-    if (views.data) library.setViews(views.data)
+    if (views.data) {
+      library.setViews(views.data)
+      let ids = {}
+      for (let i = 0; i < views.data.length; i++) {
+        ids[views.data[i].CollectionType] = views.data[i].Id
+      }
+      library.setViewIDs(ids)
+    }
   }, [views.data])
-  useEffect(() => {
-    if (songs.data) library.setSongs(songs.data.Items)
-  }, [songs.data])
-  useEffect(() => {
-    if (favorites.data) library.setFavorites(favorites.data.Items)
-  }, [favorites.data])
-  useEffect(() => {
-    if (albums.data) library.setAlbums(albums.data.Items)
-  }, [albums.data])
 
   const styles = StyleSheet.create({
     tabIcon: {

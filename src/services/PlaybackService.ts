@@ -9,11 +9,31 @@ const PlaybackService = async () => {
   TrackPlayer.addEventListener(Event.RemotePause, () =>
     usePlayer.getState().pause(),
   )
+  TrackPlayer.addEventListener(Event.RemotePrevious, () =>
+    usePlayer.getState().prevTrack(),
+  )
+  TrackPlayer.addEventListener(Event.RemoteNext, () =>
+    usePlayer.getState().nextTrack(),
+  )
+  TrackPlayer.addEventListener(Event.RemoteSeek, (event) =>
+    TrackPlayer.seekTo(event.position),
+  )
+  TrackPlayer.addEventListener(Event.RemoteSetRating, (event) =>
+    console.log(event.rating),
+  )
+
+  TrackPlayer.addEventListener(Event.RemoteDuck, (event) => {
+    if (event.paused) {
+      usePlayer.getState().pause()
+    } else {
+      usePlayer.getState().play()
+    }
+  })
 
   // TrackPlayer.addEventListener(Event.PlaybackState, (state) =>
   //   console.log(state),
   // )
-  TrackPlayer.addEventListener(Event.PlayerError, (error) => console.log(error))
+  //TrackPlayer.addEventListener(Event.PlayerError, (error) => console.log(error))
 
   TrackPlayer.addEventListener(
     Event.PlaybackActiveTrackChanged,

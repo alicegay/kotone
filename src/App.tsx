@@ -19,6 +19,7 @@ import SelectServer from 'screens/SelectServer'
 import SelectUser from 'screens/SelectUser'
 import Tabs from 'screens/Tabs'
 import TabStack from 'types/TabStack'
+import MusicStack from 'types/MusicStack'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -51,6 +52,7 @@ const App = () => {
         notificationCapabilities: [
           Capability.Play,
           Capability.Pause,
+          Capability.SeekTo,
           Capability.SkipToNext,
           Capability.SkipToPrevious,
           Capability.SetRating,
@@ -120,6 +122,6 @@ TrackPlayer.registerPlaybackService(() => PlaybackService)
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStack, TabStack {}
+    interface RootParamList extends RootStack, TabStack, MusicStack {}
   }
 }
