@@ -115,9 +115,6 @@ const TrackModal = ({ visible, onClose, track }: Props) => {
                 onClose()
               }}
             />
-
-            <Separator />
-
             <Button
               text="Add to playlist"
               icon="playlist_add"
@@ -189,10 +186,8 @@ const Separator = () => {
     <View
       style={{
         flexGrow: 1,
-        height: 2,
+        height: 1,
         backgroundColor: theme.foregroundAlt,
-        borderRadius: 1,
-        overflow: 'hidden',
         marginHorizontal: 16,
         marginVertical: 4,
       }}

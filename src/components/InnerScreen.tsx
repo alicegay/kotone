@@ -7,11 +7,11 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { BlurMask, Canvas, Oval } from '@shopify/react-native-skia'
 
 import useTheme from 'hooks/useTheme'
 import { Icon } from './Icon'
 import { ReactNode } from 'react'
-import { BlurMask, Canvas, Oval, Rect } from '@shopify/react-native-skia'
 
 interface Props {
   children?: ReactNode

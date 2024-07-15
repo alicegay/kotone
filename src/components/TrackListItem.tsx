@@ -1,10 +1,4 @@
-import {
-  GestureResponderEvent,
-  Image,
-  Pressable,
-  Text,
-  View,
-} from 'react-native'
+import { GestureResponderEvent, Pressable, Text, View } from 'react-native'
 import Item from 'jellyfin-api/lib/types/media/Item'
 
 import useClient from 'hooks/useClient'
@@ -12,6 +6,7 @@ import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
 import { Icon } from 'components/Icon'
+import { FasterImageView } from '@candlefinance/faster-image'
 
 interface Props {
   track: Item
@@ -78,11 +73,12 @@ const TrackListItem = ({
             height: 48,
             borderRadius: 8,
             overflow: 'hidden',
+            backgroundColor: '#222',
           }}
         >
           {!!image && (
-            <Image
-              source={{ uri: image }}
+            <FasterImageView
+              source={{ url: image }}
               style={{ width: '100%', height: '100%' }}
             />
           )}
@@ -154,7 +150,9 @@ const TrackListItem = ({
             }}
             numberOfLines={1}
           >
-            {track.Artists.join(', ')}
+            {track.Type === 'MusicAlbum'
+              ? track.AlbumArtist
+              : track.Artists.join(', ')}
           </Text>
         )}
       </View>
