@@ -10,6 +10,7 @@ interface PlayerStore {
   trackID?: string
   queue: Item[]
   repeat: 'off' | 'track' | 'queue'
+  ducked: boolean
 
   setTrack: (index: number, stealth?: boolean) => void
   prevTrack: () => void
@@ -18,6 +19,7 @@ interface PlayerStore {
   pause: () => void
   setRepeat: (mode: 'off' | 'track' | 'queue') => void
   cycleRepeat: () => void
+  setDucked: (value: boolean) => void
 
   setQueue: (items: Item[], index?: number) => void
   moveQueue: (fromIndex: number, toIndex: number) => void
@@ -37,6 +39,7 @@ const usePlayer = create<PlayerStore>()(
       trackID: undefined,
       queue: [],
       repeat: 'off',
+      ducked: false,
 
       setTrack: (index, stealth = false) => {
         set((state) => ({ track: index, trackID: state.queue[index].Id }))
@@ -96,6 +99,7 @@ const usePlayer = create<PlayerStore>()(
           current === 'off' ? 'queue' : current === 'queue' ? 'track' : 'off',
         )
       },
+      setDucked: (value) => set(() => ({ ducked: value })),
 
       setQueue: async (items, index = 0) => {
         set(() => ({ queue: items, track: index, trackID: items[index].Id }))

@@ -25,8 +25,9 @@ const PlaybackService = async () => {
   TrackPlayer.addEventListener(Event.RemoteDuck, (event) => {
     if (event.paused) {
       usePlayer.getState().pause()
+      if (!event.permanent) usePlayer.getState().setDucked(true)
     } else {
-      usePlayer.getState().play()
+      if (usePlayer.getState().ducked) usePlayer.getState().play()
     }
   })
 
