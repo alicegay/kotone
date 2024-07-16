@@ -27,7 +27,10 @@ const PlaybackService = async () => {
       usePlayer.getState().pause()
       if (!event.permanent) usePlayer.getState().setDucked(true)
     } else {
-      if (usePlayer.getState().ducked) usePlayer.getState().play()
+      if (usePlayer.getState().ducked) {
+        usePlayer.getState().play()
+        usePlayer.getState().setDucked(false)
+      }
     }
   })
 

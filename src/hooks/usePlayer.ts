@@ -159,6 +159,7 @@ const usePlayer = create<PlayerStore>()(
       storage: createJSONStorage(() => AsyncStorage),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true)
+        state?.setDucked(false)
       },
     },
   ),
