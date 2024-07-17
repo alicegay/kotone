@@ -58,6 +58,14 @@ const MusicHome = ({
         >
           Playlists
         </Button>
+
+        <Button
+          onPress={() => {
+            theme.setDark(!theme.dark)
+          }}
+        >
+          Set {theme.dark ? 'light' : 'dark'} mode
+        </Button>
       </View>
     </InnerScreen>
   )

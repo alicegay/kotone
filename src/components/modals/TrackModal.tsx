@@ -110,6 +110,7 @@ const TrackModal = ({
             {!hasSongs && (
               <TrackListItem
                 track={track}
+                useTheme={false}
                 playing={false}
                 showDuration={!album}
               />

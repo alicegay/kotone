@@ -49,7 +49,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
       borderRadius: 32,
       overflow: 'hidden',
     },
-    tabIconFocus: { backgroundColor: '#493939' },
+    tabIconFocus: { backgroundColor: theme.scheme.surfaceVariant },
   })
 
   const icons = {
@@ -65,12 +65,12 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#FADCD6',
-          tabBarInactiveTintColor: '#493939',
+          tabBarActiveTintColor: theme.scheme.onSurface,
+          tabBarInactiveTintColor: theme.scheme.surfaceVariant,
           tabBarStyle: {
             paddingBottom: insets.bottom,
             height: 64 + insets.bottom,
-            backgroundColor: '#201818',
+            backgroundColor: theme.scheme.surface,
             borderTopWidth: 0,
           },
           tabBarIcon: ({ focused, color, size }) => {

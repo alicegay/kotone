@@ -10,6 +10,7 @@ import { FasterImageView } from '@candlefinance/faster-image'
 
 interface Props {
   track: Item
+  useTheme?: boolean
   onPress?: (e: GestureResponderEvent) => void
   onLongPress?: (e: GestureResponderEvent) => void
   onDragStart?: (e: GestureResponderEvent) => void
@@ -24,6 +25,7 @@ interface Props {
 
 const TrackListItem = ({
   track,
+  useTheme: th = true,
   onPress,
   onLongPress,
   onDragStart,
@@ -73,12 +75,12 @@ const TrackListItem = ({
             height: 48,
             borderRadius: 8,
             overflow: 'hidden',
-            backgroundColor: '#222',
+            backgroundColor: th ? theme.scheme.surface : '#222',
           }}
         >
           {!!image && (
             <FasterImageView
-              source={{ url: image }}
+              source={{ url: image, resizeMode: 'cover' }}
               style={{ width: '100%', height: '100%' }}
             />
           )}
@@ -105,13 +107,17 @@ const TrackListItem = ({
       {(!!trackNumber || trackNumber === 0) && isPlaying ? (
         <Icon
           name="equalizer"
-          style={{ color: theme.foreground, fontSize: 24, width: 24 }}
+          style={{
+            color: th ? theme.scheme.primary : theme.foreground,
+            fontSize: 24,
+            width: 24,
+          }}
         />
       ) : (
         (!!trackNumber || trackNumber === 0) && (
           <Text
             style={{
-              color: theme.foreground,
+              color: th ? theme.scheme.primary : theme.foreground,
               fontFamily: theme.font700,
               fontSize: 14,
               width: 24,
@@ -133,7 +139,7 @@ const TrackListItem = ({
       >
         <Text
           style={{
-            color: theme.foreground,
+            color: th ? theme.scheme.primary : theme.foreground,
             fontFamily: theme.font500,
             fontSize: 16,
           }}
@@ -144,7 +150,7 @@ const TrackListItem = ({
         {showArtist && track.Type !== 'Playlist' && (
           <Text
             style={{
-              color: theme.foregroundAlt,
+              color: th ? theme.scheme.secondary : theme.foregroundAlt,
               fontFamily: theme.font400,
               fontSize: 14,
             }}
@@ -160,7 +166,7 @@ const TrackListItem = ({
       {!onDragStart && showDuration && (
         <Text
           style={{
-            color: theme.foregroundAlt,
+            color: th ? theme.scheme.secondary : theme.foregroundAlt,
             fontFamily: theme.font400,
             fontSize: 14,
           }}
@@ -187,7 +193,10 @@ const TrackListItem = ({
         >
           <Icon
             name="menu"
-            style={{ color: theme.foregroundAlt, fontSize: 20 }}
+            style={{
+              color: th ? theme.scheme.secondary : theme.foregroundAlt,
+              fontSize: 20,
+            }}
           />
         </Pressable>
       )}

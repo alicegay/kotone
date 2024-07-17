@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@candlefinance/faster-image": "^1.6.2",
+    "@material/material-color-utilities": "^0.3.0",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/bottom-tabs": "^6.6.0",
     "@react-navigation/native": "^6.1.17",
@@ -26,7 +27,9 @@
     "axios": "^1.7.2",
     "babel-plugin-react-compiler": "^0.0.0-experimental-696af53-20240625",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
+    "i": "^0.3.7",
     "jellyfin-api": "github:alicegay/jellyfin-api",
+    "npm": "^10.8.2",
     "react": "18.2.0",
     "react-compiler-runtime": "file:./lib/react-compiler-runtime",
     "react-native": "0.74.3",

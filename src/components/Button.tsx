@@ -37,20 +37,20 @@ const Button = forwardRef<View, Props>(
         justifyContent: 'center',
         borderRadius: 20,
         minHeight: 36,
-        backgroundColor: theme.tint,
+        backgroundColor: theme.scheme.primaryContainer,
       },
       rootFocus: {
-        backgroundColor: theme.foreground,
+        backgroundColor: theme.scheme.primary,
       },
       rootWithLabel: {
         minWidth: 96,
       },
       icon: {
         fontSize: 14,
-        color: theme.foreground,
+        color: theme.scheme.primary,
       },
       iconFocus: {
-        color: theme.background,
+        color: theme.scheme.primaryContainer,
       },
       iconWithLabel: {
         marginLeft: 16,
@@ -62,10 +62,10 @@ const Button = forwardRef<View, Props>(
         textAlign: 'center',
         marginVertical: 8,
         marginHorizontal: 24,
-        color: theme.foreground,
+        color: theme.scheme.primary,
       },
       labelFocus: {
-        color: theme.background,
+        color: theme.scheme.primaryContainer,
       },
     })
 

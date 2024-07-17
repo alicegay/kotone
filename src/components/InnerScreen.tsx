@@ -11,7 +11,8 @@ import { BlurMask, Canvas, Oval } from '@shopify/react-native-skia'
 
 import useTheme from 'hooks/useTheme'
 import { Icon } from './Icon'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
+import { hexFromArgb } from '@material/material-color-utilities'
 
 interface Props {
   children?: ReactNode
@@ -33,17 +34,23 @@ const InnerScreen = ({
   const { width } = useWindowDimensions()
   const navigation = useNavigation()
 
+  useEffect(() => {
+    // theme.setTheme('#741224')
+    // console.log('scheme', theme.scheme)
+    // console.log('primary hex', hexFromArgb(theme.scheme.primary))
+  }, [])
+
   return (
-    <View style={{ flex: 1, backgroundColor: theme.background }}>
+    <View style={{ flex: 1, backgroundColor: theme.scheme.background }}>
       <Canvas style={{ position: 'absolute', width: '100%', height: 200 }}>
         <Oval
           x={-(width * 1.5) / 2}
           y={-100}
           width={width * 1.75}
           height={200}
-          color={theme.tint}
+          color={theme.scheme.primaryContainer}
         >
-          <BlurMask blur={24} style="normal" />
+          <BlurMask blur={32} style="normal" />
         </Oval>
       </Canvas>
       <View
@@ -80,13 +87,13 @@ const InnerScreen = ({
             >
               <Icon
                 name="arrow_back"
-                style={{ color: theme.foreground, fontSize: 24 }}
+                style={{ color: theme.scheme.primary, fontSize: 24 }}
               />
             </Pressable>
           )}
           <Text
             style={{
-              color: theme.foreground,
+              color: theme.scheme.primary,
               fontFamily: theme.font700,
               fontSize: 24,
               flexGrow: 1,
@@ -113,7 +120,7 @@ const InnerScreen = ({
             >
               <Icon
                 name={icon}
-                style={{ color: theme.foreground, fontSize: 24 }}
+                style={{ color: theme.scheme.primary, fontSize: 24 }}
               />
             </Pressable>
           )}

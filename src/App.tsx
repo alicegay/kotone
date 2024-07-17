@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { AppRegistry, useWindowDimensions } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, Theme } from '@react-navigation/native'
 import {
   CardStyleInterpolators,
   createStackNavigator,
@@ -20,6 +20,7 @@ import SelectUser from 'screens/SelectUser'
 import Tabs from 'screens/Tabs'
 import TabStack from 'types/TabStack'
 import MusicStack from 'types/MusicStack'
+import useTheme from 'hooks/useTheme'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -29,6 +30,7 @@ let playerSetup = false
 const App = () => {
   const client = useClient()
   const player = usePlayer()
+  const theme = useTheme()
   const { height } = useWindowDimensions()
 
   useEffect(() => {
@@ -72,7 +74,7 @@ const App = () => {
     }
 
     SystemNavigationBar.setNavigationColor(0x00000000, 'light')
-  })
+  }, [])
 
   useEffect(() => {
     const restoreQueue = async () => {
@@ -88,29 +90,50 @@ const App = () => {
     }
   }, [client.hasHydrated, player.hasHydrated])
 
+  useEffect(() => {
+    if (theme.hasHydrated) {
+      theme.setTheme(theme.tint)
+      console.log('SET THEME', theme.tint, theme.dark ? 'DARK' : 'LIGHT')
+    }
+  }, [theme.hasHydrated, theme.tint, theme.dark])
+
+  const navTheme: Theme = {
+    dark: theme.dark ?? true,
+    colors: {
+      primary: theme.scheme?.primary ?? '#fff',
+      background: theme.scheme?.background ?? '#000',
+      card: theme.scheme?.surface ?? '#000',
+      text: theme.scheme?.primary ?? '#fff',
+      border: theme.scheme?.primary ?? '#fff',
+      notification: theme.scheme?.primary ?? '#fff',
+    },
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="SelectServer"
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name="Tabs" component={Tabs} />
-            <Stack.Screen
-              name="Player"
-              component={Player}
-              options={{
-                presentation: 'card',
-                gestureEnabled: true,
-                gestureDirection: 'vertical',
-                gestureResponseDistance: height / 2,
-                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-              }}
-            />
-            <Stack.Screen name="SelectServer" component={SelectServer} />
-            <Stack.Screen name="SelectUser" component={SelectUser} />
-          </Stack.Navigator>
+        <NavigationContainer theme={navTheme}>
+          {!!theme.scheme && (
+            <Stack.Navigator
+              initialRouteName="SelectServer"
+              screenOptions={{ headerShown: false }}
+            >
+              <Stack.Screen name="Tabs" component={Tabs} />
+              <Stack.Screen
+                name="Player"
+                component={Player}
+                options={{
+                  presentation: 'card',
+                  gestureEnabled: true,
+                  gestureDirection: 'vertical',
+                  gestureResponseDistance: height / 2,
+                  cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                }}
+              />
+              <Stack.Screen name="SelectServer" component={SelectServer} />
+              <Stack.Screen name="SelectUser" component={SelectUser} />
+            </Stack.Navigator>
+          )}
         </NavigationContainer>
       </QueryClientProvider>
     </GestureHandlerRootView>
