@@ -1,6 +1,8 @@
+import TrackPlayer, { Event, State } from 'react-native-track-player'
+
+import useSettings from 'hooks/useSettings'
 import usePlayer from 'hooks/usePlayer'
 import { playing, stopped } from 'lib/progress'
-import TrackPlayer, { Event, State } from 'react-native-track-player'
 
 const PlaybackService = async () => {
   TrackPlayer.addEventListener(Event.RemotePlay, () =>
@@ -44,7 +46,10 @@ const PlaybackService = async () => {
     async (event) => {
       if (usePlayer.getState().queue.length > event.index) {
         usePlayer.getState().setTrack(event.index, true)
-        if ('NormalizationGain' in usePlayer.getState().queue[event.index]) {
+        if (
+          useSettings.getState().gain &&
+          'NormalizationGain' in usePlayer.getState().queue[event.index]
+        ) {
           const gain = Math.pow(
             10,
             usePlayer.getState().queue[event.index].NormalizationGain / 20,

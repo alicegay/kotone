@@ -10,11 +10,11 @@ import TabStack from 'types/TabStack'
 import useTheme from 'hooks/useTheme'
 import useLibrary from 'hooks/useLibrary'
 import useViews from 'api/useViews'
-import useItems from 'api/useItems'
 import FloatingPlayer from 'components/FloatingPlayer'
 import { Icon } from 'components/Icon'
 import Home from './Home'
 import Queue from './Queue'
+import Settings from './Settings'
 
 const Tab = createBottomTabNavigator<TabStack>()
 
@@ -46,7 +46,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
     tabIcon: {
       paddingHorizontal: 16,
       paddingVertical: 6,
-      borderRadius: 32,
+      borderRadius: 20.2,
       overflow: 'hidden',
     },
     tabIconFocus: { backgroundColor: theme.scheme.surfaceVariant },
@@ -90,7 +90,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
         <Tab.Screen name="Music" component={Home} />
         <Tab.Screen name="Search" component={Temp} />
         <Tab.Screen name="Queue" component={Queue} />
-        <Tab.Screen name="Settings" component={Temp} />
+        <Tab.Screen name="Settings" component={Settings} />
       </Tab.Navigator>
       <FloatingPlayer navigation={navigation} />
     </>

@@ -75,7 +75,7 @@ const TrackListItem = ({
             height: 48,
             borderRadius: 8,
             overflow: 'hidden',
-            backgroundColor: th ? theme.scheme.surface : '#222',
+            backgroundColor: th ? theme.scheme.primaryContainer : '#222',
           }}
         >
           {!!image && (

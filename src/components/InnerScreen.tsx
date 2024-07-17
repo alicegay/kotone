@@ -11,8 +11,7 @@ import { BlurMask, Canvas, Oval } from '@shopify/react-native-skia'
 
 import useTheme from 'hooks/useTheme'
 import { Icon } from './Icon'
-import { ReactNode, useEffect } from 'react'
-import { hexFromArgb } from '@material/material-color-utilities'
+import { ReactNode } from 'react'
 
 interface Props {
   children?: ReactNode
@@ -33,12 +32,6 @@ const InnerScreen = ({
   const insets = useSafeAreaInsets()
   const { width } = useWindowDimensions()
   const navigation = useNavigation()
-
-  useEffect(() => {
-    // theme.setTheme('#741224')
-    // console.log('scheme', theme.scheme)
-    // console.log('primary hex', hexFromArgb(theme.scheme.primary))
-  }, [])
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.scheme.background }}>

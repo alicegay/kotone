@@ -20,6 +20,7 @@ interface ThemeStore {
   dark: boolean
   scheme: Scheme
 
+  setTint: (color: string) => void
   setDark: (dark: boolean) => void
   setTheme: (color: string) => void
 
@@ -30,18 +31,19 @@ interface ThemeStore {
 const useTheme = create<ThemeStore>()(
   persist(
     (set, get) => ({
-      background: '#1E100D',
+      background: '#000',
       foreground: '#fff',
       foregroundAlt: '#fff6',
       ripple: '#fff2',
-      tint: '#741224',
+      tint: '#b696c0',
       font400: 'NunitoRoundedMplus-Regular',
       font500: 'NunitoRoundedMplus-Medium',
       font700: 'NunitoRoundedMplus-Bold',
 
-      dark: true,
+      dark: false,
       scheme: null,
 
+      setTint: (color) => set(() => ({ tint: color.slice(0, 7) })),
       setDark: (dark) => set(() => ({ dark: dark })),
       setTheme: (color) => {
         const theme = themeFromSourceColor(argbFromHex(color))
@@ -51,6 +53,7 @@ const useTheme = create<ThemeStore>()(
         for (const key in scheme) {
           scheme[key] = hexFromArgb(scheme[key])
         }
+        scheme['ripple'] = scheme['onBackground'] + '22'
         set(() => ({
           scheme: scheme as unknown as Scheme,
         }))
@@ -99,6 +102,7 @@ type Scheme = {
   inverseSurface: string
   inverseOnSurface: string
   inversePrimary: string
+  ripple: string
 }
 
 export default useTheme
