@@ -24,10 +24,12 @@ const PlaybackService = async () => {
     console.log(event.rating),
   )
 
-  TrackPlayer.addEventListener(Event.RemoteDuck, (event) => {
+  TrackPlayer.addEventListener(Event.RemoteDuck, async (event) => {
     if (event.paused) {
       usePlayer.getState().pause()
-      if (!event.permanent) usePlayer.getState().setDucked(true)
+      const { state } = await TrackPlayer.getPlaybackState()
+      if (state === State.Playing && !event.permanent)
+        usePlayer.getState().setDucked(true)
     } else {
       if (usePlayer.getState().ducked) {
         usePlayer.getState().play()
