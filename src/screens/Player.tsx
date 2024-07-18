@@ -25,6 +25,7 @@ import useLyrics from 'api/useLyrics'
 import { useEffect, useState } from 'react'
 import secsToTicks from 'lib/secsToTicks'
 import useInterval from 'hooks/useInterval'
+import useFavItem from 'api/useFavItem'
 
 //let accuratePosition = 0
 
@@ -41,6 +42,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const track = player.queue.length > 0 ? player.queue[player.track] : null
 
   const item = useSingleItem(!!track ? track.Id : null, !!track)
+  const favorite = !!item.data && item.data.UserData.IsFavorite
+  const favItem = useFavItem(!!item.data ? item.data.Id : null)
   const lyrics = useLyrics(!!track ? track.Id : null, !!track)
   const timedLyrics = !!lyrics.data ? 'Start' in lyrics.data.Lyrics[0] : false
   const [currentLyric, setCurrentLyric] = useState<string>(null)
@@ -284,7 +287,6 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           </Pressable>
           <Pressable
             onPress={async () => {
-              //console.log(await TrackPlayer.getQueue())
               player.nextTrack()
             }}
             android_ripple={androidRipple}
@@ -337,12 +339,23 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           <Pressable
             style={styles.buttonSmall}
             android_ripple={androidRipple}
-            onPress={() => {}}
+            onPress={() => {
+              if (!!item.data) {
+                favItem.mutate(favorite)
+              }
+            }}
           >
-            <IconFilled
-              name="favorite"
-              style={{ color: theme.foreground, fontSize: 20 }}
-            />
+            {favorite ? (
+              <IconFilled
+                name="favorite"
+                style={{ color: theme.foreground, fontSize: 20 }}
+              />
+            ) : (
+              <Icon
+                name="favorite"
+                style={{ color: theme.foregroundAlt, fontSize: 20 }}
+              />
+            )}
           </Pressable>
           <Pressable
             style={styles.buttonSmall}
