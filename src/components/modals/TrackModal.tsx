@@ -17,19 +17,11 @@ interface Props {
   visible: boolean
   onClose: () => void
   track: Item
-  title?: string
   songs?: Item[]
   navigation: NativeStackNavigationProp<MusicStack>
 }
 
-const TrackModal = ({
-  visible,
-  onClose,
-  track,
-  title,
-  songs,
-  navigation,
-}: Props) => {
+const TrackModal = ({ visible, onClose, track, songs, navigation }: Props) => {
   const player = usePlayer()
   const theme = useTheme()
   const { height } = useWindowDimensions()

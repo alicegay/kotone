@@ -38,6 +38,7 @@ const Albums = ({
   )
 
   const [trackModal, setTrackModal] = useState<Item>(null)
+  const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
 
   return (
     <>
@@ -46,6 +47,7 @@ const Albums = ({
         icon="more_horiz"
         onPress={() => {
           setTrackModal(album)
+          setShowTrackModal(true)
         }}
       >
         {!isLoading && !!data && (
@@ -65,6 +67,7 @@ const Albums = ({
                 }}
                 onLongPress={() => {
                   setTrackModal(item)
+                  setShowTrackModal(true)
                 }}
               />
             )}
@@ -76,8 +79,8 @@ const Albums = ({
       </InnerScreen>
 
       <TrackModal
-        visible={!!trackModal}
-        onClose={() => setTrackModal(null)}
+        visible={showTrackModal}
+        onClose={() => setShowTrackModal(false)}
         track={trackModal}
         navigation={navigation}
       />

@@ -24,6 +24,7 @@ const AlbumList = ({
   const library = useLibrary()
 
   const [trackModal, setTrackModal] = useState<Item>(null)
+  const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
 
   const titles = {
     albums: 'Albums',
@@ -67,6 +68,7 @@ const AlbumList = ({
                 }}
                 onLongPress={() => {
                   setTrackModal(item)
+                  setShowTrackModal(true)
                 }}
                 showDuration={false}
                 showArtist={item.Type !== 'Playlist'}
@@ -84,8 +86,8 @@ const AlbumList = ({
       </InnerScreen>
 
       <TrackModal
-        visible={!!trackModal}
-        onClose={() => setTrackModal(null)}
+        visible={showTrackModal}
+        onClose={() => setShowTrackModal(false)}
         track={trackModal}
         navigation={navigation}
       />

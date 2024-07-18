@@ -24,6 +24,7 @@ const SongList = ({
   const library = useLibrary()
 
   const [trackModal, setTrackModal] = useState<Item | 'songs'>(null)
+  const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
 
   const titles = {
     songs: 'Songs',
@@ -79,6 +80,7 @@ const SongList = ({
         icon="more_horiz"
         onPress={() => {
           setTrackModal('songs')
+          setShowTrackModal(true)
         }}
       >
         {!isLoading && data && (
@@ -95,6 +97,7 @@ const SongList = ({
                 }}
                 onLongPress={() => {
                   setTrackModal(item)
+                  setShowTrackModal(true)
                 }}
               />
             )}
@@ -110,8 +113,8 @@ const SongList = ({
       </InnerScreen>
 
       <TrackModal
-        visible={!!trackModal}
-        onClose={() => setTrackModal(null)}
+        visible={showTrackModal}
+        onClose={() => setShowTrackModal(false)}
         track={typeof trackModal !== 'string' ? trackModal : null}
         songs={trackModal === 'songs' ? data.Items : null}
         navigation={navigation}
