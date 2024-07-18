@@ -16,10 +16,19 @@ interface Props {
   visible: boolean
   onClose: () => void
   track: Track
+  queue?: boolean
+  index?: number
   navigation: NativeStackNavigationProp<MusicStack>
 }
 
-const TrackModal = ({ visible, onClose, track, navigation }: Props) => {
+const TrackModal = ({
+  visible,
+  onClose,
+  track,
+  queue = false,
+  index,
+  navigation,
+}: Props) => {
   const player = usePlayer()
   const theme = useTheme()
   const { height } = useWindowDimensions()
@@ -84,7 +93,11 @@ const TrackModal = ({ visible, onClose, track, navigation }: Props) => {
               icon="play_arrow"
               iconFilled={true}
               onPress={() => {
-                player.setQueue([track])
+                if (queue) {
+                  player.setTrack(index)
+                } else {
+                  player.setQueue([track])
+                }
                 player.play()
                 onClose()
               }}
@@ -105,6 +118,19 @@ const TrackModal = ({ visible, onClose, track, navigation }: Props) => {
                 onClose()
               }}
             />
+            {queue && (
+              <ModalButton
+                text="Remove from queue"
+                icon="playlist_remove"
+                onPress={() => {
+                  player.removeQueue(index)
+                  onClose()
+                }}
+              />
+            )}
+
+            <Separator />
+
             <ModalButton
               text="Add to playlist"
               icon="playlist_add"

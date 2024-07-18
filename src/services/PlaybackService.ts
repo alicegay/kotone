@@ -62,12 +62,14 @@ const PlaybackService = async () => {
         }
       }
 
-      if ('track' in event && event.lastTrack) {
+      if (event.lastTrack) {
         const lastID = usePlayer.getState().queue[event.lastIndex].Id
         await stopped(lastID, event.lastTrack.duration)
       }
-      const trackID = usePlayer.getState().queue[event.index].Id
-      await playing(undefined, trackID)
+      if (event.track) {
+        const trackID = usePlayer.getState().queue[event.index].Id
+        await playing(undefined, trackID)
+      }
     },
   )
 

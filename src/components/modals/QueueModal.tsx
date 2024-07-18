@@ -7,23 +7,17 @@ import MusicStack from 'types/MusicStack'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import ModalButton from './ModalButton'
-import { Track } from 'types/ItemTypes'
-import Separator from './Separator'
 
 interface Props {
   visible: boolean
   onClose: () => void
-  tracks?: Track[]
-  navigation: NativeStackNavigationProp<MusicStack>
 }
 
-const ListModal = ({ visible, onClose, tracks, navigation }: Props) => {
+const QueueModal = ({ visible, onClose }: Props) => {
   const player = usePlayer()
   const theme = useTheme()
   const { height } = useWindowDimensions()
   const insets = useSafeAreaInsets()
-
-  if (!tracks) return null
 
   return (
     <Modal
@@ -48,53 +42,41 @@ const ListModal = ({ visible, onClose, tracks, navigation }: Props) => {
         >
           <View style={{ paddingVertical: 8, gap: 4 }}>
             <ModalButton
-              text="Play all"
+              text="Play queue"
               icon="play_arrow"
               iconFilled={true}
               useTheme={true}
               onPress={() => {
-                player.setQueue(tracks)
+                player.setTrack(0)
                 player.play()
                 onClose()
               }}
+              disabled={player.queue.length === 0}
             />
             <ModalButton
-              text="Shuffle all"
+              text="Shuffle queue"
               icon="shuffle"
               useTheme={true}
               onPress={() => {
-                player.setQueue([...tracks].sort(() => Math.random() - 0.5))
+                player.setQueue(
+                  [...player.queue].sort(() => Math.random() - 0.5),
+                )
+                player.setTrack(0)
                 player.play()
                 onClose()
               }}
+              disabled={player.queue.length === 0}
             />
+
             <ModalButton
-              text="Play next"
-              icon="playlist_play"
-              useTheme={true}
-              onPress={() => {
-                player.nextQueue(tracks)
-                onClose()
-              }}
-            />
-            <ModalButton
-              text="Add to queue"
+              text="Clear queue"
               icon="playlist_add"
               useTheme={true}
               onPress={() => {
-                player.addQueue(tracks)
+                player.clearQueue()
                 onClose()
               }}
-            />
-
-            <Separator />
-
-            <ModalButton
-              text="Add to playlist"
-              icon="playlist_add"
-              useTheme={true}
-              onPress={() => {}}
-              disabled={true}
+              disabled={player.queue.length === 0}
             />
           </View>
         </View>
@@ -103,4 +85,4 @@ const ListModal = ({ visible, onClose, tracks, navigation }: Props) => {
   )
 }
 
-export default ListModal
+export default QueueModal

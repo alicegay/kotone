@@ -137,6 +137,9 @@ const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
               }}
               disabled={(album && list.isLoading) || (album && !list.data)}
             />
+
+            <Separator />
+
             <ModalButton
               text="Add to playlist"
               icon="playlist_add"
