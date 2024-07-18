@@ -10,31 +10,43 @@ import useTheme from 'hooks/useTheme'
 import TrackListItem from 'components/TrackListItem'
 import ModalButton from './ModalButton'
 import Separator from './Separator'
-import { Track } from 'types/ItemTypes'
+import useItems from 'api/useItems'
+import { Album, Playlist } from 'types/ItemTypes'
 
 interface Props {
   visible: boolean
   onClose: () => void
-  track: Track
+  album: Album | Playlist
   navigation: NativeStackNavigationProp<MusicStack>
 }
 
-const TrackModal = ({ visible, onClose, track, navigation }: Props) => {
+const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
   const player = usePlayer()
   const theme = useTheme()
   const { height } = useWindowDimensions()
   const insets = useSafeAreaInsets()
 
-  if (!track) return null
+  const list = useItems(
+    {
+      ParentId: !!album ? album.Id : null,
+      SortBy:
+        !!album && album.Type === 'Playlist'
+          ? undefined
+          : 'ParentIndexNumber,IndexNumber,Name',
+    },
+    !!album,
+  )
+
+  if (!album) return null
 
   const blurhash =
-    'Primary' in track.ImageBlurHashes
-      ? track.ImageBlurHashes.Primary[
-          'Primary' in track.ImageTags
-            ? track.ImageTags.Primary
-            : track.AlbumPrimaryImageTag
+    'Primary' in album.ImageBlurHashes
+      ? album.ImageBlurHashes.Primary[
+          'Primary' in album.ImageTags ? album.ImageTags.Primary : null
         ]
       : null
+
+  const playlist = album.Type === 'Playlist'
 
   return (
     <Modal
@@ -78,32 +90,52 @@ const TrackModal = ({ visible, onClose, track, navigation }: Props) => {
             </>
           )}
           <View style={{ paddingVertical: 8, gap: 4 }}>
-            <TrackListItem track={track} useTheme={false} playing={false} />
+            <TrackListItem
+              track={album}
+              useTheme={false}
+              playing={false}
+              showDuration={!album}
+            />
             <ModalButton
-              text="Play"
+              text={playlist ? 'Play playlist' : 'Play album'}
               icon="play_arrow"
               iconFilled={true}
               onPress={() => {
-                player.setQueue([track])
+                player.setQueue(list.data?.Items)
                 player.play()
                 onClose()
               }}
+              disabled={list.isLoading || !list.data}
+            />
+            <ModalButton
+              text={playlist ? 'Shuffle playlist' : 'Shuffle album'}
+              icon="shuffle"
+              onPress={() => {
+                player.setQueue(
+                  [...list.data?.Items].sort(() => Math.random() - 0.5),
+                )
+                player.play()
+                onClose()
+              }}
+              disabled={list.isLoading || !list.data}
             />
             <ModalButton
               text="Play next"
               icon="playlist_play"
               onPress={() => {
-                player.nextQueue([track])
+                player.nextQueue(list.data?.Items)
                 onClose()
               }}
+              disabled={(album && list.isLoading) || (album && !list.data)}
             />
             <ModalButton
               text="Add to queue"
               icon="playlist_add"
               onPress={() => {
-                player.addQueue([track])
+                player.addQueue(list.data?.Items)
                 onClose()
               }}
+              disabled={(album && list.isLoading) || (album && !list.data)}
             />
             <ModalButton
               text="Add to playlist"
@@ -112,24 +144,32 @@ const TrackModal = ({ visible, onClose, track, navigation }: Props) => {
               disabled={true}
             />
 
-            <Separator />
+            {!playlist && (
+              <>
+                <Separator />
 
-            <ModalButton
-              text="View album"
-              icon="album"
-              onPress={() => {
-                onClose()
-                navigation.push('Album', { album: track.AlbumId })
-              }}
-            />
+                <ModalButton
+                  text="View artist"
+                  icon="artist"
+                  iconFilled={true}
+                  onPress={() => {}}
+                  disabled={true}
+                />
+              </>
+            )}
 
-            <ModalButton
-              text="View artist"
-              icon="artist"
-              iconFilled={true}
-              onPress={() => {}}
-              disabled={true}
-            />
+            {playlist && (
+              <>
+                <Separator />
+
+                <ModalButton
+                  text="Delete playlist"
+                  icon="playlist_remove"
+                  onPress={() => {}}
+                  disabled={true}
+                />
+              </>
+            )}
           </View>
         </View>
       </View>
@@ -137,4 +177,4 @@ const TrackModal = ({ visible, onClose, track, navigation }: Props) => {
   )
 }
 
-export default TrackModal
+export default AlbumModal

@@ -2,17 +2,17 @@ import { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { FlashList } from '@shopify/flash-list'
 import { useQueryClient } from '@tanstack/react-query'
-import Item from 'jellyfin-api/lib/types/media/Item'
 import ItemsQuery from 'jellyfin-api/lib/types/queries/ItemsQuery'
 
 import MusicStack from 'types/MusicStack'
 import TrackListItem from 'components/TrackListItem'
 import usePlayer from 'hooks/usePlayer'
 import useLibrary from 'hooks/useLibrary'
-import TrackModal from 'components/modals/TrackModal'
 import EndOfList from 'components/EndOfList'
 import InnerScreen from 'components/InnerScreen'
 import useItems from 'api/useItems'
+import { Album, Playlist } from 'types/ItemTypes'
+import AlbumModal from 'components/modals/AlbumModal'
 
 const AlbumList = ({
   navigation,
@@ -20,11 +20,10 @@ const AlbumList = ({
 }: NativeStackScreenProps<MusicStack, 'AlbumList'>) => {
   const { type } = route.params
   const queryClient = useQueryClient()
-  const player = usePlayer()
   const library = useLibrary()
 
-  const [trackModal, setTrackModal] = useState<Item>(null)
-  const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
+  const [albumModal, setAlbumModal] = useState<Album | Playlist>(null)
+  const [showAlbumModal, setShowAlbumModal] = useState<boolean>(false)
 
   const titles = {
     albums: 'Albums',
@@ -67,8 +66,12 @@ const AlbumList = ({
                   navigation.push('Album', { album: item })
                 }}
                 onLongPress={() => {
-                  setTrackModal(item)
-                  setShowTrackModal(true)
+                  setAlbumModal(
+                    item.Type !== 'Playlist'
+                      ? (item as Album)
+                      : (item as Playlist),
+                  )
+                  setShowAlbumModal(true)
                 }}
                 showDuration={false}
                 showArtist={item.Type !== 'Playlist'}
@@ -85,10 +88,10 @@ const AlbumList = ({
         )}
       </InnerScreen>
 
-      <TrackModal
-        visible={showTrackModal}
-        onClose={() => setShowTrackModal(false)}
-        track={trackModal}
+      <AlbumModal
+        visible={showAlbumModal}
+        onClose={() => setShowAlbumModal(false)}
+        album={albumModal}
         navigation={navigation}
       />
     </>

@@ -23,11 +23,11 @@ interface PlayerStore {
   cycleRepeat: () => void
   setDucked: (value: boolean) => void
 
-  setQueue: (items: Item[], index?: number) => void
+  setQueue: (items: Item[] | Track[], index?: number) => void
   moveQueue: (fromIndex: number, toIndex: number) => void
   clearQueue: () => void
-  addQueue: (items: Item[]) => void
-  nextQueue: (items: Item[]) => void
+  addQueue: (items: Item[] | Track[]) => void
+  nextQueue: (items: Item[] | Track[]) => void
   removeQueue: (index: number) => void
 
   hasHydrated: boolean

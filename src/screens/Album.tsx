@@ -12,6 +12,8 @@ import InnerScreen from 'components/InnerScreen'
 import useItems from 'api/useItems'
 import sameAlbumArtists from 'lib/sameAlbumArtists'
 import useSingleItem from 'api/useSingleItem'
+import AlbumModal from 'components/modals/AlbumModal'
+import { Album, Track } from 'types/ItemTypes'
 
 const Albums = ({
   navigation,
@@ -37,8 +39,11 @@ const Albums = ({
     typeof albumParam === 'string' && !albumQuery.data ? false : true,
   )
 
-  const [trackModal, setTrackModal] = useState<Item>(null)
+  const [trackModal, setTrackModal] = useState<Track>(null)
   const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
+
+  const [albumModal, setAlbumModal] = useState<Album>(null)
+  const [showAlbumModal, setShowAlbumModal] = useState<boolean>(false)
 
   return (
     <>
@@ -46,8 +51,8 @@ const Albums = ({
         title={album?.Name}
         icon="more_horiz"
         onPress={() => {
-          setTrackModal(album)
-          setShowTrackModal(true)
+          setAlbumModal(album as Album)
+          setShowAlbumModal(true)
         }}
       >
         {!isLoading && !!data && (
@@ -66,7 +71,7 @@ const Albums = ({
                   player.play()
                 }}
                 onLongPress={() => {
-                  setTrackModal(item)
+                  setTrackModal(item as Track)
                   setShowTrackModal(true)
                 }}
               />
@@ -82,6 +87,13 @@ const Albums = ({
         visible={showTrackModal}
         onClose={() => setShowTrackModal(false)}
         track={trackModal}
+        navigation={navigation}
+      />
+
+      <AlbumModal
+        visible={showAlbumModal}
+        onClose={() => setShowAlbumModal(false)}
+        album={albumModal}
         navigation={navigation}
       />
     </>

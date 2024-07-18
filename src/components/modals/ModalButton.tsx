@@ -7,6 +7,7 @@ interface Props {
   icon: string
   iconFilled?: boolean
   onPress?: (e: GestureResponderEvent) => void
+  useTheme?: boolean
   disabled?: boolean
 }
 
@@ -15,9 +16,18 @@ const ModalButton = ({
   icon,
   iconFilled = false,
   onPress,
+  useTheme: th = false,
   disabled = false,
 }: Props) => {
   const theme = useTheme()
+
+  const color = disabled
+    ? th
+      ? theme.scheme.primary.slice(0, 7) + '66'
+      : theme.foregroundAlt
+    : th
+    ? theme.scheme.primary
+    : theme.foreground
 
   return (
     <Pressable
@@ -28,14 +38,14 @@ const ModalButton = ({
         paddingVertical: 8,
         gap: 16,
       }}
-      android_ripple={{ color: theme.ripple }}
+      android_ripple={{ color: th ? theme.scheme.ripple : theme.ripple }}
       disabled={disabled}
     >
       {iconFilled ? (
         <IconFilled
           name={icon}
           style={{
-            color: disabled ? theme.foregroundAlt : theme.foreground,
+            color: color,
             fontSize: 24,
           }}
         />
@@ -43,14 +53,14 @@ const ModalButton = ({
         <Icon
           name={icon}
           style={{
-            color: disabled ? theme.foregroundAlt : theme.foreground,
+            color: color,
             fontSize: 24,
           }}
         />
       )}
       <Text
         style={{
-          color: disabled ? theme.foregroundAlt : theme.foreground,
+          color: color,
           fontFamily: theme.font500,
           fontSize: 20,
         }}

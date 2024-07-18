@@ -60,14 +60,13 @@ const TrackListItem = ({
       delayLongPress={300}
       disabled={isDragging || (!onPress && !onLongPress)}
       style={{
-        //flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 4,
         gap: 16,
       }}
-      android_ripple={{ color: '#fff2' }}
+      android_ripple={{ color: th ? theme.scheme.ripple : theme.ripple }}
     >
       {showAlbumArt && (
         <View

@@ -13,6 +13,8 @@ import TrackModal from 'components/modals/TrackModal'
 import EndOfList from 'components/EndOfList'
 import InnerScreen from 'components/InnerScreen'
 import useItems from 'api/useItems'
+import { Track } from 'types/ItemTypes'
+import ListModal from 'components/modals/ListModal'
 
 const SongList = ({
   navigation,
@@ -23,8 +25,11 @@ const SongList = ({
   const player = usePlayer()
   const library = useLibrary()
 
-  const [trackModal, setTrackModal] = useState<Item | 'songs'>(null)
+  const [trackModal, setTrackModal] = useState<Track>(null)
   const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
+
+  const [listModal, setListModal] = useState<Track[]>(null)
+  const [showListModal, setShowListModal] = useState<boolean>(false)
 
   const titles = {
     songs: 'Songs',
@@ -59,7 +64,7 @@ const SongList = ({
       IncludeItemTypes: 'Audio',
       Recursive: true,
       Filter: 'IsPlayed',
-      Limit: 32,
+      Limit: 50,
     },
     recent: {
       SortBy: 'DatePlayed',
@@ -67,7 +72,7 @@ const SongList = ({
       IncludeItemTypes: 'Audio',
       Recursive: true,
       Filter: 'IsPlayed',
-      Limit: 32,
+      Limit: 50,
     },
   }
 
@@ -79,8 +84,8 @@ const SongList = ({
         title={titles[type]}
         icon="more_horiz"
         onPress={() => {
-          setTrackModal('songs')
-          setShowTrackModal(true)
+          setListModal(data?.Items as Track[])
+          setShowListModal(true)
         }}
       >
         {!isLoading && data && (
@@ -96,7 +101,7 @@ const SongList = ({
                   player.play()
                 }}
                 onLongPress={() => {
-                  setTrackModal(item)
+                  setTrackModal(item as Track)
                   setShowTrackModal(true)
                 }}
               />
@@ -115,8 +120,14 @@ const SongList = ({
       <TrackModal
         visible={showTrackModal}
         onClose={() => setShowTrackModal(false)}
-        track={typeof trackModal !== 'string' ? trackModal : null}
-        songs={trackModal === 'songs' ? data.Items : null}
+        track={trackModal}
+        navigation={navigation}
+      />
+
+      <ListModal
+        visible={showListModal}
+        onClose={() => setShowListModal(false)}
+        tracks={listModal}
         navigation={navigation}
       />
     </>
