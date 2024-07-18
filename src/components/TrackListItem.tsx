@@ -7,9 +7,10 @@ import useTheme from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
 import { Icon } from 'components/Icon'
 import { FasterImageView } from '@candlefinance/faster-image'
+import { Album, Playlist, Track } from 'types/ItemTypes'
 
 interface Props {
-  track: Item
+  track: Track | Album | Playlist | Item
   useTheme?: boolean
   onPress?: (e: GestureResponderEvent) => void
   onLongPress?: (e: GestureResponderEvent) => void

@@ -3,12 +3,14 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import Item from 'jellyfin-api/lib/types/media/Item'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import TrackPlayer, { RepeatMode } from 'react-native-track-player'
-import itemToTrack from 'lib/itemToTrack'
+import itemToRNTPTrack from 'lib/itemToRNTPTrack'
+import { Track } from 'types/ItemTypes'
+import itemToType from 'lib/itemToType'
 
 interface PlayerStore {
   track: number
   trackID?: string
-  queue: Item[]
+  queue: Track[]
   repeat: 'off' | 'track' | 'queue'
   ducked: boolean
 
@@ -102,8 +104,9 @@ const usePlayer = create<PlayerStore>()(
       setDucked: (value) => set(() => ({ ducked: value })),
 
       setQueue: async (items, index = 0) => {
-        set(() => ({ queue: items, track: index, trackID: items[index].Id }))
-        await TrackPlayer.setQueue(items.map((item) => itemToTrack(item)))
+        const tracks = items.map((item) => itemToType(item) as Track)
+        set(() => ({ queue: tracks, track: index, trackID: items[index].Id }))
+        await TrackPlayer.setQueue(items.map((item) => itemToRNTPTrack(item)))
         await TrackPlayer.skip(index)
       },
       moveQueue: async (fromIndex, toIndex) => {
@@ -130,19 +133,21 @@ const usePlayer = create<PlayerStore>()(
         TrackPlayer.reset()
       },
       addQueue: (items) => {
-        set((state) => ({ queue: [...state.queue, ...items] }))
-        TrackPlayer.add(items.map((item) => itemToTrack(item)))
+        const tracks = items.map((item) => itemToType(item) as Track)
+        set((state) => ({ queue: [...state.queue, ...tracks] }))
+        TrackPlayer.add(items.map((item) => itemToRNTPTrack(item)))
       },
       nextQueue: (items) => {
+        const tracks = items.map((item) => itemToType(item) as Track)
         set((state) => ({
           queue: [
             ...state.queue.slice(0, state.track + 1),
-            ...items,
+            ...tracks,
             ...state.queue.slice(state.track + 1),
           ],
         }))
         TrackPlayer.add(
-          items.map((item) => itemToTrack(item)),
+          items.map((item) => itemToRNTPTrack(item)),
           get().track + 1,
         )
       },

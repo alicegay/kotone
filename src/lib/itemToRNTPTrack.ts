@@ -1,23 +1,10 @@
-import DeviceInfo from 'react-native-device-info'
-import { Track } from 'react-native-track-player'
+import { Track as RNTPTrack } from 'react-native-track-player'
 import Item from 'jellyfin-api/lib/types/media/Item'
 import useClient from 'hooks/useClient'
+import { Track } from 'types/ItemTypes'
 
-const itemToTrack = (item: Item): Track => {
+const itemToRNTPTrack = (item: Item | Track): RNTPTrack => {
   const server = useClient.getState().server
-
-  // const auth =
-  //   'MediaBrowser Client="' +
-  //   DeviceInfo.getApplicationName() +
-  //   '", Device="' +
-  //   useClient.getState().deviceName +
-  //   '", DeviceId="' +
-  //   useClient.getState().deviceID +
-  //   '", Version="' +
-  //   DeviceInfo.getVersion() +
-  //   '", Token="' +
-  //   useClient.getState().token +
-  //   '"'
 
   const image =
     'Primary' in item.ImageTags
@@ -41,9 +28,6 @@ const itemToTrack = (item: Item): Track => {
 
   return {
     url: url + params.join('&'),
-    // headers: {
-    //   Authorization: auth,
-    // },
     id: item.Id,
     title: item.Name,
     artist: item.Artists.join(', '),
@@ -52,4 +36,4 @@ const itemToTrack = (item: Item): Track => {
   }
 }
 
-export default itemToTrack
+export default itemToRNTPTrack
