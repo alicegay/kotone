@@ -20,6 +20,13 @@ import useTheme from 'hooks/useTheme'
 import usePlayer from 'hooks/usePlayer'
 import secsToTime from 'lib/secsToTime'
 import { Icon, IconFilled } from 'components/Icon'
+import useSingleItem from 'api/useSingleItem'
+import useLyrics from 'api/useLyrics'
+import { useEffect, useState } from 'react'
+import secsToTicks from 'lib/secsToTicks'
+import useInterval from 'hooks/useInterval'
+
+//let accuratePosition = 0
 
 const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const client = useClient()
@@ -32,6 +39,45 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const navigationHook = useNavigation()
 
   const track = player.queue.length > 0 ? player.queue[player.track] : null
+
+  const item = useSingleItem(!!track ? track.Id : null, !!track)
+  const lyrics = useLyrics(!!track ? track.Id : null, !!track)
+  const timedLyrics = !!lyrics.data ? 'Start' in lyrics.data.Lyrics[0] : false
+  const [currentLyric, setCurrentLyric] = useState<string>(null)
+  const [accuratePosition, setAccuratePosition] = useState<number>(0)
+
+  useEffect(() => {
+    if (timedLyrics && !!lyrics.data) {
+      const position = secsToTicks(accuratePosition)
+      for (let i = 0; i < lyrics.data.Lyrics.length; i++) {
+        const start = lyrics.data.Lyrics[i].Start
+        if (start >= position) {
+          if (i == 0) {
+            setCurrentLyric(null)
+            break
+          }
+          setCurrentLyric(lyrics.data.Lyrics[i - 1].Text)
+          if (lyrics.data.Lyrics[i - 1].Text === currentLyric) break
+          break
+        }
+      }
+    }
+  }, [accuratePosition])
+
+  useEffect(() => {
+    setAccuratePosition(playerProgress.position)
+  }, [playerProgress.position])
+
+  useInterval(() => {
+    if (
+      timedLyrics &&
+      playerState.state === State.Playing &&
+      playerProgress.position !== accuratePosition + 0.1
+    ) {
+      setAccuratePosition(accuratePosition + 0.1)
+    }
+  }, 100)
+
   if (!track) return null
 
   const image =
@@ -126,7 +172,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             >
               {track.Artists.join(', ')}
             </Text>
-            {track.Album != track.Name && (
+            {track.Album !== track.Name && (
               <Text
                 style={{
                   color: theme.foregroundAlt,
@@ -187,28 +233,20 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             </View>
           </View>
 
-          {/* <View>
-            <Text
-              style={{
-                color: '#fff',
-                fontFamily: theme.font400,
-                textAlign: 'center',
-              }}
-              numberOfLines={1}
-            >
-              無敵の笑顔で荒らすメディア
-            </Text>
-            <Text
-              style={{
-                color: '#fff6',
-                fontFamily: theme.font400,
-                textAlign: 'center',
-              }}
-              numberOfLines={1}
-            >
-              知りたいその秘密ミステリアス
-            </Text>
-          </View> */}
+          {timedLyrics && (
+            <View>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontFamily: theme.font400,
+                  textAlign: 'center',
+                }}
+                numberOfLines={1}
+              >
+                {currentLyric}
+              </Text>
+            </View>
+          )}
         </View>
 
         <View
@@ -272,7 +310,10 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           >
             <Icon
               name="lyrics"
-              style={{ color: theme.foregroundAlt, fontSize: 20 }}
+              style={{
+                color: !!lyrics.data ? theme.foreground : theme.foregroundAlt,
+                fontSize: 20,
+              }}
             />
           </Pressable>
           <Pressable
