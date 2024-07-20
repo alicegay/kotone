@@ -145,6 +145,7 @@ const TrackModal = ({
               icon="album"
               onPress={() => {
                 onClose()
+                if (queue) navigation.navigate('Music')
                 navigation.push('Album', { album: track.AlbumId })
               }}
             />
