@@ -35,7 +35,7 @@ const useTheme = create<ThemeStore>()(
       foreground: '#fff',
       foregroundAlt: '#fff6',
       ripple: '#fff2',
-      tint: '#b696c0',
+      tint: '#ffd7f4',
       font400: 'NunitoRoundedMplus-Regular',
       font500: 'NunitoRoundedMplus-Medium',
       font700: 'NunitoRoundedMplus-Bold',

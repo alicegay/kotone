@@ -103,9 +103,8 @@ const Settings = () => {
               <HueSlider style={{ marginBottom: 8 }} />
               <Swatches
                 colors={[
-                  '#b696c0',
+                  '#ffd7f4',
                   '#9e515f',
-                  // '#741224',
                   '#bc8e68',
                   '#549e68',
                   '#4398a9',
