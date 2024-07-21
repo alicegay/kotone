@@ -72,7 +72,7 @@ const useTheme = create<ThemeStore>()(
   ),
 )
 
-type Scheme = {
+export type Scheme = {
   primary: string
   onPrimary: string
   primaryContainer: string

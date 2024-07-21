@@ -3,7 +3,7 @@ import Item from 'jellyfin-api/lib/types/media/Item'
 
 import useClient from 'hooks/useClient'
 import usePlayer from 'hooks/usePlayer'
-import useTheme from 'hooks/useTheme'
+import useTheme, { Scheme } from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
 import { Icon } from 'components/Icon'
 import { FasterImageView } from '@candlefinance/faster-image'
@@ -11,7 +11,6 @@ import { Album, Playlist, Track } from 'types/ItemTypes'
 
 interface Props {
   track: Track | Album | Playlist | Item
-  useTheme?: boolean
   onPress?: (e: GestureResponderEvent) => void
   onLongPress?: (e: GestureResponderEvent) => void
   onDragStart?: (e: GestureResponderEvent) => void
@@ -22,11 +21,11 @@ interface Props {
   showDuration?: boolean
   trackNumber?: number
   playing?: boolean | 'auto'
+  scheme?: Scheme
 }
 
 const TrackListItem = ({
   track,
-  useTheme: th = true,
   onPress,
   onLongPress,
   onDragStart,
@@ -37,6 +36,7 @@ const TrackListItem = ({
   showDuration = true,
   trackNumber,
   playing = 'auto',
+  scheme,
 }: Props) => {
   const client = useClient()
   const player = usePlayer()
@@ -66,7 +66,7 @@ const TrackListItem = ({
         paddingVertical: 4,
         gap: 16,
       }}
-      android_ripple={{ color: th ? theme.scheme.ripple : theme.ripple }}
+      android_ripple={{ color: !!scheme ? scheme.ripple : theme.ripple }}
     >
       {showAlbumArt && (
         <View
@@ -75,7 +75,7 @@ const TrackListItem = ({
             height: 48,
             borderRadius: 8,
             overflow: 'hidden',
-            backgroundColor: th ? theme.scheme.primaryContainer : '#222',
+            backgroundColor: !!scheme ? scheme.primaryContainer : '#222',
           }}
         >
           {!!image && (
@@ -108,7 +108,7 @@ const TrackListItem = ({
         <Icon
           name="equalizer"
           style={{
-            color: th ? theme.scheme.primary : theme.foreground,
+            color: !!scheme ? scheme.primary : theme.foreground,
             fontSize: 24,
             width: 24,
           }}
@@ -117,7 +117,7 @@ const TrackListItem = ({
         (!!trackNumber || trackNumber === 0) && (
           <Text
             style={{
-              color: th ? theme.scheme.primary : theme.foreground,
+              color: !!scheme ? scheme.primary : theme.foreground,
               fontFamily: theme.font700,
               fontSize: 14,
               width: 24,
@@ -139,7 +139,7 @@ const TrackListItem = ({
       >
         <Text
           style={{
-            color: th ? theme.scheme.primary : theme.foreground,
+            color: !!scheme ? scheme.primary : theme.foreground,
             fontFamily: theme.font500,
             fontSize: 16,
           }}
@@ -150,7 +150,7 @@ const TrackListItem = ({
         {showArtist && track.Type !== 'Playlist' && (
           <Text
             style={{
-              color: th ? theme.scheme.secondary : theme.foregroundAlt,
+              color: !!scheme ? scheme.secondary : theme.foregroundAlt,
               fontFamily: theme.font400,
               fontSize: 14,
             }}
@@ -166,7 +166,7 @@ const TrackListItem = ({
       {!onDragStart && showDuration && (
         <Text
           style={{
-            color: th ? theme.scheme.secondary : theme.foregroundAlt,
+            color: !!scheme ? scheme.secondary : theme.foregroundAlt,
             fontFamily: theme.font400,
             fontSize: 14,
           }}
@@ -194,7 +194,7 @@ const TrackListItem = ({
           <Icon
             name="menu"
             style={{
-              color: th ? theme.scheme.secondary : theme.foregroundAlt,
+              color: !!scheme ? scheme.secondary : theme.foregroundAlt,
               fontSize: 20,
             }}
           />

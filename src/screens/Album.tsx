@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { Pressable, Text, useWindowDimensions, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { FlashList } from '@shopify/flash-list'
-import Item from 'jellyfin-api/lib/types/media/Item'
+import { FasterImageView } from '@candlefinance/faster-image'
+import tinycolor from 'tinycolor2'
 
+import useClient from 'hooks/useClient'
 import MusicStack from 'types/MusicStack'
 import TrackListItem from 'components/TrackListItem'
 import usePlayer from 'hooks/usePlayer'
@@ -14,6 +17,10 @@ import sameAlbumArtists from 'lib/sameAlbumArtists'
 import useSingleItem from 'api/useSingleItem'
 import AlbumModal from 'components/modals/AlbumModal'
 import { Album, Track } from 'types/ItemTypes'
+import useTheme from 'hooks/useTheme'
+import { Blurhash } from 'react-native-blurhash'
+import getTheme from 'lib/getTheme'
+import { Icon, IconFilled } from 'components/Icon'
 
 const Albums = ({
   navigation,
@@ -21,7 +28,10 @@ const Albums = ({
 }: NativeStackScreenProps<MusicStack, 'Album'>) => {
   const { album: albumParam } = route.params
 
+  const client = useClient()
   const player = usePlayer()
+  const theme = useTheme()
+  const { width } = useWindowDimensions()
 
   const albumQuery = useSingleItem(
     typeof albumParam === 'string' ? albumParam : albumParam.Id,
@@ -45,11 +55,26 @@ const Albums = ({
   const [albumModal, setAlbumModal] = useState<Album>(null)
   const [showAlbumModal, setShowAlbumModal] = useState<boolean>(false)
 
+  const image = client.server + '/Items/' + album?.Id + '/Images/Primary'
+
+  const blurhash =
+    'Primary' in album?.ImageBlurHashes
+      ? album?.ImageBlurHashes.Primary[
+          'Primary' in album?.ImageTags
+            ? album?.ImageTags.Primary
+            : album?.AlbumPrimaryImageTag
+        ]
+      : null
+  const average = !!blurhash
+    ? tinycolor(Blurhash.getAverageColor(blurhash)).toHex8String()
+    : null
+  const scheme = getTheme(average, theme.dark)
+
   return (
     <>
       <InnerScreen
-        title={album?.Name}
         icon="more_horiz"
+        scheme={scheme}
         onPress={() => {
           setAlbumModal(album as Album)
           setShowAlbumModal(true)
@@ -58,6 +83,7 @@ const Albums = ({
         {!isLoading && !!data && (
           <FlashList
             data={data.Items}
+            extraData={scheme}
             estimatedItemSize={56}
             keyExtractor={(item, index) => index + '_' + item.Id}
             renderItem={({ item, index }) => (
@@ -74,10 +100,119 @@ const Albums = ({
                   setTrackModal(item as Track)
                   setShowTrackModal(true)
                 }}
+                scheme={scheme}
               />
             )}
             ListFooterComponent={
-              <EndOfList text={playlist ? 'End of playlist' : 'End of album'} />
+              <EndOfList
+                text={playlist ? 'End of playlist' : 'End of album'}
+                scheme={scheme}
+              />
+            }
+            ListHeaderComponent={
+              <View
+                style={{
+                  paddingHorizontal: 16,
+                  gap: 8,
+                  paddingBottom: 16,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                  }}
+                >
+                  <View
+                    style={{
+                      width: width / 2,
+                      height: width / 2,
+                      borderRadius: 16,
+                      overflow: 'hidden',
+                      backgroundColor: scheme.primaryContainer,
+                    }}
+                  >
+                    <FasterImageView
+                      source={{ url: image, resizeMode: 'cover' }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                      }}
+                    />
+                  </View>
+                  <View style={{ gap: 16 }}>
+                    <Pressable
+                      android_ripple={{
+                        color: scheme.ripple,
+                        foreground: true,
+                        borderless: true,
+                      }}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                      onPress={() => {
+                        player.setQueue(
+                          [...data.Items].sort(() => Math.random() - 0.5),
+                        )
+                        player.play()
+                      }}
+                    >
+                      <Icon
+                        name="shuffle"
+                        style={{ color: scheme.primary, fontSize: 24 }}
+                      />
+                    </Pressable>
+                    <Pressable
+                      android_ripple={{
+                        color: scheme.ripple,
+                        foreground: true,
+                        borderless: true,
+                      }}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                      onPress={() => {
+                        player.setQueue(data.Items)
+                        player.play()
+                      }}
+                    >
+                      <IconFilled
+                        name="play_arrow"
+                        style={{ color: scheme.primary, fontSize: 24 }}
+                      />
+                    </Pressable>
+                  </View>
+                </View>
+                <Text
+                  style={{
+                    color: scheme.primary,
+                    fontFamily: theme.font700,
+                    fontSize: 24,
+                  }}
+                  numberOfLines={2}
+                >
+                  {album?.Name}
+                </Text>
+                {album?.Type !== 'Playlist' && (
+                  <Text
+                    style={{
+                      color: scheme.secondary,
+                      fontFamily: theme.font700,
+                      fontSize: 18,
+                    }}
+                    numberOfLines={1}
+                  >
+                    {album?.AlbumArtist}
+                  </Text>
+                )}
+              </View>
             }
           />
         )}

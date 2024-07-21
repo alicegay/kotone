@@ -13,6 +13,7 @@ import InnerScreen from 'components/InnerScreen'
 import useItems from 'api/useItems'
 import { Album, Playlist } from 'types/ItemTypes'
 import AlbumModal from 'components/modals/AlbumModal'
+import useTheme from 'hooks/useTheme'
 
 const AlbumList = ({
   navigation,
@@ -21,6 +22,7 @@ const AlbumList = ({
   const { type } = route.params
   const queryClient = useQueryClient()
   const library = useLibrary()
+  const theme = useTheme()
 
   const [albumModal, setAlbumModal] = useState<Album | Playlist>(null)
   const [showAlbumModal, setShowAlbumModal] = useState<boolean>(false)
@@ -57,6 +59,7 @@ const AlbumList = ({
         {!isLoading && data && (
           <FlashList
             data={data.Items}
+            extraData={theme.scheme}
             estimatedItemSize={56}
             keyExtractor={(item, index) => index + '_' + item.Id}
             renderItem={({ item }) => (
@@ -75,6 +78,7 @@ const AlbumList = ({
                 }}
                 showDuration={false}
                 showArtist={item.Type !== 'Playlist'}
+                scheme={theme.scheme}
               />
             )}
             ListFooterComponent={<EndOfList text={'End of ' + footers[type]} />}

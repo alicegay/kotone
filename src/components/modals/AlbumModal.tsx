@@ -92,7 +92,6 @@ const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
           <View style={{ paddingVertical: 8, gap: 4 }}>
             <TrackListItem
               track={album}
-              useTheme={false}
               playing={false}
               showDuration={!album}
             />

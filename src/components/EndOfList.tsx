@@ -1,11 +1,12 @@
 import { Text, View } from 'react-native'
-import useTheme from 'hooks/useTheme'
+import useTheme, { Scheme } from 'hooks/useTheme'
 
 interface Props {
   text?: string
+  scheme?: Scheme
 }
 
-const EndOfList = ({ text = 'End of list' }: Props) => {
+const EndOfList = ({ text = 'End of list', scheme }: Props) => {
   const theme = useTheme()
 
   return (
@@ -23,14 +24,14 @@ const EndOfList = ({ text = 'End of list' }: Props) => {
     >
       <View
         style={{
-          backgroundColor: theme.scheme.secondary,
+          backgroundColor: !!scheme ? scheme.secondary : theme.scheme.secondary,
           height: 1,
           flexGrow: 1,
         }}
       />
       <Text
         style={{
-          color: theme.scheme.secondary,
+          color: !!scheme ? scheme.secondary : theme.scheme.secondary,
           fontFamily: theme.font400,
           fontSize: 12,
         }}
@@ -39,7 +40,7 @@ const EndOfList = ({ text = 'End of list' }: Props) => {
       </Text>
       <View
         style={{
-          backgroundColor: theme.scheme.secondary,
+          backgroundColor: !!scheme ? scheme.secondary : theme.scheme.secondary,
           height: 1,
           flexGrow: 1,
         }}

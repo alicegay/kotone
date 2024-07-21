@@ -57,6 +57,7 @@ const Queue = ({}: BottomTabScreenProps<TabStack, 'Queue'>) => {
                 onDragEnd={onDragEnd}
                 isDragging={isActive}
                 playing={index === player.track}
+                scheme={theme.scheme}
               />
             )}
             onReordered={(fromIndex, toIndex) => {

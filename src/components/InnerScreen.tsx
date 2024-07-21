@@ -9,16 +9,17 @@ import { useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { BlurMask, Canvas, Oval } from '@shopify/react-native-skia'
 
-import useTheme from 'hooks/useTheme'
+import useTheme, { Scheme } from 'hooks/useTheme'
 import { Icon } from './Icon'
 import { ReactNode } from 'react'
 
 interface Props {
   children?: ReactNode
-  title: string
+  title?: string
   showBackButton?: boolean
   icon?: string
   onPress?: (e: GestureResponderEvent) => void
+  scheme?: Scheme
 }
 
 const InnerScreen = ({
@@ -27,6 +28,7 @@ const InnerScreen = ({
   showBackButton = true,
   icon,
   onPress,
+  scheme,
 }: Props) => {
   const theme = useTheme()
   const insets = useSafeAreaInsets()
@@ -34,14 +36,21 @@ const InnerScreen = ({
   const navigation = useNavigation()
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.scheme.background }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: !!scheme ? scheme.background : theme.scheme.background,
+      }}
+    >
       <Canvas style={{ position: 'absolute', width: '100%', height: 200 }}>
         <Oval
           x={-(width * 1.5) / 2}
           y={-100}
           width={width * 1.75}
           height={200}
-          color={theme.scheme.primaryContainer}
+          color={
+            !!scheme ? scheme.primaryContainer : theme.scheme.primaryContainer
+          }
         >
           <BlurMask blur={32} style="normal" />
         </Oval>
@@ -59,6 +68,7 @@ const InnerScreen = ({
             flexDirection: 'row',
             alignItems: 'center',
             gap: 16,
+            justifyContent: 'space-between',
           }}
         >
           {showBackButton && (
@@ -70,7 +80,7 @@ const InnerScreen = ({
                 alignItems: 'center',
               }}
               android_ripple={{
-                color: theme.ripple,
+                color: !!scheme ? scheme.ripple : theme.scheme.ripple,
                 borderless: true,
                 foreground: true,
               }}
@@ -80,22 +90,27 @@ const InnerScreen = ({
             >
               <Icon
                 name="arrow_back"
-                style={{ color: theme.scheme.primary, fontSize: 24 }}
+                style={{
+                  color: !!scheme ? scheme.primary : theme.scheme.primary,
+                  fontSize: 24,
+                }}
               />
             </Pressable>
           )}
-          <Text
-            style={{
-              color: theme.scheme.primary,
-              fontFamily: theme.font700,
-              fontSize: 24,
-              flexGrow: 1,
-              flexShrink: 1,
-            }}
-            numberOfLines={1}
-          >
-            {title}
-          </Text>
+          {!!title && (
+            <Text
+              style={{
+                color: !!scheme ? scheme.primary : theme.scheme.primary,
+                fontFamily: theme.font700,
+                fontSize: 24,
+                flexGrow: 1,
+                flexShrink: 1,
+              }}
+              numberOfLines={1}
+            >
+              {title}
+            </Text>
+          )}
           {!!icon && (
             <Pressable
               style={{
@@ -105,7 +120,7 @@ const InnerScreen = ({
                 alignItems: 'center',
               }}
               android_ripple={{
-                color: theme.ripple,
+                color: !!scheme ? scheme.ripple : theme.scheme.ripple,
                 borderless: true,
                 foreground: true,
               }}
@@ -113,7 +128,10 @@ const InnerScreen = ({
             >
               <Icon
                 name={icon}
-                style={{ color: theme.scheme.primary, fontSize: 24 }}
+                style={{
+                  color: !!scheme ? scheme.primary : theme.scheme.primary,
+                  fontSize: 24,
+                }}
               />
             </Pressable>
           )}

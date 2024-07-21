@@ -15,6 +15,7 @@ import InnerScreen from 'components/InnerScreen'
 import useItems from 'api/useItems'
 import { Track } from 'types/ItemTypes'
 import ListModal from 'components/modals/ListModal'
+import useTheme from 'hooks/useTheme'
 
 const SongList = ({
   navigation,
@@ -24,6 +25,7 @@ const SongList = ({
   const queryClient = useQueryClient()
   const player = usePlayer()
   const library = useLibrary()
+  const theme = useTheme()
 
   const [trackModal, setTrackModal] = useState<Track>(null)
   const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
@@ -104,6 +106,7 @@ const SongList = ({
                   setTrackModal(item as Track)
                   setShowTrackModal(true)
                 }}
+                scheme={theme.scheme}
               />
             )}
             ListFooterComponent={<EndOfList text={'End of ' + footers[type]} />}

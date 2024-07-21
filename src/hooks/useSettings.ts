@@ -11,7 +11,7 @@ interface SettingsStore {
   setHasHydrated: (state: boolean) => void
 }
 
-const useTheme = create<SettingsStore>()(
+const useSettings = create<SettingsStore>()(
   persist(
     (set, get) => ({
       gain: true,
@@ -31,4 +31,4 @@ const useTheme = create<SettingsStore>()(
   ),
 )
 
-export default useTheme
+export default useSettings
