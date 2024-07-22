@@ -46,9 +46,12 @@ const TrackListItem = ({
 
   const image =
     'Primary' in track.ImageTags
-      ? client.server + '/Items/' + track.Id + '/Images/Primary'
-      : track.AlbumPrimaryImageTag
-      ? client.server + '/Items/' + track.AlbumId + '/Images/Primary'
+      ? client.server + '/Items/' + track.Id + '/Images/Primary?maxHeight=96'
+      : 'AlbumPrimaryImageTag' in track && track.AlbumPrimaryImageTag
+      ? client.server +
+        '/Items/' +
+        track.AlbumId +
+        '/Images/Primary?maxHeight=96'
       : null
 
   const isPlaying = playing === 'auto' ? player.trackID == track.Id : playing
@@ -158,7 +161,8 @@ const TrackListItem = ({
           >
             {track.Type === 'MusicAlbum'
               ? track.AlbumArtist
-              : track.Artists.join(', ')}
+              : // @ts-ignore
+                track.Artists.join(', ')}
           </Text>
         )}
       </View>

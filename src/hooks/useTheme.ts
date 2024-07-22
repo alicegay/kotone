@@ -6,6 +6,7 @@ import {
   hexFromArgb,
   themeFromSourceColor,
 } from '@material/material-color-utilities'
+import getTheme from 'lib/getTheme'
 
 interface ThemeStore {
   background: string
@@ -46,16 +47,9 @@ const useTheme = create<ThemeStore>()(
       setTint: (color) => set(() => ({ tint: color.slice(0, 7) })),
       setDark: (dark) => set(() => ({ dark: dark })),
       setTheme: (color) => {
-        const theme = themeFromSourceColor(argbFromHex(color))
-        let scheme = get().dark
-          ? theme.schemes.dark.toJSON()
-          : theme.schemes.light.toJSON()
-        for (const key in scheme) {
-          scheme[key] = hexFromArgb(scheme[key])
-        }
-        scheme['ripple'] = scheme['onBackground'] + '22'
+        const theme = getTheme(color, get().dark)
         set(() => ({
-          scheme: scheme as unknown as Scheme,
+          scheme: theme,
         }))
       },
 

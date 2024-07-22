@@ -1,14 +1,16 @@
 import Item from 'jellyfin-api/lib/types/media/Item'
+import itemToType from 'lib/itemToType'
+import { Album, Playlist, Track } from 'types/ItemTypes'
 import { create } from 'zustand'
 
 interface LibraryStore {
   views: Item[]
   viewIDs: { [key: string]: string }
-  songs: Item[]
-  albums: Item[]
+  songs: Track[]
+  albums: Album[]
   artists: Item[]
-  playlists: Item[]
-  favorites: Item[]
+  playlists: Playlist[]
+  favorites: Track[]
   musicvideos: Item[]
 
   setViews: (views: Item[]) => void
@@ -38,19 +40,23 @@ const useLibrary = create<LibraryStore>()((set) => ({
     set(() => ({ viewIDs: viewIDs }))
   },
   setSongs: (songs) => {
-    set(() => ({ songs: songs }))
+    const items = songs.map((item) => itemToType(item) as Track)
+    set(() => ({ songs: items }))
   },
   setAlbums: (albums) => {
-    set(() => ({ albums: albums }))
+    const items = albums.map((item) => itemToType(item) as Album)
+    set(() => ({ albums: items }))
   },
   setArtists: (artists) => {
     set(() => ({ artists: artists }))
   },
   setPlaylists: (playlists) => {
-    set(() => ({ playlists: playlists }))
+    const items = playlists.map((item) => itemToType(item) as Playlist)
+    set(() => ({ playlists: items }))
   },
   setFavorites: (favorites) => {
-    set(() => ({ favorites: favorites }))
+    const items = favorites.map((item) => itemToType(item) as Track)
+    set(() => ({ favorites: items }))
   },
   setMusicvideos: (musicvideos) => {
     set(() => ({ musicvideos: musicvideos }))

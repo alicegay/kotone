@@ -1,5 +1,6 @@
 type Base = {
   Name: string
+  Search?: string
   SortName: string
   Id: string
   RunTimeTicks: number

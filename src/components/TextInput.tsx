@@ -31,18 +31,16 @@ const TextInput = forwardRef<Partial<TypeInputHandle>, TextInputProps>(
 
     const styles = StyleSheet.create({
       input: {
-        backgroundColor: tinycolor(theme.background).lighten(10).toHex8String(),
-        color: theme.foreground,
+        backgroundColor: theme.scheme.primaryContainer,
+        color: theme.scheme.onPrimaryContainer,
         fontFamily: theme.font500,
+        fontSize: 18,
         borderRadius: 32,
         overflow: 'hidden',
-        paddingHorizontal: 16,
-        paddingVertical: 4,
+        paddingHorizontal: 24,
+        paddingVertical: 8,
       },
-      focus: {
-        backgroundColor: theme.foreground,
-        color: theme.background,
-      },
+      focus: {},
     })
 
     return (
@@ -52,10 +50,13 @@ const TextInput = forwardRef<Partial<TypeInputHandle>, TextInputProps>(
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         onPress={() => textRef.current.focus()}
+        style={{ flexGrow: 1, flexShrink: 1 }}
       >
         <TextInputOrig
           ref={textRef}
-          placeholderTextColor="#888"
+          placeholderTextColor={
+            theme.scheme.onPrimaryContainer.slice(0, 7) + '66'
+          }
           {...props}
           style={[styles.input, focus && styles.focus, style]}
         />

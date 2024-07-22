@@ -17,7 +17,7 @@ import SettingsList from 'components/SettingsList'
 import Switch from 'components/Switch'
 import Button from 'components/Button'
 
-const Settings = () => {
+const SettingsTab = () => {
   const client = useClient()
   const settings = useSettings()
   const theme = useTheme()
@@ -127,4 +127,4 @@ const Settings = () => {
   )
 }
 
-export default Settings
+export default SettingsTab

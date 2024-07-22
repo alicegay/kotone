@@ -1,9 +1,11 @@
 import Item from 'jellyfin-api/lib/types/media/Item'
 import { Album, Playlist, Track } from 'types/ItemTypes'
+import formatName from './formatName'
 
 const itemToType = (item: Item): Track | Album | Playlist | Item => {
   let base = {
     Name: item.Name,
+    Search: formatName(item.Name),
     SortName: item.SortName,
     Id: item.Id,
     RunTimeTicks: item.RunTimeTicks,

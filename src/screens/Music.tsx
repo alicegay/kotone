@@ -7,7 +7,7 @@ import useTheme from 'hooks/useTheme'
 import Button from 'components/Button'
 import InnerScreen from 'components/InnerScreen'
 
-const MusicHome = ({
+const Music = ({
   navigation,
 }: NativeStackScreenProps<MusicStack, 'MusicHome'>) => {
   const theme = useTheme()
@@ -63,4 +63,4 @@ const MusicHome = ({
   )
 }
 
-export default MusicHome
+export default Music

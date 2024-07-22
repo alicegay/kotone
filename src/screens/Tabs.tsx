@@ -10,11 +10,13 @@ import TabStack from 'types/TabStack'
 import useTheme from 'hooks/useTheme'
 import useLibrary from 'hooks/useLibrary'
 import useViews from 'api/useViews'
+import useItems from 'api/useItems'
 import FloatingPlayer from 'components/FloatingPlayer'
 import { Icon } from 'components/Icon'
-import Home from './Home'
-import Queue from './Queue'
-import Settings from './Settings'
+import MusicTab from './MusicTab'
+import SearchTab from './SearchTab'
+import SettingsTab from './SettingsTab'
+import QueueTab from './QueueTab'
 
 const Tab = createBottomTabNavigator<TabStack>()
 
@@ -30,7 +32,6 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const insets = useSafeAreaInsets()
 
   const views = useViews()
-
   useEffect(() => {
     if (views.data) {
       library.setViews(views.data)
@@ -41,6 +42,32 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
       library.setViewIDs(ids)
     }
   }, [views.data])
+
+  const musicView =
+    library.viewIDs && 'music' in library.viewIDs ? library.viewIDs.music : null
+  const albums = useItems(
+    {
+      ParentId: musicView,
+      SortBy: 'Name',
+      SortOrder: 'Ascending',
+      IncludeItemTypes: 'MusicAlbum',
+      Recursive: true,
+    },
+    !!musicView,
+  )
+  useEffect(() => {
+    if (albums.data) library.setAlbums(albums.data.Items)
+  }, [albums.data])
+
+  const songs = useItems({
+    SortBy: 'Name',
+    SortOrder: 'Ascending',
+    IncludeItemTypes: 'Audio',
+    Recursive: true,
+  })
+  useEffect(() => {
+    if (songs.data) library.setSongs(songs.data.Items)
+  }, [songs.data])
 
   const styles = StyleSheet.create({
     tabIcon: {
@@ -87,21 +114,13 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           },
         })}
       >
-        <Tab.Screen name="Music" component={Home} />
-        <Tab.Screen name="Search" component={Temp} />
-        <Tab.Screen name="Queue" component={Queue} />
-        <Tab.Screen name="Settings" component={Settings} />
+        <Tab.Screen name="Music" component={MusicTab} />
+        <Tab.Screen name="Search" component={SearchTab} />
+        <Tab.Screen name="Queue" component={QueueTab} />
+        <Tab.Screen name="Settings" component={SettingsTab} />
       </Tab.Navigator>
       <FloatingPlayer navigation={navigation} />
     </>
-  )
-}
-
-function Temp({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Temporary screen!</Text>
-    </View>
   )
 }
 

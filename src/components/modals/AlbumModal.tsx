@@ -12,12 +12,15 @@ import ModalButton from './ModalButton'
 import Separator from './Separator'
 import useItems from 'api/useItems'
 import { Album, Playlist } from 'types/ItemTypes'
+import SearchStack from 'types/SearchStack'
 
 interface Props {
   visible: boolean
   onClose: () => void
   album: Album | Playlist
-  navigation: NativeStackNavigationProp<MusicStack>
+  navigation:
+    | NativeStackNavigationProp<MusicStack>
+    | NativeStackNavigationProp<SearchStack>
 }
 
 const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
@@ -149,6 +152,16 @@ const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
             {!playlist && (
               <>
                 <Separator />
+
+                <ModalButton
+                  text="View album"
+                  icon="album"
+                  onPress={() => {
+                    onClose()
+                    // @ts-ignore
+                    navigation.push('Album', { album: album.Id })
+                  }}
+                />
 
                 <ModalButton
                   text="View artist"

@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { useNavigation } from '@react-navigation/native'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import DragList from 'react-native-draglist'
 
-import TabStack from 'types/TabStack'
+import QueueStack from 'types/QueueStack'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import TrackListItem from 'components/TrackListItem'
@@ -14,11 +13,12 @@ import TrackModal from 'components/modals/TrackModal'
 import QueueModal from 'components/modals/QueueModal'
 import { Track } from 'types/ItemTypes'
 
-const Queue = ({}: BottomTabScreenProps<TabStack, 'Queue'>) => {
+const Queue = ({
+  navigation,
+}: NativeStackScreenProps<QueueStack, 'QueueHome'>) => {
   const theme = useTheme()
   const player = usePlayer()
   const insets = useSafeAreaInsets()
-  const navigation = useNavigation()
 
   const [trackModal, setTrackModal] = useState<Track>(null)
   const [trackIndex, setTrackIndex] = useState<number>(0)
@@ -78,7 +78,6 @@ const Queue = ({}: BottomTabScreenProps<TabStack, 'Queue'>) => {
         track={trackModal}
         queue={true}
         index={trackIndex}
-        // @ts-ignore
         navigation={navigation}
       />
 

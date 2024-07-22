@@ -1,20 +1,20 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import MusicStack from 'types/MusicStack'
-import MusicHome from './MusicHome'
+import Music from './Music'
 import Album from './Album'
 import SongList from './SongList'
 import AlbumList from './AlbumList'
 
-const Home = () => {
-  const Stack = createNativeStackNavigator<MusicStack>()
+const Stack = createNativeStackNavigator<MusicStack>()
 
+const MusicTab = () => {
   return (
     <Stack.Navigator
       initialRouteName="MusicHome"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="MusicHome" component={MusicHome} />
+      <Stack.Screen name="MusicHome" component={Music} />
       <Stack.Screen name="SongList" component={SongList} />
       <Stack.Screen name="AlbumList" component={AlbumList} />
       <Stack.Screen name="Album" component={Album} />
@@ -22,4 +22,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default MusicTab

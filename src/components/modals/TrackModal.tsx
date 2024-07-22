@@ -11,6 +11,7 @@ import TrackListItem from 'components/TrackListItem'
 import ModalButton from './ModalButton'
 import Separator from './Separator'
 import { Track } from 'types/ItemTypes'
+import QueueStack from 'types/QueueStack'
 
 interface Props {
   visible: boolean
@@ -18,7 +19,9 @@ interface Props {
   track: Track
   queue?: boolean
   index?: number
-  navigation: NativeStackNavigationProp<MusicStack>
+  navigation:
+    | NativeStackNavigationProp<MusicStack>
+    | NativeStackNavigationProp<QueueStack>
 }
 
 const TrackModal = ({
@@ -145,7 +148,7 @@ const TrackModal = ({
               icon="album"
               onPress={() => {
                 onClose()
-                if (queue) navigation.navigate('Music')
+                // @ts-ignore
                 navigation.push('Album', { album: track.AlbumId })
               }}
             />
