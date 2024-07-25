@@ -7,11 +7,11 @@ index 7ec958b..04b6dc7 100644
  
  android {
 -    compileSdkVersion safeExtGet('JapaneseTextAnalyzer_compileSdkVersion', 29)
-+    compileSdkVersion safeExtGet('JapaneseTextAnalyzer_compileSdkVersion', 30)
++    compileSdkVersion safeExtGet('JapaneseTextAnalyzer_compileSdkVersion', 31)
      defaultConfig {
          minSdkVersion safeExtGet('JapaneseTextAnalyzer_minSdkVersion', 16)
 -        targetSdkVersion safeExtGet('JapaneseTextAnalyzer_targetSdkVersion', 29)
-+        targetSdkVersion safeExtGet('JapaneseTextAnalyzer_targetSdkVersion', 30)
++        targetSdkVersion safeExtGet('JapaneseTextAnalyzer_targetSdkVersion', 31)
          versionCode 1
          versionName "1.0"
  
