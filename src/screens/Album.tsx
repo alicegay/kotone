@@ -69,7 +69,7 @@ const Albums = ({
   const average = !!blurhash
     ? tinycolor(Blurhash.getAverageColor(blurhash)).toHex8String()
     : null
-  const scheme = getTheme(average, theme.dark)
+  const scheme = !average ? theme.scheme : getTheme(average, theme.dark)
 
   return (
     <>
