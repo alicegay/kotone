@@ -44,7 +44,6 @@ const Search = ({
             flexDirection: 'row',
             paddingHorizontal: 16,
             paddingBottom: 16,
-            gap: 8,
           }}
         >
           <TextInput
@@ -53,12 +52,18 @@ const Search = ({
             onChangeText={setSearch}
             autoCapitalize={'none'}
             placeholder="Search..."
+            style={{
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+            }}
           />
           <Pressable
             style={{
               width: 44,
               height: 44,
               borderRadius: 22,
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
               overflow: 'hidden',
               backgroundColor: theme.scheme.primaryContainer,
               alignItems: 'center',
@@ -71,7 +76,7 @@ const Search = ({
             }}
           >
             <Icon
-              name="backspace"
+              name="close"
               style={{ color: theme.scheme.onPrimaryContainer, fontSize: 18 }}
             />
           </Pressable>

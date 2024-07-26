@@ -6,7 +6,6 @@ import {
   Pressable,
 } from 'react-native'
 import useTheme from 'hooks/useTheme'
-import tinycolor from 'tinycolor2'
 
 interface TypeInputHandle extends TextInputOrig {
   focus: () => void | null
