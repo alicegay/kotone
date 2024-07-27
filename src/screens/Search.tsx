@@ -1,7 +1,11 @@
 import { useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack'
 import { FlashList } from '@shopify/flash-list'
+import { TabView } from 'react-native-tab-view'
 
 import useTheme from 'hooks/useTheme'
 import useLibrary from 'hooks/useLibrary'
@@ -13,17 +17,17 @@ import SearchStack from 'types/SearchStack'
 import CenterLoading from 'components/CenterLoading'
 import EndOfList from 'components/EndOfList'
 import AlbumModal from 'components/modals/AlbumModal'
-import { Album } from 'types/ItemTypes'
+import { Album, Track } from 'types/ItemTypes'
 import { Icon } from 'components/Icon'
+import Item from 'jellyfin-api/lib/types/media/Item'
+import usePlayer from 'hooks/usePlayer'
+import TrackModal from 'components/modals/TrackModal'
 
 const Search = ({
   navigation,
 }: NativeStackScreenProps<SearchStack, 'SearchHome'>) => {
   const theme = useTheme()
   const library = useLibrary()
-
-  const [albumModal, setAlbumModal] = useState<Album>(null)
-  const [showAlbumModal, setShowAlbumModal] = useState<boolean>(false)
 
   const [search, setSearch] = useState<string>('')
 
@@ -35,6 +39,13 @@ const Search = ({
           album.Search.includes(formatName(search)),
         )
       : null
+
+  const songs =
+    !!search && !!library.songs
+      ? library.songs.filter((song) => song.Search.includes(formatName(search)))
+      : null
+
+  const [index, setIndex] = useState(0)
 
   return (
     <>
@@ -81,38 +92,116 @@ const Search = ({
             />
           </Pressable>
         </View>
-        {!!library.albums ? (
-          !!albums && (
-            <FlashList
-              data={albums}
-              estimatedItemSize={56}
-              keyExtractor={(item) => item.Id}
-              renderItem={({ item }) => (
-                <TrackListItem
-                  track={item}
-                  onPress={() => {
-                    navigation.push('Album', { album: item })
-                  }}
-                  onLongPress={() => {
-                    setAlbumModal(item)
-                    setShowAlbumModal(true)
-                  }}
-                  showDuration={false}
-                  scheme={theme.scheme}
-                />
-              )}
-              ListFooterComponent={<EndOfList text="End of search" />}
-            />
-          )
-        ) : (
-          <CenterLoading />
-        )}
+
+        <TabView
+          navigationState={{
+            index,
+            routes: [
+              { key: 'albums', title: 'Albums' },
+              { key: 'songs', title: 'Songs' },
+              // { key: 'artists', title: 'Artists' },
+            ],
+          }}
+          onIndexChange={setIndex}
+          renderScene={({ route }) => {
+            switch (route.key) {
+              case 'albums':
+                return (
+                  <InnerTab
+                    data={albums as Item[]}
+                    type="albums"
+                    navigation={navigation}
+                    isLoading={!library.albums}
+                  />
+                )
+              case 'songs':
+                return (
+                  <InnerTab
+                    data={songs as Item[]}
+                    type="songs"
+                    navigation={navigation}
+                    isLoading={!library.songs}
+                  />
+                )
+            }
+          }}
+        />
       </InnerScreen>
+    </>
+  )
+}
+
+const InnerTab = ({
+  data,
+  type,
+  navigation,
+  isLoading,
+}: {
+  data: Item[]
+  type: 'albums' | 'songs' | 'artists'
+  navigation: NativeStackNavigationProp<SearchStack>
+  isLoading: boolean
+}) => {
+  const theme = useTheme()
+  const player = usePlayer()
+
+  const [albumModal, setAlbumModal] = useState<Album>(null)
+  const [showAlbumModal, setShowAlbumModal] = useState<boolean>(false)
+
+  const [trackModal, setTrackModal] = useState<Track>(null)
+  const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
+
+  return (
+    <>
+      {!isLoading ? (
+        !!data && (
+          <FlashList
+            data={data}
+            estimatedItemSize={56}
+            keyExtractor={(item) => item.Id}
+            renderItem={({ item }) => (
+              <TrackListItem
+                track={item}
+                onPress={() => {
+                  if (type === 'albums') {
+                    navigation.push('Album', { album: item })
+                  } else if (type === 'songs') {
+                    player.setQueue([item])
+                    player.play()
+                  }
+                }}
+                onLongPress={() => {
+                  if (type === 'albums') {
+                    setAlbumModal(item as Album)
+                    setShowAlbumModal(true)
+                  } else if (type === 'songs') {
+                    setTrackModal(item as Track)
+                    setShowTrackModal(true)
+                  }
+                }}
+                showDuration={type === 'songs'}
+                scheme={theme.scheme}
+              />
+            )}
+            ListFooterComponent={<EndOfList text="End of search" />}
+          />
+        )
+      ) : (
+        <CenterLoading />
+      )}
 
       <AlbumModal
         visible={showAlbumModal}
         onClose={() => setShowAlbumModal(false)}
         album={albumModal}
+        navigation={navigation}
+      />
+
+      <TrackModal
+        visible={showTrackModal}
+        onClose={() => setShowTrackModal(false)}
+        track={trackModal}
+        // @ts-ignore
         navigation={navigation}
       />
     </>

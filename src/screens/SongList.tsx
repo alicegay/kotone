@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { FlashList } from '@shopify/flash-list'
 import { useQueryClient } from '@tanstack/react-query'
-import Item from 'jellyfin-api/lib/types/media/Item'
 import ItemsQuery from 'jellyfin-api/lib/types/queries/ItemsQuery'
 
 import MusicStack from 'types/MusicStack'
