@@ -42,6 +42,10 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const track = player.queue.length > 0 ? player.queue[player.track] : null
 
   const item = useSingleItem(!!track ? track.Id : null, !!track)
+  const stream =
+    !!item.data && item.data.MediaStreams.length > 0
+      ? item.data.MediaStreams.find((stream) => stream.Type === 'Audio')
+      : null
   const favorite = !!item.data && item.data.UserData.IsFavorite
   const favItem = useFavItem(!!item.data ? item.data.Id : null)
   const lyrics = useLyrics(!!track ? track.Id : null, !!track)
@@ -222,9 +226,50 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
               >
                 {secsToTime(playerProgress.position)}
               </Text>
-              {/* <Text style={{ color: theme.foregroundAlt, fontFamily: theme.font400 }}>
-                FLAC
-              </Text> */}
+              {!!stream && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 8,
+                    alignItems: 'center',
+                  }}
+                >
+                  {(stream.SampleRate > 48000 || stream.BitDepth > 16) && (
+                    <IconFilled
+                      name="high_res"
+                      style={{ color: theme.foregroundAlt, fontSize: 16 }}
+                    />
+                  )}
+                  <Text
+                    style={{
+                      color: theme.foregroundAlt,
+                      fontFamily: theme.font400,
+                      fontSize: 10,
+                    }}
+                  >
+                    {stream.Codec.toUpperCase()}
+                  </Text>
+                  <Text
+                    style={{
+                      color: theme.foregroundAlt,
+                      fontFamily: theme.font400,
+                      fontSize: 10,
+                    }}
+                  >
+                    {stream.SampleRate / 1000 + ' ' + 'kHz'}
+                  </Text>
+
+                  <Text
+                    style={{
+                      color: theme.foregroundAlt,
+                      fontFamily: theme.font400,
+                      fontSize: 10,
+                    }}
+                  >
+                    {Math.round(stream.BitRate / 1000) + ' ' + 'kbps'}
+                  </Text>
+                </View>
+              )}
               <Text
                 style={{
                   color: theme.foregroundAlt,
