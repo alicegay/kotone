@@ -94,7 +94,7 @@ const Music = ({
                     onPress={() => {
                       navigation.push('Album', { album: item })
                     }}
-                    style={{ margin: 8 }}
+                    style={{ padding: 8 }}
                   />
                 )}
                 horizontal={true}

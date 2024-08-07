@@ -39,14 +39,14 @@ const SquareListItem = ({ item, onPress, onLongPress, style }: Props) => {
     <Pressable
       onPress={onPress}
       onLongPress={onLongPress}
-      style={[{ width: 128 }, style]}
+      style={[style]}
       android_ripple={{ color: theme.scheme.ripple, foreground: true }}
     >
       <View
         style={{
           width: 128,
           height: 128,
-          borderRadius: 8,
+          borderRadius: 16,
           overflow: 'hidden',
           backgroundColor: '#0000',
         }}
@@ -56,7 +56,7 @@ const SquareListItem = ({ item, onPress, onLongPress, style }: Props) => {
           style={{ width: '100%', height: '100%' }}
         />
       </View>
-      <View>
+      <View style={{ width: 128 }}>
         <Text
           style={{
             color: theme.scheme.primary,
