@@ -30,20 +30,21 @@ const Search = ({
   const library = useLibrary()
 
   const [search, setSearch] = useState<string>('')
+  const formattedSearch = formatName(search)
 
   const searchRef = useRef<any>()
 
-  const albums =
-    !!search && !!library.albums
-      ? library.albums.filter((album) =>
-          album.Search.includes(formatName(search)),
-        )
-      : null
+  // const albums =
+  //   !!search && !!library.albums
+  //     ? library.albums.filter((album) =>
+  //         album.Search.includes(formatName(search)),
+  //       )
+  //     : null
 
-  const songs =
-    !!search && !!library.songs
-      ? library.songs.filter((song) => song.Search.includes(formatName(search)))
-      : null
+  // const songs =
+  //   !!search && !!library.songs
+  //     ? library.songs.filter((song) => song.Search.includes(formatName(search)))
+  //     : null
 
   const [index, setIndex] = useState(0)
 
@@ -108,7 +109,7 @@ const Search = ({
               case 'albums':
                 return (
                   <InnerTab
-                    data={albums as Item[]}
+                    search={formattedSearch}
                     type="albums"
                     navigation={navigation}
                     isLoading={!library.albums}
@@ -117,7 +118,7 @@ const Search = ({
               case 'songs':
                 return (
                   <InnerTab
-                    data={songs as Item[]}
+                    search={formattedSearch}
                     type="songs"
                     navigation={navigation}
                     isLoading={!library.songs}
@@ -132,17 +133,18 @@ const Search = ({
 }
 
 const InnerTab = ({
-  data,
+  search,
   type,
   navigation,
   isLoading,
 }: {
-  data: Item[]
+  search: string
   type: 'albums' | 'songs' | 'artists'
   navigation: NativeStackNavigationProp<SearchStack>
   isLoading: boolean
 }) => {
   const theme = useTheme()
+  const library = useLibrary()
   const player = usePlayer()
 
   const [albumModal, setAlbumModal] = useState<Album>(null)
@@ -151,12 +153,28 @@ const InnerTab = ({
   const [trackModal, setTrackModal] = useState<Track>(null)
   const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
 
+  const items = !!search
+    ? type === 'albums'
+      ? !!library.albums
+        ? library.albums.filter((album) =>
+            album.Search.includes(formatName(search)),
+          )
+        : null
+      : type === 'songs'
+      ? !!library.songs
+        ? library.songs.filter((song) =>
+            song.Search.includes(formatName(search)),
+          )
+        : null
+      : null
+    : null
+
   return (
     <>
       {!isLoading ? (
-        !!data && (
+        !!items && (
           <FlashList
-            data={data}
+            data={items as Item[]}
             estimatedItemSize={56}
             keyExtractor={(item) => item.Id}
             renderItem={({ item }) => (
