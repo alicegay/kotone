@@ -9,6 +9,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import TrackPlayer, { Capability, RatingType } from 'react-native-track-player'
 import SystemNavigationBar from 'react-native-system-navigation-bar'
+import * as Sentry from '@sentry/react-native'
 
 import RootStack from 'types/RootStack'
 import PlaybackService from 'services/PlaybackService'
@@ -142,7 +143,19 @@ const App = () => {
   )
 }
 
-AppRegistry.registerComponent('Kotone', () => App)
+Sentry.init({
+  dsn: 'https://78b9c94067abaf569468855f4b921dad@o4507548984016896.ingest.us.sentry.io/4507733341962240',
+  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  // We recommend adjusting this value in production.
+  tracesSampleRate: 1.0,
+  _experiments: {
+    // profilesSampleRate is relative to tracesSampleRate.
+    // Here, we'll capture profiles for 100% of transactions.
+    profilesSampleRate: 1.0,
+  },
+})
+
+AppRegistry.registerComponent('Kotone', () => Sentry.wrap(App))
 TrackPlayer.registerPlaybackService(() => PlaybackService)
 
 declare global {
