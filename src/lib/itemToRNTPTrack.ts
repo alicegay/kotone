@@ -1,4 +1,4 @@
-import { Track as RNTPTrack } from 'react-native-track-player'
+import { Track as RNTPTrack, TrackType } from 'react-native-track-player'
 import Item from 'jellyfin-api/lib/types/media/Item'
 import useClient from 'hooks/useClient'
 import { Track } from 'types/ItemTypes'
@@ -22,8 +22,10 @@ const itemToRNTPTrack = (item: Item | Track): RNTPTrack => {
     'container=' +
       'opus,webm|opus,mp3,aac,m4a|aac,m4b|aac,flac,webma,webm|webma,wav,ogg',
     'transcodingContainer=ts',
-    'transcodingProtocol=hls',
+    'transcodingProtocol=http',
     'audioCodec=aac',
+    'maxAudioSampleRate=48000',
+    'maxAudioBitDepth=16',
     'api_key=' + useClient.getState().token,
   ]
 

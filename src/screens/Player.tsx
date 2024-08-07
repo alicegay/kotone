@@ -26,11 +26,14 @@ import { useEffect, useState } from 'react'
 import secsToTicks from 'lib/secsToTicks'
 import useInterval from 'hooks/useInterval'
 import useFavItem from 'api/useFavItem'
+import { ticksToSecs } from 'lib/ticksToTime'
+import useSettings from 'hooks/useSettings'
 
 //let accuratePosition = 0
 
 const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   const client = useClient()
+  const settings = useSettings()
   const theme = useTheme()
   const player = usePlayer()
   const insets = useSafeAreaInsets()
@@ -206,7 +209,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
               <View
                 style={{
                   backgroundColor: theme.foreground,
-                  width: ((playerProgress.position / playerProgress.duration) *
+                  width: ((playerProgress.position /
+                    ticksToSecs(track.RunTimeTicks)) *
                     100 +
                     '%') as DimensionValue,
                   height: 6,
@@ -234,12 +238,13 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
                     alignItems: 'center',
                   }}
                 >
-                  {(stream.SampleRate > 48000 || stream.BitDepth > 16) && (
-                    <IconFilled
-                      name="high_res"
-                      style={{ color: theme.foregroundAlt, fontSize: 16 }}
-                    />
-                  )}
+                  {(stream.SampleRate > 48000 || stream.BitDepth > 16) &&
+                    stream.BitRate <= settings.bitrate && (
+                      <IconFilled
+                        name="high_res"
+                        style={{ color: theme.foregroundAlt, fontSize: 16 }}
+                      />
+                    )}
                   <Text
                     style={{
                       color: theme.foregroundAlt,
@@ -249,16 +254,18 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
                   >
                     {stream.Codec.toUpperCase()}
                   </Text>
-                  <Text
-                    style={{
-                      color: theme.foregroundAlt,
-                      fontFamily: theme.font400,
-                      fontSize: 10,
-                    }}
-                  >
-                    {stream.SampleRate / 1000 + ' ' + 'kHz'}
-                  </Text>
 
+                  {stream.BitRate <= settings.bitrate && (
+                    <Text
+                      style={{
+                        color: theme.foregroundAlt,
+                        fontFamily: theme.font400,
+                        fontSize: 10,
+                      }}
+                    >
+                      {stream.SampleRate / 1000 + ' ' + 'kHz'}
+                    </Text>
+                  )}
                   <Text
                     style={{
                       color: theme.foregroundAlt,
@@ -268,6 +275,23 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
                   >
                     {Math.round(stream.BitRate / 1000) + ' ' + 'kbps'}
                   </Text>
+                  {stream.BitRate > settings.bitrate && (
+                    <>
+                      <Icon
+                        name="arrow_forward"
+                        style={{ color: theme.foregroundAlt, fontSize: 12 }}
+                      />
+                      <Text
+                        style={{
+                          color: theme.foregroundAlt,
+                          fontFamily: theme.font400,
+                          fontSize: 10,
+                        }}
+                      >
+                        {Math.round(settings.bitrate / 1000) + ' ' + 'kbps'}
+                      </Text>
+                    </>
+                  )}
                 </View>
               )}
               <Text
@@ -276,7 +300,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
                   fontFamily: theme.font400,
                 }}
               >
-                {secsToTime(playerProgress.duration)}
+                {secsToTime(ticksToSecs(track.RunTimeTicks))}
               </Text>
             </View>
           </View>

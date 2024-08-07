@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useWindowDimensions, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -16,9 +16,12 @@ import InnerScreen from 'components/InnerScreen'
 import SettingsList from 'components/SettingsList'
 import Switch from 'components/Switch'
 import Button from 'components/Button'
+import ModalButton from 'components/modals/ModalButton'
+import usePlayer from 'hooks/usePlayer'
 
 const SettingsTab = () => {
   const client = useClient()
+  const player = usePlayer()
   const settings = useSettings()
   const theme = useTheme()
   const { height } = useWindowDimensions()
@@ -26,6 +29,12 @@ const SettingsTab = () => {
 
   const [colorModal, setColorModal] = useState<boolean>(false)
   const [color, setColor] = useState<string>(theme.tint)
+
+  const [bitrateModal, setBitrateModal] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (player.queue.length > 0) player.setQueue(player.queue, player.track)
+  }, [settings.bitrate])
 
   return (
     <>
@@ -39,6 +48,19 @@ const SettingsTab = () => {
           right={<Switch state={settings.gain} />}
           onPress={() => {
             settings.setGain(!settings.gain)
+          }}
+        />
+
+        <SettingsList
+          title="Bitrate Limit"
+          description={
+            settings.bitrate === 140_000_000
+              ? 'None'
+              : Math.round(settings.bitrate / 1000) + ' kbps'
+          }
+          icon="audio_file"
+          onPress={() => {
+            setBitrateModal(true)
           }}
         />
 
@@ -120,6 +142,94 @@ const SettingsTab = () => {
             >
               Select
             </Button>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        isVisible={bitrateModal}
+        onBackButtonPress={() => setBitrateModal(false)}
+        onBackdropPress={() => setBitrateModal(false)}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationInTiming={200}
+        animationOutTiming={200}
+        useNativeDriver={true}
+        statusBarTranslucent={true}
+        deviceHeight={height + insets.top + insets.bottom}
+        swipeDirection="down"
+      >
+        <View style={{ paddingHorizontal: 16 }}>
+          <View
+            style={{
+              backgroundColor: theme.scheme.background,
+              borderRadius: 16,
+              overflow: 'hidden',
+            }}
+          >
+            <ModalButton
+              text="128 kbps"
+              icon="music_note"
+              onPress={() => {
+                settings.setBitrate(128_000)
+                setBitrateModal(false)
+              }}
+              useTheme={true}
+            />
+            <ModalButton
+              text="320 kbps"
+              icon="music_note"
+              onPress={() => {
+                settings.setBitrate(320_000)
+                setBitrateModal(false)
+              }}
+              useTheme={true}
+            />
+            <ModalButton
+              text="448 kbps"
+              icon="music_note"
+              onPress={() => {
+                settings.setBitrate(448_000)
+                setBitrateModal(false)
+              }}
+              useTheme={true}
+            />
+            <ModalButton
+              text="640 kbps"
+              icon="music_note"
+              onPress={() => {
+                settings.setBitrate(640_000)
+                setBitrateModal(false)
+              }}
+              useTheme={true}
+            />
+            <ModalButton
+              text="1000 kbps"
+              icon="music_note"
+              onPress={() => {
+                settings.setBitrate(1_000_000)
+                setBitrateModal(false)
+              }}
+              useTheme={true}
+            />
+            <ModalButton
+              text="2000 kbps"
+              icon="music_note"
+              onPress={() => {
+                settings.setBitrate(2_000_000)
+                setBitrateModal(false)
+              }}
+              useTheme={true}
+            />
+            <ModalButton
+              text="No limit"
+              icon="music_note"
+              onPress={() => {
+                settings.setBitrate(140_000_000)
+                setBitrateModal(false)
+              }}
+              useTheme={true}
+            />
           </View>
         </View>
       </Modal>

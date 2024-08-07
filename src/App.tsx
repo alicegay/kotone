@@ -21,6 +21,7 @@ import Tabs from 'screens/Tabs'
 import TabStack from 'types/TabStack'
 import MusicStack from 'types/MusicStack'
 import useTheme from 'hooks/useTheme'
+import useSettings from 'hooks/useSettings'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -30,6 +31,7 @@ let playerSetup = false
 const App = () => {
   const client = useClient()
   const player = usePlayer()
+  const settings = useSettings()
   const theme = useTheme()
   const { height } = useWindowDimensions()
 
@@ -85,10 +87,10 @@ const App = () => {
       }
       player.setRepeat(player.repeat)
     }
-    if (client.hasHydrated && player.hasHydrated) {
+    if (client.hasHydrated && player.hasHydrated && settings.hasHydrated) {
       restoreQueue()
     }
-  }, [client.hasHydrated, player.hasHydrated])
+  }, [client.hasHydrated, player.hasHydrated, settings.hasHydrated])
 
   useEffect(() => {
     if (theme.hasHydrated) {

@@ -38,10 +38,11 @@ const PlaybackService = async () => {
     }
   })
 
-  // TrackPlayer.addEventListener(Event.PlaybackState, (state) =>
-  //   console.log(state),
-  // )
-  //TrackPlayer.addEventListener(Event.PlayerError, (error) => console.log(error))
+  // TrackPlayer.addEventListener(Event.PlaybackState, (state) => {
+  //   console.log(state)
+  //   TrackPlayer.getActiveTrack().then((track) => console.log(track.url))
+  // })
+  // TrackPlayer.addEventListener(Event.PlayerError, (error) => console.log(error))
 
   TrackPlayer.addEventListener(
     Event.PlaybackActiveTrackChanged,
