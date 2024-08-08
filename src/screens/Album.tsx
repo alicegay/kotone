@@ -43,6 +43,7 @@ const Albums = ({
   const params = {
     ParentId: typeof albumParam === 'string' ? albumParam : albumParam.Id,
     SortBy: playlist ? undefined : 'ParentIndexNumber,IndexNumber,Name',
+    Fields: 'MediaSources',
   }
   const { data, isLoading } = useItems(
     params,

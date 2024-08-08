@@ -26,6 +26,19 @@ const itemToType = (item: Item): Track | Album | Playlist | Item => {
       AlbumArtists: item.AlbumArtists,
       AlbumPrimaryImageTag: item.AlbumPrimaryImageTag,
       NormalizationGain: item.NormalizationGain,
+      // @ts-ignore
+      Bitrate:
+        'Bitrate' in item && item.Bitrate
+          ? item.Bitrate
+          : 'MediaSources' in item
+          ? item.MediaSources[0].Bitrate
+          : undefined,
+      Container:
+        'Container' in item && item.Container
+          ? item.Container
+          : 'MediaSources' in item
+          ? item.MediaSources[0].Container
+          : undefined,
     }
     return result
   } else if (item.Type === 'MusicAlbum') {

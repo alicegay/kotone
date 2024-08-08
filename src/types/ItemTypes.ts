@@ -20,6 +20,8 @@ export type Track = Base & {
   AlbumArtists: { Name: string; Id: string }[]
   AlbumPrimaryImageTag: string
   NormalizationGain: number
+  Bitrate?: number
+  Container?: string
 }
 
 export type Album = Base & {

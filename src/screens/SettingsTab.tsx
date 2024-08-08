@@ -31,9 +31,13 @@ const SettingsTab = () => {
   const [color, setColor] = useState<string>(theme.tint)
 
   const [bitrateModal, setBitrateModal] = useState<boolean>(false)
+  const [bitrateChanged, setBitrateChanged] = useState<boolean>(false)
 
   useEffect(() => {
-    if (player.queue.length > 0) player.setQueue(player.queue, player.track)
+    if (bitrateChanged) {
+      if (player.queue.length > 0) player.setQueue(player.queue, player.track)
+      setBitrateChanged(false)
+    }
   }, [settings.bitrate])
 
   return (
@@ -172,6 +176,7 @@ const SettingsTab = () => {
               icon="music_note"
               onPress={() => {
                 settings.setBitrate(128_000)
+                setBitrateChanged(true)
                 setBitrateModal(false)
               }}
               useTheme={true}
@@ -181,6 +186,7 @@ const SettingsTab = () => {
               icon="music_note"
               onPress={() => {
                 settings.setBitrate(320_000)
+                setBitrateChanged(true)
                 setBitrateModal(false)
               }}
               useTheme={true}
@@ -190,6 +196,7 @@ const SettingsTab = () => {
               icon="music_note"
               onPress={() => {
                 settings.setBitrate(448_000)
+                setBitrateChanged(true)
                 setBitrateModal(false)
               }}
               useTheme={true}
@@ -199,6 +206,7 @@ const SettingsTab = () => {
               icon="music_note"
               onPress={() => {
                 settings.setBitrate(640_000)
+                setBitrateChanged(true)
                 setBitrateModal(false)
               }}
               useTheme={true}
@@ -208,6 +216,7 @@ const SettingsTab = () => {
               icon="music_note"
               onPress={() => {
                 settings.setBitrate(1_000_000)
+                setBitrateChanged(true)
                 setBitrateModal(false)
               }}
               useTheme={true}
@@ -217,6 +226,7 @@ const SettingsTab = () => {
               icon="music_note"
               onPress={() => {
                 settings.setBitrate(2_000_000)
+                setBitrateChanged(true)
                 setBitrateModal(false)
               }}
               useTheme={true}
@@ -226,6 +236,7 @@ const SettingsTab = () => {
               icon="music_note"
               onPress={() => {
                 settings.setBitrate(140_000_000)
+                setBitrateChanged(true)
                 setBitrateModal(false)
               }}
               useTheme={true}

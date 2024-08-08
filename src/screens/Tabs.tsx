@@ -64,6 +64,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
     SortOrder: 'Ascending',
     IncludeItemTypes: 'Audio',
     Recursive: true,
+    Fields: 'MediaSources',
   })
   useEffect(() => {
     if (songs.data) library.setSongs(songs.data.Items)

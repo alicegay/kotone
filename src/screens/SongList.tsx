@@ -51,6 +51,7 @@ const SongList = ({
       SortOrder: 'Ascending',
       IncludeItemTypes: 'Audio',
       Recursive: true,
+      Fields: 'MediaSources',
     },
     favorites: {
       SortBy: 'Name',
@@ -58,6 +59,7 @@ const SongList = ({
       IncludeItemTypes: 'Audio',
       Recursive: true,
       IsFavorite: true,
+      Fields: 'MediaSources',
     },
     frequent: {
       SortBy: 'PlayCount',
@@ -66,6 +68,7 @@ const SongList = ({
       Recursive: true,
       Filter: 'IsPlayed',
       Limit: 50,
+      Fields: 'MediaSources',
     },
     recent: {
       SortBy: 'DatePlayed',
@@ -74,6 +77,7 @@ const SongList = ({
       Recursive: true,
       Filter: 'IsPlayed',
       Limit: 50,
+      Fields: 'MediaSources',
     },
   }
 
