@@ -23,6 +23,7 @@ import TabStack from 'types/TabStack'
 import MusicStack from 'types/MusicStack'
 import useTheme from 'hooks/useTheme'
 import useSettings from 'hooks/useSettings'
+import Lyrics from 'screens/Lyrics'
 
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
@@ -133,6 +134,7 @@ const App = () => {
                   cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
                 }}
               />
+              <Stack.Screen name="Lyrics" component={Lyrics} />
               <Stack.Screen name="SelectServer" component={SelectServer} />
               <Stack.Screen name="SelectUser" component={SelectUser} />
             </Stack.Navigator>

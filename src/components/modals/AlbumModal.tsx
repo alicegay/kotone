@@ -36,6 +36,7 @@ const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
         !!album && album.Type === 'Playlist'
           ? undefined
           : 'ParentIndexNumber,IndexNumber,Name',
+      Fields: 'MediaSources',
     },
     !!album,
   )

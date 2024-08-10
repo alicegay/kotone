@@ -1,7 +1,7 @@
 type RootStack = {
   Tabs: undefined
   Player: undefined
-  Settings: undefined
+  Lyrics: undefined
   SelectServer: undefined
   SelectUser: { server: string }
 }

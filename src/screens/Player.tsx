@@ -29,9 +29,7 @@ import useFavItem from 'api/useFavItem'
 import { ticksToSecs } from 'lib/ticksToTime'
 import useSettings from 'hooks/useSettings'
 
-//let accuratePosition = 0
-
-const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
+const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
   const client = useClient()
   const settings = useSettings()
   const theme = useTheme()
@@ -61,7 +59,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
       const position = secsToTicks(accuratePosition)
       for (let i = 0; i < lyrics.data.Lyrics.length; i++) {
         const start = lyrics.data.Lyrics[i].Start
-        if (start >= position) {
+        if (start >= position + 200_0000) {
           if (i == 0) {
             setCurrentLyric(null)
             break
@@ -377,7 +375,9 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           <Pressable
             style={styles.buttonSmall}
             android_ripple={androidRipple}
-            onPress={() => {}}
+            onPress={() => {
+              if (!!lyrics.data) navigation.push('Lyrics')
+            }}
           >
             <Icon
               name="lyrics"
