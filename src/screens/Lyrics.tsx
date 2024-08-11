@@ -57,12 +57,18 @@ const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
   }, [accuratePosition])
 
   useEffect(() => {
-    if (timed && follow && current)
+    if (timed && follow && current) {
       lyricsRef.current.scrollToIndex({
         index: current,
         animated: true,
         viewPosition: 0.5,
       })
+    } else if (timed && follow && !current) {
+      lyricsRef.current.scrollToOffset({
+        offset: 0,
+        animated: true,
+      })
+    }
   }, [follow, current])
 
   useEffect(() => {
@@ -186,14 +192,20 @@ const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
             contentContainerStyle={{ gap: 8 }}
             onScrollToIndexFailed={() => {}}
             onContentSizeChange={() => {
-              if (timed && follow && current)
+              if (timed && follow && current) {
                 lyricsRef.current.scrollToIndex({
                   index: current,
                   animated: true,
                   viewPosition: 0.5,
                 })
+              } else if (timed && follow && !current) {
+                lyricsRef.current.scrollToOffset({
+                  offset: 0,
+                  animated: true,
+                })
+              }
             }}
-            scrollEnabled={!follow}
+            scrollEnabled={timed ? !follow : true}
           />
         )}
       </View>
