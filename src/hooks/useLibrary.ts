@@ -11,7 +11,7 @@ interface LibraryStore {
   artists: Item[]
   playlists: Playlist[]
   favorites: Track[]
-  musicvideos: Item[]
+  musicvideos: Track[]
 
   setViews: (views: Item[]) => void
   setViewIDs: (viewIDs: { [key: string]: string }) => void
@@ -59,7 +59,8 @@ const useLibrary = create<LibraryStore>()((set) => ({
     set(() => ({ favorites: items }))
   },
   setMusicvideos: (musicvideos) => {
-    set(() => ({ musicvideos: musicvideos }))
+    const items = musicvideos.map((item) => itemToType(item) as Track)
+    set(() => ({ musicvideos: items }))
   },
 }))
 

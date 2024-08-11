@@ -37,14 +37,20 @@ const SongList = ({
     favorites: 'Favorites',
     frequent: 'Frequently Played',
     recent: 'Recently Played',
+    musicvideos: 'Music Videos',
   }
   const footers = {
     songs: 'songs',
     favorites: 'favorites',
     frequent: 'list',
     recent: 'list',
+    musicvideos: 'music videos',
   }
 
+  const musicvideoView =
+    library.viewIDs && 'musicvideos' in library.viewIDs
+      ? library.viewIDs.musicvideos
+      : null
   const params: { [key: string]: ItemsQuery } = {
     songs: {
       SortBy: 'Name',
@@ -77,6 +83,14 @@ const SongList = ({
       Recursive: true,
       Filter: 'IsPlayed',
       Limit: 50,
+      Fields: 'MediaSources',
+    },
+    musicvideos: {
+      ParentId: musicvideoView,
+      SortBy: 'Name',
+      SortOrder: 'Ascending',
+      IncludeItemTypes: 'MusicVideo',
+      Recursive: true,
       Fields: 'MediaSources',
     },
   }

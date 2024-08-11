@@ -69,6 +69,13 @@ const Music = ({
           >
             Playlists
           </Button>
+          <Button
+            onPress={() => {
+              navigation.push('SongList', { type: 'musicvideos' })
+            }}
+          >
+            Music Videos
+          </Button>
         </View>
 
         <ScrollView>

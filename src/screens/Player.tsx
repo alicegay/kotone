@@ -47,6 +47,12 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
     !!item.data && item.data.MediaStreams.length > 0
       ? item.data.MediaStreams.find((stream) => stream.Type === 'Audio')
       : null
+  const source =
+    !!item.data &&
+    'MediaSources' in item.data &&
+    item.data.MediaSources.length > 0
+      ? item.data.MediaSources[0]
+      : null
   const favorite = !!item.data && item.data.UserData.IsFavorite
   const favItem = useFavItem(!!item.data ? item.data.Id : null)
   const lyrics = useLyrics(!!track ? track.Id : null, !!track)
@@ -228,7 +234,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
               >
                 {secsToTime(playerProgress.position)}
               </Text>
-              {!!stream && (
+              {!!source && !!stream && (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -250,35 +256,13 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
                       fontSize: 10,
                     }}
                   >
-                    {stream.Codec.toUpperCase()}
+                    {item.data.Type === 'MusicVideo'
+                      ? source.Container.toUpperCase()
+                      : stream.Codec.toUpperCase()}
                   </Text>
 
-                  {stream.BitRate <= settings.bitrate && (
-                    <Text
-                      style={{
-                        color: theme.foregroundAlt,
-                        fontFamily: theme.font400,
-                        fontSize: 10,
-                      }}
-                    >
-                      {stream.SampleRate / 1000 + ' ' + 'kHz'}
-                    </Text>
-                  )}
-                  <Text
-                    style={{
-                      color: theme.foregroundAlt,
-                      fontFamily: theme.font400,
-                      fontSize: 10,
-                    }}
-                  >
-                    {Math.round(stream.BitRate / 1000) + ' ' + 'kbps'}
-                  </Text>
-                  {stream.BitRate > settings.bitrate && (
-                    <>
-                      <Icon
-                        name="arrow_forward"
-                        style={{ color: theme.foregroundAlt, fontSize: 12 }}
-                      />
+                  {source.Bitrate <= settings.bitrate &&
+                    item.data.Type !== 'MusicVideo' && (
                       <Text
                         style={{
                           color: theme.foregroundAlt,
@@ -286,10 +270,40 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
                           fontSize: 10,
                         }}
                       >
-                        {Math.round(settings.bitrate / 1000) + ' ' + 'kbps'}
+                        {stream.SampleRate / 1000 + ' ' + 'kHz'}
                       </Text>
-                    </>
-                  )}
+                    )}
+                  <Text
+                    style={{
+                      color: theme.foregroundAlt,
+                      fontFamily: theme.font400,
+                      fontSize: 10,
+                    }}
+                  >
+                    {Math.round(source.Bitrate / 1000) + ' ' + 'kbps'}
+                  </Text>
+                  {source.Bitrate > settings.bitrate ||
+                    (item.data.Type === 'MusicVideo' && (
+                      <>
+                        <Icon
+                          name="double_arrow"
+                          style={{ color: theme.foregroundAlt, fontSize: 12 }}
+                        />
+                        <Text
+                          style={{
+                            color: theme.foregroundAlt,
+                            fontFamily: theme.font400,
+                            fontSize: 10,
+                          }}
+                        >
+                          {item.data.Type === 'MusicVideo'
+                            ? 'Audio'
+                            : Math.round(settings.bitrate / 1000) +
+                              ' ' +
+                              'kbps'}
+                        </Text>
+                      </>
+                    ))}
                 </View>
               )}
               <Text

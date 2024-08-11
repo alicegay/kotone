@@ -70,6 +70,25 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
     if (songs.data) library.setSongs(songs.data.Items)
   }, [songs.data])
 
+  const musicvideoView =
+    library.viewIDs && 'musicvideos' in library.viewIDs
+      ? library.viewIDs.musicvideos
+      : null
+  const musicvideos = useItems(
+    {
+      ParentId: musicvideoView,
+      SortBy: 'Name',
+      SortOrder: 'Ascending',
+      IncludeItemTypes: 'MusicVideo',
+      Recursive: true,
+      Fields: 'MediaSources',
+    },
+    !!musicvideoView,
+  )
+  useEffect(() => {
+    if (musicvideos.data) library.setMusicvideos(musicvideos.data.Items)
+  }, [musicvideos.data])
+
   const styles = StyleSheet.create({
     tabIcon: {
       paddingHorizontal: 16,

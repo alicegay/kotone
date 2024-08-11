@@ -151,6 +151,7 @@ const TrackModal = ({
                 // @ts-ignore
                 navigation.push('Album', { album: track.AlbumId })
               }}
+              disabled={!track.Album}
             />
 
             <ModalButton

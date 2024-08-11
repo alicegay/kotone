@@ -5,14 +5,14 @@ import formatName from './formatName'
 const itemToType = (item: Item): Track | Album | Playlist | Item => {
   let base = {
     Name: item.Name,
-    Search: formatName(item.Name),
+    Search: 'Search' in item ? (item.Search as string) : formatName(item.Name),
     SortName: item.SortName,
     Id: item.Id,
     RunTimeTicks: item.RunTimeTicks,
     ImageTags: item.ImageTags,
     ImageBlurHashes: item.ImageBlurHashes,
   }
-  if (item.Type === 'Audio') {
+  if (item.Type === 'Audio' || item.Type === 'MusicVideo') {
     const result: Track = {
       ...base,
       Type: 'Audio',

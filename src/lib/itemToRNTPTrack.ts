@@ -25,6 +25,7 @@ const itemToRNTPTrack = (item: Item | Track): RNTPTrack => {
       transcode = true
     if (!containers.includes(item.MediaSources[0].Container)) transcode = true
   }
+  if (item.Type === 'MusicVideo') transcode = false
 
   const image =
     'Primary' in item.ImageTags
@@ -39,7 +40,10 @@ const itemToRNTPTrack = (item: Item | Track): RNTPTrack => {
     'deviceId=' + useClient.getState().deviceID,
     transcode
       ? 'audioBitRate=' + useSettings.getState().bitrate
-      : 'maxStreamingBitrate=' + useSettings.getState().bitrate,
+      : 'maxStreamingBitrate=' +
+        (item.Type === 'MusicVideo' && useSettings.getState().bitrate > 640_000
+          ? 640_000
+          : useSettings.getState().bitrate),
     transcode ? '' : 'container=' + containers.join(','),
     transcode ? 'transcodingProtocol=hls' : 'transcodingProtocol=http',
     transcode

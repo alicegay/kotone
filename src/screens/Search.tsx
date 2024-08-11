@@ -100,6 +100,7 @@ const Search = ({
             routes: [
               { key: 'albums', title: 'Albums' },
               { key: 'songs', title: 'Songs' },
+              { key: 'musicvideos', title: 'Music Videos' },
               // { key: 'artists', title: 'Artists' },
             ],
           }}
@@ -124,6 +125,15 @@ const Search = ({
                     isLoading={!library.songs}
                   />
                 )
+              case 'musicvideos':
+                return (
+                  <InnerTab
+                    search={formattedSearch}
+                    type="musicvideos"
+                    navigation={navigation}
+                    isLoading={!library.musicvideos}
+                  />
+                )
             }
           }}
         />
@@ -139,7 +149,7 @@ const InnerTab = ({
   isLoading,
 }: {
   search: string
-  type: 'albums' | 'songs' | 'artists'
+  type: 'albums' | 'songs' | 'artists' | 'musicvideos'
   navigation: NativeStackNavigationProp<SearchStack>
   isLoading: boolean
 }) => {
@@ -164,6 +174,12 @@ const InnerTab = ({
       ? !!library.songs
         ? library.songs.filter((song) =>
             song.Search.includes(formatName(search)),
+          )
+        : null
+      : type === 'musicvideos'
+      ? !!library.musicvideos
+        ? library.musicvideos.filter((mv) =>
+            mv.Search.includes(formatName(search)),
           )
         : null
       : null
