@@ -261,7 +261,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
                       : stream.Codec.toUpperCase()}
                   </Text>
 
-                  {source.Bitrate <= settings.bitrate &&
+                  {stream.BitRate <= settings.bitrate &&
                     item.data.Type !== 'MusicVideo' && (
                       <Text
                         style={{
@@ -282,28 +282,26 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
                   >
                     {Math.round(source.Bitrate / 1000) + ' ' + 'kbps'}
                   </Text>
-                  {source.Bitrate > settings.bitrate ||
-                    (item.data.Type === 'MusicVideo' && (
-                      <>
-                        <Icon
-                          name="double_arrow"
-                          style={{ color: theme.foregroundAlt, fontSize: 12 }}
-                        />
-                        <Text
-                          style={{
-                            color: theme.foregroundAlt,
-                            fontFamily: theme.font400,
-                            fontSize: 10,
-                          }}
-                        >
-                          {item.data.Type === 'MusicVideo'
-                            ? 'Audio'
-                            : Math.round(settings.bitrate / 1000) +
-                              ' ' +
-                              'kbps'}
-                        </Text>
-                      </>
-                    ))}
+                  {(stream.BitRate > settings.bitrate ||
+                    item.data.Type === 'MusicVideo') && (
+                    <>
+                      <Icon
+                        name="double_arrow"
+                        style={{ color: theme.foregroundAlt, fontSize: 12 }}
+                      />
+                      <Text
+                        style={{
+                          color: theme.foregroundAlt,
+                          fontFamily: theme.font400,
+                          fontSize: 10,
+                        }}
+                      >
+                        {item.data.Type === 'MusicVideo'
+                          ? 'Audio'
+                          : Math.round(settings.bitrate / 1000) + ' ' + 'kbps'}
+                      </Text>
+                    </>
+                  )}
                 </View>
               )}
               <Text

@@ -55,7 +55,7 @@ const itemToRNTPTrack = (item: Item | Track): RNTPTrack => {
     'maxAudioSampleRate=48000',
     'maxAudioBitDepth=16',
     'transcodingAudioChannels=2',
-    'api_key=' + useClient.getState().token,
+    'apiKey=' + useClient.getState().token,
   ]
 
   return {

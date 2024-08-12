@@ -22,7 +22,7 @@ export const playing = async (
     IsPaused: state !== State.Playing,
     IsMuted: false,
     VolumeLevel: 100,
-    PositionTicks: secsToTicks(position),
+    PositionTicks: Math.round(secsToTicks(position)),
     PlayMethod: 'Transcode',
     RepeatMode:
       usePlayer.getState().repeat === 'off'
