@@ -90,7 +90,12 @@ const TrackModal = ({
             </>
           )}
           <View style={{ paddingVertical: 8, gap: 4 }}>
-            <TrackListItem track={track} playing={false} />
+            <TrackListItem
+              track={track}
+              playing={false}
+              showArtist={false}
+              showDuration={false}
+            />
             <ModalButton
               text="Play"
               icon="play_arrow"

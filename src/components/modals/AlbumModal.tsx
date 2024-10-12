@@ -97,6 +97,7 @@ const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
             <TrackListItem
               track={album}
               playing={false}
+              showArtist={false}
               showDuration={!album}
             />
             <ModalButton

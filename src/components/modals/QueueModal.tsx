@@ -70,7 +70,7 @@ const QueueModal = ({ visible, onClose }: Props) => {
 
             <ModalButton
               text="Clear queue"
-              icon="playlist_add"
+              icon="playlist_remove"
               useTheme={true}
               onPress={() => {
                 player.clearQueue()
