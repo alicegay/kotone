@@ -163,8 +163,12 @@ const TrackModal = ({
               text="View artist"
               icon="artist"
               iconFilled={true}
-              onPress={() => {}}
-              disabled={true}
+              onPress={() => {
+                onClose()
+                // @ts-ignore
+                navigation.push('Artist', { artist: track.AlbumArtists[0].Id })
+              }}
+              //disabled={true}
             />
           </View>
         </View>

@@ -169,8 +169,14 @@ const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
                   text="View artist"
                   icon="artist"
                   iconFilled={true}
-                  onPress={() => {}}
-                  disabled={true}
+                  onPress={() => {
+                    onClose()
+                    // @ts-ignore
+                    navigation.push('Artist', {
+                      artist: album.AlbumArtists[0].Id,
+                    })
+                  }}
+                  //disabled={true}
                 />
               </>
             )}

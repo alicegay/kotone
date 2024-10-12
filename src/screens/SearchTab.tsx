@@ -7,6 +7,7 @@ import SearchStack from 'types/SearchStack'
 import SongList from './SongList'
 import AlbumList from './AlbumList'
 import Album from './Album'
+import Artist from './Artist'
 
 const Stack = createNativeStackNavigator<SearchStack>()
 
@@ -20,6 +21,7 @@ const SearchTab = ({}: BottomTabScreenProps<TabStack, 'Search'>) => {
       <Stack.Screen name="SongList" component={SongList} />
       <Stack.Screen name="AlbumList" component={AlbumList} />
       <Stack.Screen name="Album" component={Album} />
+      <Stack.Screen name="Artist" component={Artist} />
     </Stack.Navigator>
   )
 }

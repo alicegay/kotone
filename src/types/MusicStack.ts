@@ -7,7 +7,7 @@ type MusicStack = {
   AlbumList: { type: string }
   ArtistList: { type: string }
   Album: { album: Album | Item | string }
-  Artist: { artist: Item | string }
+  Artist: { artist: string }
 }
 
 export default MusicStack
