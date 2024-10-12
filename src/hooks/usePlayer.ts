@@ -156,12 +156,17 @@ const usePlayer = create<PlayerStore>()(
         newQueue.splice(index, 1)
         set(() => ({ queue: newQueue }))
         TrackPlayer.remove(index)
-        if (get().track >= newQueue.length - 1) {
+        if (get().track >= newQueue.length - 1 && newQueue.length > 0) {
           set(() => ({
-            track: newQueue.length - 1,
-            trackID: newQueue[newQueue.length - 1].Id,
+            track: 0,
+            trackID: newQueue[0].Id,
           }))
-          TrackPlayer.skip(newQueue.length - 1)
+          //TrackPlayer.skip(newQueue.length - 1)
+        } else if (index < get().track) {
+          set(() => ({
+            track: get().track - 1,
+            trackID: newQueue[get().track - 1].Id,
+          }))
         }
       },
 
