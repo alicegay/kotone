@@ -18,6 +18,10 @@ interface ThemeStore {
   font500: string
   font700: string
 
+  dTint: string
+  dG1: string
+  dG2: string
+
   dark: boolean
   scheme: Scheme
 
@@ -41,7 +45,11 @@ const useTheme = create<ThemeStore>()(
       font500: 'NunitoRoundedMplus-Medium',
       font700: 'NunitoRoundedMplus-Bold',
 
-      dark: false,
+      dTint: '#ffd7f4',
+      dG1: '#6E5DC6',
+      dG2: '#E774BB',
+
+      dark: true,
       scheme: null,
 
       setTint: (color) => set(() => ({ tint: color.slice(0, 7) })),

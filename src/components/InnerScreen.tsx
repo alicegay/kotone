@@ -7,11 +7,11 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { BlurMask, Canvas, Oval } from '@shopify/react-native-skia'
 
 import useTheme, { Scheme } from 'hooks/useTheme'
 import { Icon } from './Icon'
 import { ReactNode } from 'react'
+import LinearGradient from 'react-native-linear-gradient'
 
 interface Props {
   children?: ReactNode
@@ -32,29 +32,32 @@ const InnerScreen = ({
 }: Props) => {
   const theme = useTheme()
   const insets = useSafeAreaInsets()
-  const { width } = useWindowDimensions()
   const navigation = useNavigation()
 
+  const mainTheme = theme.tint === theme.dTint && theme.dark && !scheme
+
+  const gradient1 = mainTheme
+    ? theme.dG1
+    : !!scheme
+    ? scheme.primaryContainer
+    : theme.scheme.primaryContainer
+  const gradient2 = mainTheme
+    ? theme.dG2
+    : !!scheme
+    ? scheme.background
+    : theme.scheme.background
+
   return (
-    <View
+    <LinearGradient
       style={{
         flex: 1,
-        backgroundColor: !!scheme ? scheme.background : theme.scheme.background,
+        backgroundColor: gradient1,
       }}
+      colors={[gradient1, gradient2]}
+      useAngle={true}
+      angle={140}
+      angleCenter={{ x: 0.5, y: 0.5 }}
     >
-      <Canvas style={{ position: 'absolute', width: '100%', height: 200 }}>
-        <Oval
-          x={-(width * 1.5) / 2}
-          y={-100}
-          width={width * 1.75}
-          height={200}
-          color={
-            !!scheme ? scheme.primaryContainer : theme.scheme.primaryContainer
-          }
-        >
-          <BlurMask blur={32} style="normal" />
-        </Oval>
-      </Canvas>
       <View
         style={{
           flex: 1,
@@ -138,7 +141,7 @@ const InnerScreen = ({
         </View>
         {children}
       </View>
-    </View>
+    </LinearGradient>
   )
 }
 

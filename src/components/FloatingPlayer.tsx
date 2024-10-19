@@ -53,7 +53,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
     >
       <Shadow
         distance={24}
-        startColor={theme.scheme.background.slice(0, 7) + 'aa'}
+        startColor={theme.scheme.background.slice(0, 7) + '44'}
       >
         <Pressable
           style={{
