@@ -69,30 +69,37 @@ const App = () => {
           Capability.SkipToNext,
         ],
       })
+      console.log('PLAYER SETUP')
+      playerSetup = true
     }
 
     if (!playerSetup) {
       setupPlayer()
-      console.log('PLAYER SETUP')
-      playerSetup = true
     }
 
     SystemNavigationBar.setNavigationColor(0x00000000, 'light')
   }, [])
 
   useEffect(() => {
-    const restoreQueue = async () => {
-      const queue = await TrackPlayer.getQueue()
-      if (player.queue.length > 0 && queue.length === 0) {
-        player.setQueue(player.queue, player.track)
-        console.log('RESTORED QUEUE')
+    if (playerSetup) {
+      const restoreQueue = async () => {
+        const queue = await TrackPlayer.getQueue()
+        if (player.queue.length > 0 && queue.length === 0) {
+          player.setQueue(player.queue, player.track)
+          console.log('RESTORED QUEUE')
+        }
+        player.setRepeat(player.repeat)
       }
-      player.setRepeat(player.repeat)
+      if (client.hasHydrated && player.hasHydrated && settings.hasHydrated) {
+        restoreQueue()
+      }
     }
-    if (client.hasHydrated && player.hasHydrated && settings.hasHydrated) {
-      restoreQueue()
-    }
-  }, [client.hasHydrated, player.hasHydrated, settings.hasHydrated])
+  }, [
+    client.hasHydrated,
+    player.hasHydrated,
+    settings.hasHydrated,
+    playerSetup,
+  ])
 
   useEffect(() => {
     if (theme.hasHydrated) {
