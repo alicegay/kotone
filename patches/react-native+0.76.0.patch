@@ -1,0 +1,17 @@
+diff --git a/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js b/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js
+index 4d49bcd..34dc3cf 100644
+--- a/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js
++++ b/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js
+@@ -2227,9 +2227,9 @@ to return true:wantsResponderID|                            |
+         var directDispatchConfig = customDirectEventTypes[topLevelType];
+ 
+         if (!bubbleDispatchConfig && !directDispatchConfig) {
+-          throw new Error( // $FlowFixMe[incompatible-type] - Flow doesn't like this string coercion because DOMTopLevelEventType is opaque
+-            'Unsupported top level event type "' + topLevelType + '" dispatched'
+-          );
++          // throw new Error( // $FlowFixMe[incompatible-type] - Flow doesn't like this string coercion because DOMTopLevelEventType is opaque
++          //   'Unsupported top level event type "' + topLevelType + '" dispatched'
++          // );
+         }
+ 
+         var event = SyntheticEvent.getPooled(
