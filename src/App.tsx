@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { AppRegistry, useWindowDimensions } from 'react-native'
 import { NavigationContainer, Theme } from '@react-navigation/native'
@@ -28,14 +28,14 @@ import Lyrics from 'screens/Lyrics'
 const Stack = createStackNavigator<RootStack>()
 const queryClient = new QueryClient()
 
-let playerSetup = false
-
 const App = () => {
   const client = useClient()
   const player = usePlayer()
   const settings = useSettings()
   const theme = useTheme()
   const { height } = useWindowDimensions()
+
+  const [playerSetup, setPlayerSetup] = useState(false)
 
   useEffect(() => {
     const setupPlayer = async () => {
@@ -70,7 +70,7 @@ const App = () => {
         ],
       })
       console.log('PLAYER SETUP')
-      playerSetup = true
+      setPlayerSetup(true)
     }
 
     if (!playerSetup) {
