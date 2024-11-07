@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "start": "react-native start",
     "build": "cd android && ./gradlew assembleRelease",
-    "clean": "cd android && ./gradlew clean",
     "adb": "adb install ./android/app/build/outputs/apk/release/app-release.apk",
     "build:ios": "react-native build-ios --mode \"Release\"",
     "pod": "npx pod-install ios",
@@ -53,6 +52,7 @@
     "react-native-vector-icons": "10.2.0",
     "reanimated-color-picker": "3.0.4",
     "tinycolor2": "1.6.0",
+    "use-debounce": "10.0.4",
     "wanakana": "5.3.1",
     "zustand": "5.0.1"
   },

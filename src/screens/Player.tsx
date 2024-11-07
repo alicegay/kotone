@@ -28,6 +28,7 @@ import useInterval from 'hooks/useInterval'
 import useFavItem from 'api/useFavItem'
 import { ticksToSecs } from 'lib/ticksToTime'
 import useSettings from 'hooks/useSettings'
+import { useDebounce } from 'use-debounce'
 
 const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
   const client = useClient()
@@ -57,7 +58,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
   const favItem = useFavItem(!!item.data ? item.data.Id : null)
   const lyrics = useLyrics(!!track ? track.Id : null, !!track)
   const timedLyrics = !!lyrics.data ? 'Start' in lyrics.data.Lyrics[0] : false
-  const [currentLyric, setCurrentLyric] = useState<string>(null)
+  const [currentLyricA, setCurrentLyric] = useState<string>(null)
+  const [currentLyric] = useDebounce(currentLyricA, 200, { leading: true })
   const [accuratePosition, setAccuratePosition] = useState<number>(0)
 
   useEffect(() => {

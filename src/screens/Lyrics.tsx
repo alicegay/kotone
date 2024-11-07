@@ -14,6 +14,7 @@ import useInterval from 'hooks/useInterval'
 import { Icon } from 'components/Icon'
 import Switch from 'components/Switch'
 import secsToTicks from 'lib/secsToTicks'
+import { useDebounce } from 'use-debounce'
 
 const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
   const client = useClient()
@@ -27,7 +28,8 @@ const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
   const lyrics = useLyrics(!!track ? track.Id : null, !!track)
   const [timed, setTimed] = useState<boolean>(false)
   const [follow, setFollow] = useState<boolean>(true)
-  const [current, setCurrent] = useState<number>(null)
+  const [currentA, setCurrent] = useState<number>(null)
+  const [current] = useDebounce(currentA, 200, { leading: true })
   const [accuratePosition, setAccuratePosition] = useState<number>(0)
   const lyricsRef = useRef<FlatList>()
 
@@ -114,7 +116,7 @@ const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
         style={{
           flex: 1,
           paddingTop: insets.top + 16,
-          paddingBottom: insets.bottom + 16,
+          //paddingBottom: insets.bottom + 16,
         }}
       >
         <View
@@ -206,6 +208,10 @@ const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
               }
             }}
             scrollEnabled={timed ? !follow : true}
+            showsVerticalScrollIndicator={!timed || (timed && !follow)}
+            ListFooterComponent={() => (
+              <View style={{ height: insets.bottom + 16 }} />
+            )}
           />
         )}
       </View>
