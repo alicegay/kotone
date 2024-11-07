@@ -33,7 +33,7 @@
     "react": "18.3.1",
     "react-compiler-runtime": "file:./lib/react-compiler-runtime",
     "react-native": "0.76.1",
-    "react-native-blurhash": "2.0.3",
+    "react-native-blurhash": "2.1.0",
     "react-native-bootsplash": "6.2.2",
     "react-native-device-info": "13.1.0",
     "react-native-draglist": "3.6.2",
