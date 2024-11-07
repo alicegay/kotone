@@ -1,6 +1,6 @@
+import { storage } from 'lib/storage'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface SettingsStore {
   gain: boolean
@@ -27,7 +27,7 @@ const useSettings = create<SettingsStore>()(
     }),
     {
       name: 'settings',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => storage),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true)
       },

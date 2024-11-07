@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import Item from 'jellyfin-api/lib/types/media/Item'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import TrackPlayer, { RepeatMode } from 'react-native-track-player'
 import itemToRNTPTrack from 'lib/itemToRNTPTrack'
 import { Track } from 'types/ItemTypes'
 import itemToType from 'lib/itemToType'
+import { storage } from 'lib/storage'
 
 interface PlayerStore {
   track: number
@@ -175,7 +175,7 @@ const usePlayer = create<PlayerStore>()(
     }),
     {
       name: 'player',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => storage),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true)
         state?.setDucked(false)
