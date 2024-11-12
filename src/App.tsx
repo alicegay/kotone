@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { AppRegistry, useWindowDimensions } from 'react-native'
-import { NavigationContainer, Theme } from '@react-navigation/native'
+import {
+  DefaultTheme,
+  NavigationContainer,
+  Theme,
+} from '@react-navigation/native'
 import {
   CardStyleInterpolators,
   createStackNavigator,
@@ -118,6 +122,7 @@ const App = () => {
       border: theme.scheme?.primary ?? '#fff',
       notification: theme.scheme?.primary ?? '#fff',
     },
+    fonts: DefaultTheme.fonts,
   }
 
   return (

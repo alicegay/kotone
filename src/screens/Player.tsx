@@ -7,7 +7,6 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Blurhash } from 'react-native-blurhash'
@@ -39,7 +38,6 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
   const { width } = useWindowDimensions()
   const playerProgress = useProgress()
   const playerState = usePlaybackState()
-  const navigationHook = useNavigation()
 
   const track = player.queue.length > 0 ? player.queue[player.track] : null
 
@@ -445,7 +443,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
             android_ripple={androidRipple}
             onPress={() => {
               navigation.goBack()
-              navigationHook.navigate('Queue')
+              navigation.navigate('Tabs', { screen: 'Queue', initial: true })
             }}
           >
             <Icon

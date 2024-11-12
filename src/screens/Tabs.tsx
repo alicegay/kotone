@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -91,10 +91,13 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
 
   const styles = StyleSheet.create({
     tabIcon: {
+      top: 13,
       paddingHorizontal: 16,
       paddingVertical: 6,
-      borderRadius: 20.2,
-      overflow: 'hidden',
+      borderRadius: 24,
+      fontSize: 24,
+      width: 56,
+      height: 42,
     },
     tabIconFocus: { backgroundColor: theme.scheme.surfaceVariant },
   })
@@ -115,23 +118,34 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
           tabBarActiveTintColor: theme.scheme.onSurface,
           tabBarInactiveTintColor: theme.scheme.surfaceVariant,
           tabBarStyle: {
-            paddingBottom: insets.bottom,
             height: 64 + insets.bottom,
             backgroundColor: theme.scheme.surface,
             borderTopWidth: 0,
           },
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ focused, color }) => {
             return (
               <Icon
                 name={icons[route.name]}
                 style={[
                   styles.tabIcon,
                   focused && styles.tabIconFocus,
-                  { fontSize: size, color: color },
+                  {
+                    color: color,
+                  },
                 ]}
               />
             )
           },
+          tabBarButton: (props) => (
+            <Pressable
+              {...props}
+              android_ripple={{
+                radius: 24,
+                foreground: true,
+                color: theme.scheme.ripple,
+              }}
+            />
+          ),
         })}
       >
         <Tab.Screen name="Music" component={MusicTab} />
