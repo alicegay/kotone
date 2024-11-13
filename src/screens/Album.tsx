@@ -21,6 +21,7 @@ import useTheme from 'hooks/useTheme'
 import { Blurhash } from 'react-native-blurhash'
 import getTheme from 'lib/getTheme'
 import { Icon, IconFilled } from 'components/Icon'
+import PlaylistModal from 'components/modals/PlaylistModal'
 
 const Albums = ({
   navigation,
@@ -55,6 +56,9 @@ const Albums = ({
 
   const [albumModal, setAlbumModal] = useState<Album>(null)
   const [showAlbumModal, setShowAlbumModal] = useState<boolean>(false)
+
+  const [playlistModal, setPlaylistModal] = useState<string[]>(null)
+  const [showPlaylistModal, setShowPlaylistModal] = useState<boolean>(false)
 
   const image = client.server + '/Items/' + album?.Id + '/Images/Primary'
 
@@ -225,6 +229,8 @@ const Albums = ({
         onClose={() => setShowTrackModal(false)}
         track={trackModal}
         navigation={navigation}
+        setPlaylistModal={setPlaylistModal}
+        setShowPlaylistModal={setShowPlaylistModal}
       />
 
       <AlbumModal
@@ -232,6 +238,12 @@ const Albums = ({
         onClose={() => setShowAlbumModal(false)}
         album={albumModal}
         navigation={navigation}
+      />
+
+      <PlaylistModal
+        visible={showPlaylistModal}
+        onClose={() => setShowPlaylistModal(false)}
+        tracks={playlistModal}
       />
     </>
   )

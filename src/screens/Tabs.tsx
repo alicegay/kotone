@@ -140,8 +140,7 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
             <Pressable
               {...props}
               android_ripple={{
-                radius: 24,
-                foreground: true,
+                radius: 32,
                 color: theme.scheme.ripple,
               }}
             />

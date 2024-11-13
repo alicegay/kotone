@@ -12,6 +12,7 @@ import ModalButton from './ModalButton'
 import Separator from './Separator'
 import { Track } from 'types/ItemTypes'
 import QueueStack from 'types/QueueStack'
+import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
   visible: boolean
@@ -22,6 +23,8 @@ interface Props {
   navigation:
     | NativeStackNavigationProp<MusicStack>
     | NativeStackNavigationProp<QueueStack>
+  setPlaylistModal: Dispatch<SetStateAction<string[]>>
+  setShowPlaylistModal: Dispatch<SetStateAction<boolean>>
 }
 
 const TrackModal = ({
@@ -31,6 +34,8 @@ const TrackModal = ({
   queue = false,
   index,
   navigation,
+  setPlaylistModal,
+  setShowPlaylistModal,
 }: Props) => {
   const player = usePlayer()
   const theme = useTheme()
@@ -142,8 +147,11 @@ const TrackModal = ({
             <ModalButton
               text="Add to playlist"
               icon="playlist_add"
-              onPress={() => {}}
-              disabled={true}
+              onPress={() => {
+                onClose()
+                setPlaylistModal([track.Id])
+                setShowPlaylistModal(true)
+              }}
             />
 
             <Separator />

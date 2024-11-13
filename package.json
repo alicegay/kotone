@@ -27,7 +27,7 @@
     "axios": "1.7.7",
     "babel-plugin-react-compiler": "^0.0.0-experimental-696af53-20240625",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
-    "jellyfin-api": "github:alicegay/jellyfin-api#053d54b",
+    "jellyfin-api": "github:alicegay/jellyfin-api#ee77057",
     "react": "18.3.1",
     "react-compiler-runtime": "file:./lib/react-compiler-runtime",
     "react-native": "0.76.1",
