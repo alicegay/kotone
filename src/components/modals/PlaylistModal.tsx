@@ -73,7 +73,8 @@ const PlaylistModal = ({ visible, onClose, tracks }: Props) => {
                       playlists
                         .add(client.api, item.Id, tracks)
                         .catch((error: AxiosError) => {
-                          if (error.status) console.log('Permission denied')
+                          if (error.status === 403)
+                            console.log('Permission denied')
                         })
                       onClose()
                     }}

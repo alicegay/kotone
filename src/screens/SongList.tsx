@@ -15,6 +15,8 @@ import useItems from 'api/useItems'
 import { Track } from 'types/ItemTypes'
 import ListModal from 'components/modals/ListModal'
 import useTheme from 'hooks/useTheme'
+import useSettings from 'hooks/useSettings'
+import PlaylistModal from 'components/modals/PlaylistModal'
 
 const SongList = ({
   navigation,
@@ -24,6 +26,7 @@ const SongList = ({
   const queryClient = useQueryClient()
   const player = usePlayer()
   const library = useLibrary()
+  const settings = useSettings()
   const theme = useTheme()
 
   const [trackModal, setTrackModal] = useState<Track>(null)
@@ -31,6 +34,9 @@ const SongList = ({
 
   const [listModal, setListModal] = useState<Track[]>(null)
   const [showListModal, setShowListModal] = useState<boolean>(false)
+
+  const [playlistModal, setPlaylistModal] = useState<string[]>(null)
+  const [showPlaylistModal, setShowPlaylistModal] = useState<boolean>(false)
 
   const titles = {
     songs: 'Songs',
@@ -124,6 +130,7 @@ const SongList = ({
                   setShowTrackModal(true)
                 }}
                 scheme={theme.scheme}
+                showLike={type !== 'favorites' && settings.showLikes}
               />
             )}
             ListFooterComponent={<EndOfList text={'End of ' + footers[type]} />}
@@ -142,6 +149,8 @@ const SongList = ({
         onClose={() => setShowTrackModal(false)}
         track={trackModal}
         navigation={navigation}
+        setPlaylistModal={setPlaylistModal}
+        setShowPlaylistModal={setShowPlaylistModal}
       />
 
       <ListModal
@@ -149,6 +158,12 @@ const SongList = ({
         onClose={() => setShowListModal(false)}
         tracks={listModal}
         navigation={navigation}
+      />
+
+      <PlaylistModal
+        visible={showPlaylistModal}
+        onClose={() => setShowPlaylistModal(false)}
+        tracks={playlistModal}
       />
     </>
   )

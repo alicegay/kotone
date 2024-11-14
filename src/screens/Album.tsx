@@ -22,6 +22,7 @@ import { Blurhash } from 'react-native-blurhash'
 import getTheme from 'lib/getTheme'
 import { Icon, IconFilled } from 'components/Icon'
 import PlaylistModal from 'components/modals/PlaylistModal'
+import useSettings from 'hooks/useSettings'
 
 const Albums = ({
   navigation,
@@ -32,6 +33,7 @@ const Albums = ({
   const client = useClient()
   const player = usePlayer()
   const theme = useTheme()
+  const settings = useSettings()
   const { width } = useWindowDimensions()
 
   const albumQuery = useSingleItem(
@@ -98,6 +100,7 @@ const Albums = ({
                 trackNumber={!playlist && item.IndexNumber}
                 showAlbumArt={playlist}
                 showArtist={playlist || !sameAlbumArtists(item)}
+                showLike={settings.showLikes}
                 onPress={() => {
                   player.setQueue(data.Items, index)
                   player.play()
@@ -235,6 +238,7 @@ const Albums = ({
         navigation={navigation}
         setPlaylistModal={setPlaylistModal}
         setShowPlaylistModal={setShowPlaylistModal}
+        removePlaylist={playlist ? album?.Id : null}
       />
 
       <AlbumModal

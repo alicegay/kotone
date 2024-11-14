@@ -13,6 +13,9 @@ import Separator from './Separator'
 import { Track } from 'types/ItemTypes'
 import QueueStack from 'types/QueueStack'
 import { Dispatch, SetStateAction } from 'react'
+import { playlists } from 'jellyfin-api'
+import useClient from 'hooks/useClient'
+import { AxiosError } from 'axios'
 
 interface Props {
   visible: boolean
@@ -25,6 +28,7 @@ interface Props {
     | NativeStackNavigationProp<QueueStack>
   setPlaylistModal: Dispatch<SetStateAction<string[]>>
   setShowPlaylistModal: Dispatch<SetStateAction<boolean>>
+  removePlaylist?: string
 }
 
 const TrackModal = ({
@@ -36,7 +40,9 @@ const TrackModal = ({
   navigation,
   setPlaylistModal,
   setShowPlaylistModal,
+  removePlaylist,
 }: Props) => {
+  const client = useClient()
   const player = usePlayer()
   const theme = useTheme()
   const { height } = useWindowDimensions()
@@ -144,15 +150,30 @@ const TrackModal = ({
 
             <Separator />
 
-            <ModalButton
-              text="Add to playlist"
-              icon="playlist_add"
-              onPress={() => {
-                onClose()
-                setPlaylistModal([track.Id])
-                setShowPlaylistModal(true)
-              }}
-            />
+            {removePlaylist ? (
+              <ModalButton
+                text="Remove from playlist"
+                icon="playlist_remove"
+                onPress={() => {
+                  onClose()
+                  playlists
+                    .remove(client.api, removePlaylist, [track.Id])
+                    .catch((error: AxiosError) => {
+                      if (error.status === 403) console.log('Permission denied')
+                    })
+                }}
+              />
+            ) : (
+              <ModalButton
+                text="Add to playlist"
+                icon="playlist_add"
+                onPress={() => {
+                  onClose()
+                  setPlaylistModal([track.Id])
+                  setShowPlaylistModal(true)
+                }}
+              />
+            )}
 
             <Separator />
 

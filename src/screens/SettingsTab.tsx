@@ -69,6 +69,16 @@ const SettingsTab = () => {
         />
 
         <SettingsList
+          title="Show Likes"
+          description="Show which tracks are liked in lists"
+          icon="favorite"
+          right={<Switch state={settings.showLikes} />}
+          onPress={() => {
+            settings.setShowLikes(!settings.showLikes)
+          }}
+        />
+
+        <SettingsList
           title="Dark Mode"
           description=""
           icon="dark_mode"

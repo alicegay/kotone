@@ -6,7 +6,6 @@ import ItemsQuery from 'jellyfin-api/lib/types/queries/ItemsQuery'
 
 import MusicStack from 'types/MusicStack'
 import TrackListItem from 'components/TrackListItem'
-import usePlayer from 'hooks/usePlayer'
 import useLibrary from 'hooks/useLibrary'
 import EndOfList from 'components/EndOfList'
 import InnerScreen from 'components/InnerScreen'

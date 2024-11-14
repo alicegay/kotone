@@ -1,6 +1,5 @@
-import { ScrollView, Text, View } from 'react-native'
+import { FlatList, ScrollView, Text, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import MusicStack from 'types/MusicStack'
 import useTheme from 'hooks/useTheme'
@@ -8,8 +7,6 @@ import Button from 'components/Button'
 import InnerScreen from 'components/InnerScreen'
 import useLatest from 'api/useLatest'
 import useLibrary from 'hooks/useLibrary'
-import { FlashList } from '@shopify/flash-list'
-import TrackListItem from 'components/TrackListItem'
 import SquareListItem from 'components/SquareListItem'
 
 const Music = ({
@@ -91,9 +88,9 @@ const Music = ({
               >
                 Recently Added
               </Text>
-              <FlashList
+              <FlatList
                 data={latest.data}
-                estimatedItemSize={144}
+                //estimatedItemSize={144}
                 keyExtractor={(item) => item.Id}
                 renderItem={({ item }) => (
                   <SquareListItem

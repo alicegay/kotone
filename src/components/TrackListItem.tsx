@@ -5,12 +5,12 @@ import useClient from 'hooks/useClient'
 import usePlayer from 'hooks/usePlayer'
 import useTheme, { Scheme } from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
-import { Icon } from 'components/Icon'
+import { Icon, IconFilled } from 'components/Icon'
 import { FasterImageView } from '@candlefinance/faster-image'
 import { Album, Playlist, Track } from 'types/ItemTypes'
 
 interface Props {
-  track: Track | Album | Playlist | Item
+  track: Item
   onPress?: (e: GestureResponderEvent) => void
   onLongPress?: (e: GestureResponderEvent) => void
   onDragStart?: (e: GestureResponderEvent) => void
@@ -19,6 +19,7 @@ interface Props {
   showAlbumArt?: boolean
   showArtist?: boolean
   showDuration?: boolean
+  showLike?: boolean
   trackNumber?: number
   playing?: boolean | 'auto'
   scheme?: Scheme
@@ -34,6 +35,7 @@ const TrackListItem = ({
   showAlbumArt = true,
   showArtist = true,
   showDuration = true,
+  showLike = false,
   trackNumber,
   playing = 'auto',
   scheme,
@@ -175,6 +177,16 @@ const TrackListItem = ({
           </Text>
         )}
       </View>
+
+      {showLike && 'UserData' in track && track.UserData.IsFavorite && (
+        <IconFilled
+          name="favorite"
+          style={{
+            color: !!scheme ? scheme.secondary : theme.foregroundAlt,
+            fontSize: 12,
+          }}
+        />
+      )}
 
       {!onDragStart && showDuration && (
         <Text

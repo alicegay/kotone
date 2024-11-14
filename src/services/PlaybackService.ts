@@ -52,15 +52,16 @@ const PlaybackService = async () => {
     async (event) => {
       if (usePlayer.getState().queue.length > event.index) {
         usePlayer.getState().setTrack(event.index, true)
-        if (
-          useSettings.getState().gain &&
-          'NormalizationGain' in usePlayer.getState().queue[event.index]
-        ) {
-          const gain = Math.pow(
-            10,
-            usePlayer.getState().queue[event.index].NormalizationGain / 20,
-          )
-          await TrackPlayer.setVolume(gain)
+        if (useSettings.getState().gain) {
+          if ('NormalizationGain' in usePlayer.getState().queue[event.index]) {
+            const gain = Math.pow(
+              10,
+              usePlayer.getState().queue[event.index].NormalizationGain / 20,
+            )
+            await TrackPlayer.setVolume(gain)
+          } else {
+            await TrackPlayer.setVolume(0.5)
+          }
         } else {
           await TrackPlayer.setVolume(1.0)
         }
