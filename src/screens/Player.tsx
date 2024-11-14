@@ -28,6 +28,7 @@ import useFavItem from 'api/useFavItem'
 import { ticksToSecs } from 'lib/ticksToTime'
 import useSettings from 'hooks/useSettings'
 import { useDebounce } from 'use-debounce'
+import Clipboard from '@react-native-clipboard/clipboard'
 
 const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
   const client = useClient()
@@ -166,37 +167,55 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
           </Shadow>
 
           <View style={{ gap: 8 }}>
-            <Text
-              style={{
-                color: theme.foreground,
-                fontSize: 24,
-                fontFamily: theme.font700,
+            <Pressable
+              onLongPress={() => {
+                Clipboard.setString(track.Name)
               }}
-              numberOfLines={2}
             >
-              {track.Name}
-            </Text>
-            <Text
-              style={{
-                color: theme.foregroundAlt,
-                fontSize: 18,
-                fontFamily: theme.font700,
+              <Text
+                style={{
+                  color: theme.foreground,
+                  fontSize: 24,
+                  fontFamily: theme.font700,
+                }}
+                numberOfLines={2}
+              >
+                {track.Name}
+              </Text>
+            </Pressable>
+            <Pressable
+              onLongPress={() => {
+                Clipboard.setString(track.Artists.join(', '))
               }}
-              numberOfLines={1}
             >
-              {track.Artists.join(', ')}
-            </Text>
-            {track.Album !== track.Name && (
               <Text
                 style={{
                   color: theme.foregroundAlt,
-                  fontSize: 16,
-                  fontFamily: theme.font500,
+                  fontSize: 18,
+                  fontFamily: theme.font700,
                 }}
                 numberOfLines={1}
               >
-                {track.Album}
+                {track.Artists.join(', ')}
               </Text>
+            </Pressable>
+            {track.Album !== track.Name && (
+              <Pressable
+                onLongPress={() => {
+                  Clipboard.setString(track.Album)
+                }}
+              >
+                <Text
+                  style={{
+                    color: theme.foregroundAlt,
+                    fontSize: 16,
+                    fontFamily: theme.font500,
+                  }}
+                  numberOfLines={1}
+                >
+                  {track.Album}
+                </Text>
+              </Pressable>
             )}
           </View>
 

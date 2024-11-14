@@ -15,8 +15,9 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@candlefinance/faster-image": "1.6.2",
+    "@candlefinance/faster-image": "1.7.2",
     "@material/material-color-utilities": "0.3.0",
+    "@react-native-clipboard/clipboard": "^1.15.0",
     "@react-navigation/bottom-tabs": "7.0.1",
     "@react-navigation/native": "7.0.0",
     "@react-navigation/native-stack": "7.0.0",
