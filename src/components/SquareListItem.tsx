@@ -10,7 +10,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import { Album, Playlist, Track } from 'types/ItemTypes'
 
 type NewType = GestureResponderEvent
 
@@ -35,6 +34,15 @@ const SquareListItem = ({ item, onPress, onLongPress, style }: Props) => {
         '/Images/Primary?maxHeight=256'
       : null
 
+  const blurhash =
+    'Primary' in item.ImageBlurHashes
+      ? item.ImageBlurHashes.Primary[
+          'Primary' in item.ImageTags
+            ? item.ImageTags.Primary
+            : item.AlbumPrimaryImageTag
+        ]
+      : null
+
   return (
     <Pressable
       onPress={onPress}
@@ -52,7 +60,7 @@ const SquareListItem = ({ item, onPress, onLongPress, style }: Props) => {
         }}
       >
         <FasterImageView
-          source={{ url: image, resizeMode: 'cover' }}
+          source={{ url: image, resizeMode: 'cover', blurhash: blurhash }}
           style={{ width: '100%', height: '100%' }}
         />
       </View>

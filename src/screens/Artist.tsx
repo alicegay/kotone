@@ -111,7 +111,11 @@ const Artist = ({
                     }}
                   >
                     <FasterImageView
-                      source={{ url: image, resizeMode: 'cover' }}
+                      source={{
+                        url: image,
+                        resizeMode: 'cover',
+                        blurhash: blurhash,
+                      }}
                       style={{
                         width: '100%',
                         height: '100%',

@@ -54,6 +54,15 @@ const TrackListItem = ({
         '/Images/Primary?maxHeight=96'
       : null
 
+  const blurhash =
+    'Primary' in track.ImageBlurHashes
+      ? track.ImageBlurHashes.Primary[
+          'Primary' in track.ImageTags
+            ? track.ImageTags.Primary
+            : track.AlbumPrimaryImageTag
+        ]
+      : null
+
   const isPlaying = playing === 'auto' ? player.trackID == track.Id : playing
 
   return (
@@ -83,7 +92,7 @@ const TrackListItem = ({
         >
           {!!image && (
             <FasterImageView
-              source={{ url: image, resizeMode: 'cover' }}
+              source={{ url: image, resizeMode: 'cover', blurhash: blurhash }}
               style={{ width: '100%', height: '100%' }}
             />
           )}
