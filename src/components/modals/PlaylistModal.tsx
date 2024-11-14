@@ -27,13 +27,18 @@ const PlaylistModal = ({ visible, onClose, tracks }: Props) => {
   const insets = useSafeAreaInsets()
   const library = useLibrary()
 
+  const playlistView =
+    library.viewIDs && 'playlists' in library.viewIDs
+      ? library.viewIDs.playlists
+      : null
+
   const { data, isLoading, isFetching } = useItems(
     {
-      ParentId: library.viewIDs.playlists,
+      ParentId: playlistView,
       SortBy: 'IsFolder,Name',
       SortOrder: 'Ascending',
     },
-    !!tracks,
+    !!tracks && !!playlistView,
   )
 
   if (!tracks) return null

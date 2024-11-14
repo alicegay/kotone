@@ -79,7 +79,7 @@ const SongList = ({
       IncludeItemTypes: 'Audio',
       Recursive: true,
       Filter: 'IsPlayed',
-      Limit: 50,
+      Limit: 100,
       Fields: 'MediaSources',
     },
     recent: {
@@ -88,7 +88,7 @@ const SongList = ({
       IncludeItemTypes: 'Audio',
       Recursive: true,
       Filter: 'IsPlayed',
-      Limit: 50,
+      Limit: 100,
       Fields: 'MediaSources',
     },
     musicvideos: {
