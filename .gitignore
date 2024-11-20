@@ -76,3 +76,4 @@ yarn-error.log
 .vscode/
 temp.ts
 sentry.properties
+install.sh

@@ -45,7 +45,7 @@ const AlbumList = ({
     },
     playlists: {
       ParentId: library.viewIDs.playlists,
-      SortBy: 'IsFolder,Name',
+      SortBy: 'SortName',
       SortOrder: 'Ascending',
     },
   }

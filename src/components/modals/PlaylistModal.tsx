@@ -35,7 +35,7 @@ const PlaylistModal = ({ visible, onClose, tracks }: Props) => {
   const { data, isLoading, isFetching } = useItems(
     {
       ParentId: playlistView,
-      SortBy: 'IsFolder,Name',
+      SortBy: 'SortName',
       SortOrder: 'Ascending',
     },
     !!tracks && !!playlistView,
