@@ -17,6 +17,7 @@ import MusicTab from './MusicTab'
 import SearchTab from './SearchTab'
 import SettingsTab from './SettingsTab'
 import QueueTab from './QueueTab'
+import { emitSoftReset } from 'lib/events'
 
 const Tab = createBottomTabNavigator<TabStack>()
 
@@ -142,6 +143,10 @@ const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
               android_ripple={{
                 radius: 32,
                 color: theme.scheme.ripple,
+              }}
+              onPress={(e) => {
+                props.onPress(e)
+                emitSoftReset()
               }}
             />
           ),

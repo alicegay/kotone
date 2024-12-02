@@ -2,7 +2,7 @@ import Item from 'jellyfin-api/lib/types/media/Item'
 import { Album } from './ItemTypes'
 
 type SearchStack = {
-  SearchHome: undefined
+  SearchHome: { q: string }
   SongList: { type: string }
   AlbumList: { type: string }
   ArtistList: { type: string }

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import {
   NativeStackNavigationProp,
@@ -22,6 +22,8 @@ import { Icon } from 'components/Icon'
 import Item from 'jellyfin-api/lib/types/media/Item'
 import usePlayer from 'hooks/usePlayer'
 import TrackModal from 'components/modals/TrackModal'
+import { useFocusEffect } from '@react-navigation/native'
+import { listenSoftReset } from 'lib/events'
 
 const Search = ({
   navigation,
@@ -47,6 +49,16 @@ const Search = ({
   //     : null
 
   const [index, setIndex] = useState(0)
+
+  const onSoftReset = useCallback(() => {
+    searchRef.current?.focus()
+  }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      return listenSoftReset(onSoftReset)
+    }, [onSoftReset]),
+  )
 
   return (
     <>

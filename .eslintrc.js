@@ -4,5 +4,6 @@ module.exports = {
   plugins: ['eslint-plugin-react-compiler'],
   rules: {
     'react-compiler/react-compiler': 'error',
+    'react/react-in-jsx-scope': 'off',
   },
 }
