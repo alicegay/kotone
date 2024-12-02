@@ -175,21 +175,21 @@ const InnerTab = ({
   const [trackModal, setTrackModal] = useState<Track>(null)
   const [showTrackModal, setShowTrackModal] = useState<boolean>(false)
 
-  const items = !!search
+  const items = search
     ? type === 'albums'
-      ? !!library.albums
+      ? library.albums
         ? library.albums.filter((album) =>
             album.Search.includes(formatName(search)),
           )
         : null
       : type === 'songs'
-      ? !!library.songs
+      ? library.songs
         ? library.songs.filter((song) =>
             song.Search.includes(formatName(search)),
           )
         : null
       : type === 'musicvideos'
-      ? !!library.musicvideos
+      ? library.musicvideos
         ? library.musicvideos.filter((mv) =>
             mv.Search.includes(formatName(search)),
           )

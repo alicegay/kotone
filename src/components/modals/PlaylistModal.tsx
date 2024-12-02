@@ -21,7 +21,6 @@ interface Props {
 
 const PlaylistModal = ({ visible, onClose, tracks }: Props) => {
   const client = useClient()
-  const player = usePlayer()
   const theme = useTheme()
   const { height } = useWindowDimensions()
   const insets = useSafeAreaInsets()

@@ -7,7 +7,6 @@ import useTheme, { Scheme } from 'hooks/useTheme'
 import ticksToTime from 'lib/ticksToTime'
 import { Icon, IconFilled } from 'components/Icon'
 import { FasterImageView } from '@candlefinance/faster-image'
-import { Album, Playlist, Track } from 'types/ItemTypes'
 
 interface Props {
   track: Item
@@ -65,7 +64,7 @@ const TrackListItem = ({
         ]
       : null
 
-  const isPlaying = playing === 'auto' ? player.trackID == track.Id : playing
+  const isPlaying = playing === 'auto' ? player.trackID === track.Id : playing
 
   return (
     <Pressable
@@ -80,7 +79,7 @@ const TrackListItem = ({
         paddingVertical: 4,
         gap: 16,
       }}
-      android_ripple={{ color: !!scheme ? scheme.ripple : theme.ripple }}
+      android_ripple={{ color: scheme ? scheme.ripple : theme.ripple }}
     >
       {showAlbumArt && (
         <View
@@ -89,7 +88,7 @@ const TrackListItem = ({
             height: 48,
             borderRadius: 8,
             overflow: 'hidden',
-            backgroundColor: !!scheme ? scheme.primaryContainer : '#222',
+            backgroundColor: scheme ? scheme.primaryContainer : '#222',
           }}
         >
           {!!image && (
@@ -122,7 +121,7 @@ const TrackListItem = ({
         <Icon
           name="equalizer"
           style={{
-            color: !!scheme ? scheme.primary : theme.foreground,
+            color: scheme ? scheme.primary : theme.foreground,
             fontSize: 24,
             width: 24,
           }}
@@ -131,7 +130,7 @@ const TrackListItem = ({
         (!!trackNumber || trackNumber === 0) && (
           <Text
             style={{
-              color: !!scheme ? scheme.primary : theme.foreground,
+              color: scheme ? scheme.primary : theme.foreground,
               fontFamily: theme.font700,
               fontSize: 14,
               width: 24,
@@ -153,7 +152,7 @@ const TrackListItem = ({
       >
         <Text
           style={{
-            color: !!scheme ? scheme.primary : theme.foreground,
+            color: scheme ? scheme.primary : theme.foreground,
             fontFamily: theme.font500,
             fontSize: 16,
           }}
@@ -164,7 +163,7 @@ const TrackListItem = ({
         {showArtist && track.Type !== 'Playlist' && (
           <Text
             style={{
-              color: !!scheme ? scheme.secondary : theme.foregroundAlt,
+              color: scheme ? scheme.secondary : theme.foregroundAlt,
               fontFamily: theme.font400,
               fontSize: 14,
             }}
@@ -182,7 +181,7 @@ const TrackListItem = ({
         <IconFilled
           name="favorite"
           style={{
-            color: !!scheme ? scheme.secondary : theme.foregroundAlt,
+            color: scheme ? scheme.secondary : theme.foregroundAlt,
             fontSize: 12,
           }}
         />
@@ -191,7 +190,7 @@ const TrackListItem = ({
       {!onDragStart && showDuration && (
         <Text
           style={{
-            color: !!scheme ? scheme.secondary : theme.foregroundAlt,
+            color: scheme ? scheme.secondary : theme.foregroundAlt,
             fontFamily: theme.font400,
             fontSize: 14,
           }}
@@ -219,7 +218,7 @@ const TrackListItem = ({
           <Icon
             name="menu"
             style={{
-              color: !!scheme ? scheme.secondary : theme.foregroundAlt,
+              color: scheme ? scheme.secondary : theme.foregroundAlt,
               fontSize: 20,
             }}
           />

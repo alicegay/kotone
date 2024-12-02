@@ -3,7 +3,6 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 
 import QueueStack from 'types/QueueStack'
 import TabStack from 'types/TabStack'
-import Search from './Search'
 import SongList from './SongList'
 import AlbumList from './AlbumList'
 import Album from './Album'

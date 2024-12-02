@@ -17,7 +17,6 @@ import secsToTicks from 'lib/secsToTicks'
 import { useDebounce } from 'use-debounce'
 
 const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
-  const client = useClient()
   const theme = useTheme()
   const player = usePlayer()
   const playerProgress = useProgress()
@@ -25,7 +24,7 @@ const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
   const insets = useSafeAreaInsets()
 
   const track = player.queue.length > 0 ? player.queue[player.track] : null
-  const lyrics = useLyrics(!!track ? track.Id : null, !!track)
+  const lyrics = useLyrics(track ? track.Id : null, !!track)
   const [timed, setTimed] = useState<boolean>(false)
   const [follow, setFollow] = useState<boolean>(true)
   const [currentA, setCurrent] = useState<number>(null)
@@ -47,7 +46,7 @@ const Lyrics = ({ navigation }: StackScreenProps<RootStack, 'Lyrics'>) => {
       for (let i = 0; i < lyrics.data.Lyrics.length; i++) {
         const start = lyrics.data.Lyrics[i].Start
         if (start >= position + 200_0000) {
-          if (i == 0) {
+          if (i === 0) {
             setCurrent(null)
             break
           }

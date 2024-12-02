@@ -42,7 +42,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
 
   const track = player.queue.length > 0 ? player.queue[player.track] : null
 
-  const item = useSingleItem(!!track ? track.Id : null, !!track)
+  const item = useSingleItem(track ? track.Id : null, !!track)
   const stream =
     !!item.data && item.data.MediaStreams.length > 0
       ? item.data.MediaStreams.find((stream) => stream.Type === 'Audio')
@@ -54,9 +54,9 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
       ? item.data.MediaSources[0]
       : null
   const favorite = !!item.data && item.data.UserData.IsFavorite
-  const favItem = useFavItem(!!item.data ? item.data.Id : null)
-  const lyrics = useLyrics(!!track ? track.Id : null, !!track)
-  const timedLyrics = !!lyrics.data ? 'Start' in lyrics.data.Lyrics[0] : false
+  const favItem = useFavItem(item.data ? item.data.Id : null)
+  const lyrics = useLyrics(track ? track.Id : null, !!track)
+  const timedLyrics = lyrics.data ? 'Start' in lyrics.data.Lyrics[0] : false
   const [currentLyricA, setCurrentLyric] = useState<string>(null)
   const [currentLyric] = useDebounce(currentLyricA, 200, { leading: true })
   const [accuratePosition, setAccuratePosition] = useState<number>(0)
@@ -67,7 +67,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
       for (let i = 0; i < lyrics.data.Lyrics.length; i++) {
         const start = lyrics.data.Lyrics[i].Start
         if (start >= position + 200_0000) {
-          if (i == 0) {
+          if (i === 0) {
             setCurrentLyric(null)
             break
           }
@@ -370,7 +370,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
           </Pressable>
           <Pressable
             onPress={() => {
-              if (playerState.state == State.Playing) {
+              if (playerState.state === State.Playing) {
                 player.pause()
               } else {
                 player.play()
@@ -379,7 +379,9 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
             android_ripple={androidRipple}
           >
             <IconFilled
-              name={playerState.state == State.Playing ? 'pause' : 'play_arrow'}
+              name={
+                playerState.state === State.Playing ? 'pause' : 'play_arrow'
+              }
               style={{ color: theme.foreground, fontSize: 80 }}
             />
           </Pressable>
@@ -407,13 +409,13 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
             style={styles.buttonSmall}
             android_ripple={androidRipple}
             onPress={() => {
-              if (!!lyrics.data) navigation.push('Lyrics')
+              if (lyrics.data) navigation.push('Lyrics')
             }}
           >
             <Icon
               name="lyrics"
               style={{
-                color: !!lyrics.data ? theme.foreground : theme.foregroundAlt,
+                color: lyrics.data ? theme.foreground : theme.foregroundAlt,
                 fontSize: 20,
               }}
             />
@@ -440,7 +442,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
             style={styles.buttonSmall}
             android_ripple={androidRipple}
             onPress={() => {
-              if (!!item.data) {
+              if (item.data) {
                 favItem.mutate(favorite)
               }
             }}

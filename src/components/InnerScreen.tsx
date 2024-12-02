@@ -1,10 +1,4 @@
-import {
-  GestureResponderEvent,
-  Pressable,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { GestureResponderEvent, Pressable, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -38,12 +32,12 @@ const InnerScreen = ({
 
   const gradient1 = mainTheme
     ? theme.dG1
-    : !!scheme
+    : scheme
     ? scheme.primaryContainer
     : theme.scheme.primaryContainer
   const gradient2 = mainTheme
     ? theme.dG2
-    : !!scheme
+    : scheme
     ? scheme.background
     : theme.scheme.background
 
@@ -83,7 +77,7 @@ const InnerScreen = ({
                 alignItems: 'center',
               }}
               android_ripple={{
-                color: !!scheme ? scheme.ripple : theme.scheme.ripple,
+                color: scheme ? scheme.ripple : theme.scheme.ripple,
                 borderless: true,
                 foreground: true,
               }}
@@ -94,7 +88,7 @@ const InnerScreen = ({
               <Icon
                 name="arrow_back"
                 style={{
-                  color: !!scheme ? scheme.primary : theme.scheme.primary,
+                  color: scheme ? scheme.primary : theme.scheme.primary,
                   fontSize: 24,
                 }}
               />
@@ -103,7 +97,7 @@ const InnerScreen = ({
           {!!title && (
             <Text
               style={{
-                color: !!scheme ? scheme.primary : theme.scheme.primary,
+                color: scheme ? scheme.primary : theme.scheme.primary,
                 fontFamily: theme.font700,
                 fontSize: 24,
                 flexGrow: 1,
@@ -123,7 +117,7 @@ const InnerScreen = ({
                 alignItems: 'center',
               }}
               android_ripple={{
-                color: !!scheme ? scheme.ripple : theme.scheme.ripple,
+                color: scheme ? scheme.ripple : theme.scheme.ripple,
                 borderless: true,
                 foreground: true,
               }}
@@ -132,7 +126,7 @@ const InnerScreen = ({
               <Icon
                 name={icon}
                 style={{
-                  color: !!scheme ? scheme.primary : theme.scheme.primary,
+                  color: scheme ? scheme.primary : theme.scheme.primary,
                   fontSize: 24,
                 }}
               />

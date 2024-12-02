@@ -195,7 +195,7 @@ const FloatingPlayer = ({ navigation }: Props) => {
               borderRadius: 3,
               backgroundColor: theme.foregroundAlt,
             }}
-          ></View>
+          />
         </Pressable>
       </Shadow>
     </View>

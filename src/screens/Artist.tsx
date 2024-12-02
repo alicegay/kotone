@@ -47,7 +47,7 @@ const Artist = ({
 
   const image = client.server + '/Items/' + artistID + '/Images/Primary'
 
-  const blurhash = !!artist
+  const blurhash = artist
     ? 'Primary' in artist?.ImageBlurHashes
       ? artist?.ImageBlurHashes.Primary[
           'Primary' in artist?.ImageTags
@@ -56,7 +56,7 @@ const Artist = ({
         ]
       : null
     : null
-  const average = !!blurhash
+  const average = blurhash
     ? tinycolor(Blurhash.getAverageColor(blurhash)).toHex8String()
     : null
   const scheme = !average ? theme.scheme : getTheme(average, theme.dark)

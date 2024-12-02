@@ -1,9 +1,7 @@
 import { useWindowDimensions, View } from 'react-native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Modal from 'react-native-modal'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import MusicStack from 'types/MusicStack'
 import usePlayer from 'hooks/usePlayer'
 import useTheme from 'hooks/useTheme'
 import ModalButton from './ModalButton'

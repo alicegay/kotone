@@ -24,14 +24,14 @@ const EndOfList = ({ text = 'End of list', scheme }: Props) => {
     >
       <View
         style={{
-          backgroundColor: !!scheme ? scheme.secondary : theme.scheme.secondary,
+          backgroundColor: scheme ? scheme.secondary : theme.scheme.secondary,
           height: 1,
           flexGrow: 1,
         }}
       />
       <Text
         style={{
-          color: !!scheme ? scheme.secondary : theme.scheme.secondary,
+          color: scheme ? scheme.secondary : theme.scheme.secondary,
           fontFamily: theme.font400,
           fontSize: 12,
         }}
@@ -40,7 +40,7 @@ const EndOfList = ({ text = 'End of list', scheme }: Props) => {
       </Text>
       <View
         style={{
-          backgroundColor: !!scheme ? scheme.secondary : theme.scheme.secondary,
+          backgroundColor: scheme ? scheme.secondary : theme.scheme.secondary,
           height: 1,
           flexGrow: 1,
         }}

@@ -31,7 +31,7 @@ const AlbumModal = ({ visible, onClose, album, navigation }: Props) => {
 
   const list = useItems(
     {
-      ParentId: !!album ? album.Id : null,
+      ParentId: album ? album.Id : null,
       SortBy:
         !!album && album.Type === 'Playlist'
           ? undefined
