@@ -16,7 +16,7 @@ module.exports = {
           assets: './src/assets',
           components: './src/components',
           hooks: './src/hooks',
-          screens: './src/services',
+          services: './src/services',
           screens: './src/screens',
           types: './src/types',
           lib: './src/lib',
