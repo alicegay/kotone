@@ -80,7 +80,7 @@ const SelectServer = ({
   const resetClient = async () => {
     const clientName = DeviceInfo.getApplicationName()
     const deviceName = await DeviceInfo.getDeviceName()
-    const deviceID = await DeviceInfo.getUniqueId()
+    const deviceID = 'kotone_' + (await DeviceInfo.getUniqueId())
     const clientVer = DeviceInfo.getVersion()
     client.setClient({
       server: client.server,
