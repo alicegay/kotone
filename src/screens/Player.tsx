@@ -36,7 +36,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
   const theme = useTheme()
   const player = usePlayer()
   const insets = useSafeAreaInsets()
-  const { width } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
   const playerProgress = useProgress()
   const playerState = usePlaybackState()
 
@@ -60,6 +60,9 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
   const [currentLyricA, setCurrentLyric] = useState<string>(null)
   const [currentLyric] = useDebounce(currentLyricA, 200, { leading: true })
   const [accuratePosition, setAccuratePosition] = useState<number>(0)
+
+  // const imageSize = width / height < 0.6 ? width - 32 * 2 : height / 2 - 32
+  const imageSize = Math.min(width - 32 * 2, height / 2 - 32)
 
   useEffect(() => {
     if (timedLyrics && !!lyrics.data) {
@@ -99,8 +102,8 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
     'Primary' in track.ImageTags
       ? client.server + '/Items/' + track.Id + '/Images/Primary'
       : track.AlbumPrimaryImageTag
-      ? client.server + '/Items/' + track.AlbumId + '/Images/Primary'
-      : null
+        ? client.server + '/Items/' + track.AlbumId + '/Images/Primary'
+        : null
   const blurhash =
     'Primary' in track.ImageBlurHashes
       ? track.ImageBlurHashes.Primary[
@@ -149,24 +152,25 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
           paddingHorizontal: 32,
           flex: 1,
           justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
-        <View style={{ gap: 32 }}>
+        <View style={{ gap: 32, width: imageSize }}>
           <Shadow distance={32} offset={[0, 8]} startColor="#0002">
             <Image
               source={{
                 uri: image,
               }}
               style={{
-                width: width - 32 * 2,
-                height: width - 32 * 2,
+                width: imageSize,
+                height: imageSize,
                 borderRadius: 16,
                 overflow: 'hidden',
               }}
             />
           </Shadow>
 
-          <View style={{ gap: 8 }}>
+          <View style={{ gap: 8, width: imageSize }}>
             <Pressable
               onLongPress={() => {
                 Clipboard.setString(track.Name)
@@ -219,7 +223,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
             )}
           </View>
 
-          <View style={{ gap: 8 }}>
+          <View style={{ gap: 8, width: imageSize }}>
             <View
               style={{
                 backgroundColor: theme.foregroundAlt,
@@ -243,7 +247,11 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
               />
             </View>
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: imageSize,
+              }}
             >
               <Text
                 style={{
@@ -335,7 +343,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
           </View>
 
           {timedLyrics && (
-            <View>
+            <View style={{ width: imageSize }}>
               <Text
                 style={{
                   color: '#fff',
@@ -355,6 +363,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
             alignItems: 'center',
+            width: imageSize,
           }}
         >
           <Pressable
@@ -403,6 +412,7 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
             alignItems: 'center',
+            width: imageSize,
           }}
         >
           <Pressable
