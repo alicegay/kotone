@@ -269,13 +269,12 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
                     alignItems: 'center',
                   }}
                 >
-                  {(stream.SampleRate > 48000 || stream.BitDepth > 16) &&
-                    stream.BitRate <= settings.bitrate && (
-                      <IconFilled
-                        name="high_res"
-                        style={{ color: theme.foregroundAlt, fontSize: 16 }}
-                      />
-                    )}
+                  {stream.SampleRate >= 96000 && stream.BitDepth >= 24 && (
+                    <IconFilled
+                      name="high_res"
+                      style={{ color: theme.foregroundAlt, fontSize: 16 }}
+                    />
+                  )}
                   <Text
                     style={{
                       color: theme.foregroundAlt,
@@ -307,7 +306,9 @@ const Player = ({ navigation }: StackScreenProps<RootStack, 'Player'>) => {
                       fontSize: 10,
                     }}
                   >
-                    {Math.round(source.Bitrate / 1000) + ' ' + 'kbps'}
+                    {stream.BitDepth
+                      ? stream.BitDepth + '-bit'
+                      : Math.round(source.Bitrate / 1000) + ' ' + 'kbps'}
                   </Text>
                   {(stream.BitRate > settings.bitrate ||
                     item.data.Type === 'MusicVideo') && (

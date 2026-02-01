@@ -23,7 +23,7 @@ const SelectServer = ({
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const serverRef = useRef<any>()
+  const serverRef = useRef<any>(null)
 
   const submit = () => {
     setIsLoading(true)
@@ -52,14 +52,17 @@ const SelectServer = ({
     }, submitError)
   }
 
-  const submitError = (error: AxiosError) => {
+  const submitError = (e: AxiosError) => {
     setIsLoading(false)
-    console.log(error.message)
-    if (error.code === 'ERR_NETWORK')
-      setError('Could not connect to the server')
+    console.log(e.message)
+    if (e.code === 'ERR_NETWORK') setError('Could not connect to the server')
   }
 
   useEffect(() => {
+    const hideSplash = async () => {
+      await BootSplash.hide({ fade: true })
+    }
+
     if (client.hasHydrated) {
       if (client.client) {
         navigation.replace('Tabs')
@@ -71,7 +74,7 @@ const SelectServer = ({
       ) {
         resetClient()
       } else {
-        BootSplash.hide({ fade: true })
+        hideSplash()
         serverRef.current.focus()
       }
     }

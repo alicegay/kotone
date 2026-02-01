@@ -23,8 +23,12 @@ const Tab = createBottomTabNavigator<TabStack>()
 
 const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   useEffect(() => {
+    const hideSplash = async () => {
+      await BootSplash.hide({ fade: true })
+    }
+
     if (BootSplash.isVisible()) {
-      BootSplash.hide({ fade: true })
+      hideSplash()
     }
   }, [])
 

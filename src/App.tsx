@@ -39,6 +39,7 @@ const App = () => {
   const { height } = useWindowDimensions()
 
   const [playerSetup, setPlayerSetup] = useState(false)
+  const [queueSetup, setQueueSetup] = useState(false)
 
   useEffect(() => {
     const setupPlayer = async () => {
@@ -84,7 +85,7 @@ const App = () => {
   }, [playerSetup])
 
   useEffect(() => {
-    if (playerSetup) {
+    if (playerSetup && !queueSetup) {
       const restoreQueue = async () => {
         const queue = await TrackPlayer.getQueue()
         if (player.queue.length > 0 && queue.length === 0) {
@@ -92,6 +93,8 @@ const App = () => {
           console.log('RESTORED QUEUE')
         }
         player.setRepeat(player.repeat)
+        setQueueSetup(true)
+        console.log('QUEUE SETUP')
       }
       if (client.hasHydrated && player.hasHydrated && settings.hasHydrated) {
         restoreQueue()
@@ -103,6 +106,7 @@ const App = () => {
     player.hasHydrated,
     settings.hasHydrated,
     playerSetup,
+    queueSetup,
   ])
 
   useEffect(() => {
