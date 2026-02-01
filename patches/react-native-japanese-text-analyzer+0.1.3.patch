@@ -1,8 +1,16 @@
 diff --git a/node_modules/react-native-japanese-text-analyzer/android/build.gradle b/node_modules/react-native-japanese-text-analyzer/android/build.gradle
-index 7ec958b..04b6dc7 100644
+index 7ec958b..f949e43 100644
 --- a/node_modules/react-native-japanese-text-analyzer/android/build.gradle
 +++ b/node_modules/react-native-japanese-text-analyzer/android/build.gradle
-@@ -19,10 +19,10 @@ def safeExtGet(prop, fallback) {
+@@ -3,7 +3,6 @@ buildscript {
+         repositories {
+             google()
+             mavenCentral()
+-            jcenter()
+         }
+ 
+         dependencies {
+@@ -19,10 +18,10 @@ def safeExtGet(prop, fallback) {
  }
  
  android {
@@ -15,3 +23,11 @@ index 7ec958b..04b6dc7 100644
          versionCode 1
          versionName "1.0"
  
+@@ -50,7 +49,6 @@ repositories {
+     }
+     google()
+     mavenCentral()
+-    jcenter()
+ }
+ 
+ dependencies {

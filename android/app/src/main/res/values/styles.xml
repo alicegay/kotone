@@ -10,7 +10,7 @@
     <item name="android:navigationBarColor">@android:color/transparent</item>
   </style>
 
-  <style name="BootTheme" parent="Theme.BootSplash.EdgeToEdge">
+  <style name="BootTheme" parent="Theme.BootSplash">
     <item name="darkContentBarsStyle">false</item>
     <item name="bootSplashBackground">@color/bootsplash_background</item>
     <item name="bootSplashLogo">@drawable/bootsplash_logo</item>

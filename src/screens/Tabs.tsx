@@ -23,9 +23,9 @@ const Tab = createBottomTabNavigator<TabStack>()
 
 const Tabs = ({ navigation }: StackScreenProps<RootStack, 'Tabs'>) => {
   useEffect(() => {
-    BootSplash.isVisible().then(async (visible) => {
-      if (visible) await BootSplash.hide({ fade: true })
-    })
+    if (BootSplash.isVisible()) {
+      BootSplash.hide({ fade: true })
+    }
   }, [])
 
   const theme = useTheme()
